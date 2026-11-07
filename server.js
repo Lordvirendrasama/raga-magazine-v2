@@ -9,7 +9,10 @@ const {
   getStudioStories,
   generateAngles,
   generateArticle,
-  publishToWordPress
+  publishToWordPress,
+  enrichStoryMedia,
+  formatArticleHtml,
+  uploadMediaToWordPress
 } = require('./wordpress-studio');
 
 const MIME_TYPES = {
@@ -126,19 +129,47 @@ function startServer(port) {
       return;
     }
 
+    // STUDIO API: Enrich Story Media (Extract/Search Photos, YouTube, Spotify, Instagram)
+    if (pathname === '/api/studio/enrich-media' && req.method === 'POST') {
+      try {
+        const body = await parseJsonBody(req);
+        if (!body.article) {
+          sendJson(res, 400, { success: false, error: 'article is required' });
+          return;
+        }
+        console.log(`\n🔍 [Studio API] Enriching media for "${body.article.title.substring(0, 45)}..."`);
+        const media = await enrichStoryMedia(body.article);
+        sendJson(res, 200, { success: true, media });
+      } catch (err) {
+        console.error('Studio media enrich error:', err);
+        sendJson(res, 500, { success: false, error: err.message });
+      }
+      return;
+    }
+
     // STUDIO API: Read Configuration
     if (pathname === '/api/studio/config' && req.method === 'GET') {
       try {
         const config = getStudioConfig();
-        // Mask passwords slightly for display if needed or return configured flags
         sendJson(res, 200, {
           success: true,
           config: {
-            wpUrl: config.wpUrl || '',
-            wpUsername: config.wpUsername || '',
-            wpAppPassword: config.wpAppPassword || '',
-            hasGeminiKey: Boolean(config.geminiApiKey || process.env.GEMINI_API_KEY),
-            geminiApiKey: config.geminiApiKey || '',
+            // Raga Magazine WordPress
+            ragaWpUrl: config.ragaWpUrl || config.wpUrl || 'https://plum-weasel-789096.hostingersite.com',
+            ragaWpUsername: config.ragaWpUsername || config.wpUsername || '',
+            ragaWpAppPassword: config.ragaWpAppPassword || config.wpAppPassword || '',
+            // The 8 Bit Bistro WordPress
+            eightbitWpUrl: config.eightbitWpUrl || '',
+            eightbitWpUsername: config.eightbitWpUsername || '',
+            eightbitWpAppPassword: config.eightbitWpAppPassword || '',
+            // Legacy / Shared
+            wpUrl: config.wpUrl || config.ragaWpUrl || 'https://plum-weasel-789096.hostingersite.com',
+            wpUsername: config.wpUsername || config.ragaWpUsername || '',
+            wpAppPassword: config.wpAppPassword || config.ragaWpAppPassword || '',
+            // Free LLM Engine
+            llmProvider: config.llmProvider || 'auto',
+            llmApiKey: config.llmApiKey || config.geminiApiKey || '',
+            customEndpoint: config.customEndpoint || '',
             defaultStatus: config.defaultStatus || 'draft'
           }
         });
@@ -153,14 +184,17 @@ function startServer(port) {
       try {
         const body = await parseJsonBody(req);
         const saved = saveStudioConfig(body);
-        console.log(`💾 [Studio API] Saved WordPress & API configuration.`);
+        console.log(`💾 [Studio API] Saved WordPress & LLM configuration.`);
         sendJson(res, 200, {
           success: true,
           config: {
-            wpUrl: saved.wpUrl || '',
-            wpUsername: saved.wpUsername || '',
-            hasAppPassword: Boolean(saved.wpAppPassword),
-            hasGeminiKey: Boolean(saved.geminiApiKey),
+            ragaWpUrl: saved.ragaWpUrl || saved.wpUrl,
+            ragaWpUsername: saved.ragaWpUsername || saved.wpUsername,
+            hasRagaPassword: Boolean(saved.ragaWpAppPassword || saved.wpAppPassword),
+            eightbitWpUrl: saved.eightbitWpUrl,
+            eightbitWpUsername: saved.eightbitWpUsername,
+            hasEightbitPassword: Boolean(saved.eightbitWpAppPassword),
+            llmProvider: saved.llmProvider || 'auto',
             defaultStatus: saved.defaultStatus || 'draft'
           }
         });

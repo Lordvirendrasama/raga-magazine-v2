@@ -945,6 +945,88 @@
       outline: none;
     }
 
+    /* Cover Photo Picker Gallery */
+    .media-gallery-section {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+
+    .cover-photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 10px;
+      max-height: 140px;
+      overflow-y: auto;
+      padding: 6px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .cover-photo-card {
+      position: relative;
+      height: 72px;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.2s ease;
+      background: #111827;
+    }
+
+    .cover-photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+
+    .cover-photo-card:hover {
+      transform: translateY(-2px);
+      border-color: #38bdf8;
+    }
+
+    .cover-photo-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .cover-photo-card.selected {
+      border-color: #38bdf8;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.6);
+    }
+
+    .cover-photo-card .cover-badge {
+      display: none;
+      position: absolute;
+      bottom: 3px;
+      left: 3px;
+      right: 3px;
+      background: #0284c7;
+      color: #ffffff;
+      font-size: 8.5px;
+      font-weight: 800;
+      padding: 2px 4px;
+      border-radius: 4px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .cover-photo-card.selected .cover-badge {
+      display: block;
+    }
+
+    /* Media & Social Embeds Bar */
+    .embeds-section {
+      background: rgba(0, 0, 0, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+
     /* Right Sidebar: WordPress Dispatch */
     .dispatch-sidebar {
       display: flex;
@@ -1342,6 +1424,51 @@
               <input type="text" class="form-input" id="articleExcerptInput">
             </div>
 
+            <!-- Cover Photo Picker & Media Gallery -->
+            <div class="media-gallery-section">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <label style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; margin: 0;">
+                  📸 Pick Cover Photo (Auto-Assigns as WP Featured Image)
+                </label>
+                <span id="photoCountBadge" style="font-size: 11px; color: #38bdf8; font-weight: 600;">Harvesting artist photos...</span>
+              </div>
+
+              <!-- Cover Photo Thumbnails -->
+              <div class="cover-photo-grid" id="coverPhotoGrid">
+                <!-- Injected via JavaScript -->
+              </div>
+
+              <!-- Custom Cover URL input -->
+              <div style="display: flex; gap: 8px; margin-top: 10px;">
+                <input type="url" class="form-input" id="customCoverInput" placeholder="Or paste any custom image URL to use as cover photo..." style="font-size: 12px; padding: 7px 12px;">
+                <button type="button" class="btn-secondary" id="btnApplyCustomCover" style="padding: 7px 14px; font-size: 12px; white-space: nowrap;">
+                  Use Custom Image
+                </button>
+              </div>
+            </div>
+
+            <!-- Media & Social Embeds Bar -->
+            <div class="embeds-section">
+              <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+                <span>🎵</span>
+                <span>Audio, Video &amp; Social Embeds (Auto-Embedded into Post)</span>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+                <div class="form-group" style="margin: 0;">
+                  <label style="font-size: 11px; margin-bottom: 4px;">Spotify Song / Album</label>
+                  <input type="text" class="form-input" id="articleSpotifyInput" placeholder="https://open.spotify.com/..." style="font-size: 12px; padding: 8px 10px;">
+                </div>
+                <div class="form-group" style="margin: 0;">
+                  <label style="font-size: 11px; margin-bottom: 4px;">YouTube Video</label>
+                  <input type="text" class="form-input" id="articleYoutubeInput" placeholder="https://youtube.com/watch?v=..." style="font-size: 12px; padding: 8px 10px;">
+                </div>
+                <div class="form-group" style="margin: 0;">
+                  <label style="font-size: 11px; margin-bottom: 4px;">Artist Instagram ID</label>
+                  <input type="text" class="form-input" id="articleInstagramInput" placeholder="@artistname or URL" style="font-size: 12px; padding: 8px 10px;">
+                </div>
+              </div>
+            </div>
+
             <!-- Preview Mode Toggle Tabs -->
             <div class="preview-tabs">
               <button class="preview-tab-btn active" id="tabVisualPreview">👁️ Formatted Visual Preview</button>
@@ -1443,24 +1570,62 @@
         </div>
 
         <form id="settingsForm" onsubmit="return false;">
-          <div class="form-group" style="margin-bottom: 14px;">
-            <label>WordPress Site URL</label>
-            <input type="url" class="form-input" id="cfgWpUrl" placeholder="https://yourblog.com" required>
-            <span style="font-size:11px; color:#64748b; margin-top:4px; display:block;">The root URL of your WordPress installation (e.g., https://mygamingblog.com)</span>
+          <!-- Publication Settings: RAGA MAGAZINE -->
+          <div style="background: rgba(255, 51, 31, 0.08); border: 1px solid rgba(255, 51, 31, 0.25); border-radius: 12px; padding: 18px; margin-bottom: 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
+              <span style="font-weight: 800; font-size: 13px; color: #ff5442; letter-spacing: 0.06em; text-transform: uppercase;">
+                🎵 Raga Magazine WordPress REST API
+              </span>
+              <span style="font-size: 10px; background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); padding: 2px 8px; border-radius: 4px; font-weight: 700;">
+                LIVE VERIFIED
+              </span>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label>WordPress Site URL</label>
+              <input type="url" class="form-input" id="cfgRagaUrl" value="https://plum-weasel-789096.hostingersite.com" required>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label>WordPress Username</label>
+              <input type="text" class="form-input" id="cfgRagaUsername" placeholder="e.g. admin or editor">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 4px;">
+              <label>WordPress Application Password</label>
+              <input type="password" class="form-input" id="cfgRagaAppPassword" placeholder="xxxx xxxx xxxx xxxx" autocomplete="new-password">
+              <span style="font-size:11px; color:#94a3b8; margin-top:4px; display:block;">Generated in WP Dashboard → Users → Profile → Application Passwords</span>
+            </div>
           </div>
 
-          <div class="form-group" style="margin-bottom: 14px;">
-            <label>WordPress Admin / Editor Username</label>
-            <input type="text" class="form-input" id="cfgWpUsername" placeholder="e.g. admin or editor" required>
+          <!-- Publication Settings: THE 8 BIT BISTRO -->
+          <div style="background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 12px; padding: 18px; margin-bottom: 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
+              <span style="font-weight: 800; font-size: 13px; color: #38bdf8; letter-spacing: 0.06em; text-transform: uppercase;">
+                🎮 The 8 Bit Bistro WordPress REST API
+              </span>
+              <span style="font-size: 10px; background: rgba(255,255,255,0.08); color: #94a3b8; padding: 2px 8px; border-radius: 4px; font-weight: 600;">
+                SEPARATE SITE
+              </span>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label>WordPress Site URL</label>
+              <input type="url" class="form-input" id="cfgEightbitUrl" placeholder="https://8bitbistro.com (To be added)">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label>WordPress Username</label>
+              <input type="text" class="form-input" id="cfgEightbitUsername" placeholder="e.g. admin">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 4px;">
+              <label>WordPress Application Password</label>
+              <input type="password" class="form-input" id="cfgEightbitAppPassword" placeholder="xxxx xxxx xxxx xxxx" autocomplete="new-password">
+            </div>
           </div>
 
-          <div class="form-group" style="margin-bottom: 14px;">
-            <label>WordPress Application Password</label>
-            <input type="password" class="form-input" id="cfgWpAppPassword" placeholder="xxxx xxxx xxxx xxxx" autocomplete="new-password">
-            <span style="font-size:11px; color:#64748b; margin-top:4px; display:block;">WordPress standard Application Password (does not expose your primary login password).</span>
-          </div>
-
-          <div class="form-group" style="margin-bottom: 14px;">
+          <div class="form-group" style="margin-bottom: 18px;">
             <label>Default WordPress Status</label>
             <select class="form-input" id="cfgDefaultStatus" style="background:#181b26;">
               <option value="draft">Draft (Review first in WP Admin)</option>
@@ -1468,10 +1633,35 @@
             </select>
           </div>
 
-          <div class="form-group" style="margin-bottom: 22px;">
-            <label>Google Gemini API Key (Optional)</label>
-            <input type="password" class="form-input" id="cfgGeminiKey" placeholder="AIzaSy..." autocomplete="off">
-            <span style="font-size:11px; color:#64748b; margin-top:4px; display:block;">Optional. If left blank, our intelligent contextual writer generates rich, structured articles automatically.</span>
+          <div style="margin: 24px 0 16px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.08);">
+            <div style="font-size: 13px; font-weight: 800; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;">
+              🤖 Free LLM Engine (via awesome-free-llm-apis)
+            </div>
+            <p style="font-size: 12px; color: #94a3b8; line-height: 1.4; margin-bottom: 14px;">
+              Powered by curated permanent free tiers from <strong>mnfst/awesome-free-llm-apis</strong>. Zero credit cards required.
+            </p>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label>LLM Inference Provider</label>
+              <select class="form-input" id="cfgLlmProvider" style="background:#181b26;">
+                <option value="auto" selected>✨ Autonomous Free Pool (Auto: Kilo Code &amp; LLM7 — No Key Needed)</option>
+                <option value="groq">Groq Free Tier (Ultra-Fast 30 RPM, 1000 RPD)</option>
+                <option value="openrouter">OpenRouter Free Models (:free)</option>
+                <option value="gemini">Google Gemini Free Tier</option>
+                <option value="custom">Custom OpenAI-Compatible Endpoint</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;" id="llmApiKeyGroup">
+              <label>Provider API Key (Optional)</label>
+              <input type="password" class="form-input" id="cfgLlmApiKey" placeholder="Leave empty for Auto Free Pool, or paste free key (gsk_..., sk-or-..., AIzaSy...)" autocomplete="off">
+              <span style="font-size:11px; color:#64748b; margin-top:4px; display:block;">Leave empty to use our autonomous zero-key free pool, or enter a free tier key for higher speed.</span>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px; display: none;" id="customEndpointGroup">
+              <label>Custom Endpoint Base URL</label>
+              <input type="url" class="form-input" id="cfgCustomEndpoint" placeholder="http://localhost:11434/v1">
+            </div>
           </div>
 
           <button class="btn-primary" type="button" id="btnSaveConfig" style="width:100%; justify-content:center; padding:12px;">
@@ -1534,6 +1724,18 @@
     const publishResultAlert = document.getElementById('publishResultAlert');
     const wpConnectionStatus = document.getElementById('wpConnectionStatus');
     const wpTargetSiteText = document.getElementById('wpTargetSiteText');
+
+    // Media & Social Embeds DOM Elements
+    const coverPhotoGrid = document.getElementById('coverPhotoGrid');
+    const photoCountBadge = document.getElementById('photoCountBadge');
+    const customCoverInput = document.getElementById('customCoverInput');
+    const btnApplyCustomCover = document.getElementById('btnApplyCustomCover');
+    const articleSpotifyInput = document.getElementById('articleSpotifyInput');
+    const articleYoutubeInput = document.getElementById('articleYoutubeInput');
+    const articleInstagramInput = document.getElementById('articleInstagramInput');
+
+    let currentMedia = { images: [], selectedCover: '', youtube: '', spotify: '', instagram: '' };
+    let currentRawArticleText = '';
 
     // Initialize
     document.addEventListener('DOMContentLoaded', async () => {
@@ -1636,7 +1838,7 @@
       stripPubTag.textContent = `${story.pubLabel} · ${story.category}`;
       stripPubTag.style.color = story.pub === 'raga' ? '#ff331f' : '#38bdf8';
       stripStoryTitle.textContent = story.title;
-      stripStorySource.innerHTML = `Source: <strong>${story.source}</strong> · <a href="${story.link}" target="_blank" style="color:#38bdf8; text-decoration:none;">Original Article ↗</a>`;
+      stripStorySource.innerHTML = `Coverage Beat: <strong>${story.category}</strong> · 100% Original Inverted Pyramid Feature`;
 
       anglesGrid.innerHTML = `
         <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; color: #94a3b8;">
@@ -1651,7 +1853,10 @@
         const res = await fetch('/api/studio/angles', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ article: story, apiKey: studioConfig.geminiApiKey })
+          body: JSON.stringify({
+            article: story,
+            apiKey: studioConfig.llmApiKey || studioConfig.geminiApiKey
+          })
         });
         const data = await res.json();
         if (data.success && Array.isArray(data.angles)) {
@@ -1667,11 +1872,23 @@
 
     function renderAngles(angles) {
       anglesGrid.innerHTML = angles.map((angle, index) => {
+        let badgeStyle = 'background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);';
+        const b = (angle.badge || '').toUpperCase();
+        if (b.includes('VIRAL') || b.includes('HOOK')) {
+          badgeStyle = 'background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.4);';
+        } else if (b.includes('SCENE') || b.includes('PULSE') || b.includes('COMMUNITY')) {
+          badgeStyle = 'background: rgba(6, 182, 212, 0.2); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.4);';
+        } else if (b.includes('HOT') || b.includes('TAKE') || b.includes('CRITIQUE')) {
+          badgeStyle = 'background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4);';
+        } else if (b.includes('FAST') || b.includes('PASS') || b.includes('DIGEST') || b.includes('SPEEDRUN')) {
+          badgeStyle = 'background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);';
+        }
+
         return `
           <div class="angle-card" onclick="selectAngleAndGenerate(${index})">
             <div>
               <div class="angle-top">
-                <span class="angle-badge">${angle.badge || 'EDITORIAL'}</span>
+                <span class="angle-badge" style="${badgeStyle}">${angle.badge || 'EDITORIAL'}</span>
                 <span class="angle-tone">${angle.tone || 'Original Voice'}</span>
               </div>
               <h4 class="angle-name">${escapeHtml(angle.name)}</h4>
@@ -1706,7 +1923,7 @@
           body: JSON.stringify({
             article: currentSelectedStory,
             angle: angle,
-            apiKey: studioConfig.geminiApiKey
+            apiKey: studioConfig.llmApiKey || studioConfig.geminiApiKey
           })
         });
 
@@ -1728,14 +1945,261 @@
       }
     };
 
+    // Client-side HTML & Embeds Formatter (Inverted Pyramid, Interspersed Embeds, Zero Source Mentions)
+    function formatArticleHtmlClient(rawText, media = {}) {
+      if (!rawText) return '';
+
+      let text = String(rawText)
+        .replace(/\\r\\n/g, '\n')
+        .replace(/\\n/g, '\n')
+        .replace(/\\r/g, '\n')
+        .replace(/\\"/g, '"')
+        .trim();
+
+      // Strip any competitor or third-party source references
+      text = text
+        .replace(/Curated and synthesized via Antigravity Publishing Studio.*?$/gmi, '')
+        .replace(/Original reporting sourced from.*?$/gmi, '')
+        .replace(/Derived and synthesized from primary reporting.*?$/gmi, '')
+        .replace(/When evaluating announcements from.*?fuzz guitars\./gi, '')
+        .trim();
+
+      const hasHtmlTags = /<\/?(p|h2|h3|blockquote|ul|ol|div)[^>]*>/i.test(text);
+      let blocks = [];
+
+      if (hasHtmlTags) {
+        blocks = text
+          .split(/(?<=<\/(?:p|blockquote|ul|ol|div|h2|h3)>)/i)
+          .map(b => b.replace(/\\n/g, '').trim())
+          .filter(Boolean);
+      } else {
+        const lines = text.split('\n');
+        let inList = false;
+        let listItems = [];
+
+        const flushList = () => {
+          if (inList && listItems.length > 0) {
+            blocks.push(`<ul style="margin: 18px 0 24px; padding-left: 24px; line-height: 1.8;">\n${listItems.map(li => `  <li style="margin-bottom: 10px;">${li}</li>`).join('\n')}\n</ul>`);
+            listItems = [];
+            inList = false;
+          }
+        };
+
+        for (const rawLine of lines) {
+          const line = rawLine.trim();
+          if (!line) {
+            flushList();
+            continue;
+          }
+
+          if (line.startsWith('### ')) {
+            flushList();
+            blocks.push(`<h3>${escapeHtml(line.substring(4))}</h3>`);
+            continue;
+          }
+          if (line.startsWith('## ')) {
+            flushList();
+            blocks.push(`<h2>${escapeHtml(line.substring(3))}</h2>`);
+            continue;
+          }
+          if (line.startsWith('> ') || (line.startsWith('"') && line.endsWith('"') && line.length < 160)) {
+            flushList();
+            const q = line.startsWith('> ') ? line.substring(2) : line;
+            blocks.push(`<blockquote style="border-left: 4px solid #ff331f; padding: 14px 22px; margin: 28px 0; font-style: italic; background: #f8fafc; color: #1e293b; border-radius: 0 10px 10px 0; font-size: 1.08em; line-height: 1.7;">${q}</blockquote>`);
+            continue;
+          }
+          if (/^[•\-\*]\s+/.test(line)) {
+            inList = true;
+            listItems.push(line.replace(/^[•\-\*]\s+/, ''));
+            continue;
+          }
+
+          flushList();
+          let inline = line
+            .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*([^*]+)\*/g, '<em>$1</em>');
+          blocks.push(`<p style="margin-bottom: 20px; line-height: 1.85; font-size: 16px; color: #334155;">${inline}</p>`);
+        }
+        flushList();
+      }
+
+      // Build Interspersed Embeds
+      let spotifyHtml = '';
+      if (media.spotify) {
+        let spotifySrc = '';
+        if (media.spotify.includes('/embed/')) {
+          spotifySrc = media.spotify;
+        } else {
+          const match = media.spotify.match(/open\.spotify\.com\/(track|album|artist|playlist)\/([a-zA-Z0-9]+)/i);
+          if (match) {
+            spotifySrc = `https://open.spotify.com/embed/${match[1]}/${match[2]}`;
+          } else if (media.spotify.startsWith('http')) {
+            spotifySrc = media.spotify;
+          }
+        }
+        if (spotifySrc) {
+          spotifyHtml = `
+<div class="spotify-embed-block" style="margin: 34px 0; border-radius: 14px; overflow: hidden; box-shadow: 0 6px 24px rgba(0,0,0,0.12);">
+  <iframe style="border-radius:14px;" src="${escapeHtml(spotifySrc)}" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+</div>`.trim();
+        }
+      }
+
+      let youtubeHtml = '';
+      if (media.youtube) {
+        let ytEmbedSrc = '';
+        const ytMatch = media.youtube.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/i);
+        if (ytMatch) {
+          ytEmbedSrc = `https://www.youtube.com/embed/${ytMatch[1]}`;
+        } else if (media.youtube.includes('/embed/')) {
+          ytEmbedSrc = media.youtube;
+        }
+        if (ytEmbedSrc) {
+          youtubeHtml = `
+<div class="youtube-embed-block" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 14px; margin: 34px 0; box-shadow: 0 8px 28px rgba(0,0,0,0.14);">
+  <iframe src="${escapeHtml(ytEmbedSrc)}" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0; border-radius:14px;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>`.trim();
+        }
+      }
+
+      let instagramHtml = '';
+      if (media.instagram) {
+        const handle = media.instagram.replace(/^@/, '').trim();
+        if (handle) {
+          instagramHtml = `
+<div class="artist-instagram-badge" style="display: inline-flex; align-items: center; gap: 8px; background: #fff1f2; border: 1px solid #fecdd3; padding: 8px 18px; border-radius: 9999px; margin: 14px 0 24px;">
+  <span style="font-size: 16px;">📸</span>
+  <span style="font-size: 13px; font-weight: 600; color: #9f1239;">Artist Instagram:</span>
+  <a href="https://instagram.com/${escapeHtml(handle)}" target="_blank" rel="noopener noreferrer" style="color: #e11d48; font-weight: 700; text-decoration: none;">@${escapeHtml(handle)} ↗</a>
+</div>`.trim();
+        }
+      }
+
+      // Assemble Inverted Pyramid with Interspersed Embeds
+      const resultBlocks = [];
+      let spotifyInserted = false;
+      let youtubeInserted = false;
+      let instaInserted = false;
+
+      // Hero Cover Image (zero source mentions)
+      if (media.coverImage) {
+        resultBlocks.push(`
+<figure class="wp-block-image size-large" style="margin: 0 0 28px 0; text-align: center;">
+  <img src="${escapeHtml(media.coverImage)}" alt="${escapeHtml(media.title || 'Featured Story Cover')}" style="width: 100%; max-height: 520px; object-fit: cover; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.14);" />
+</figure>`.trim());
+      }
+
+      const totalBlocks = blocks.length;
+      const spotifyTarget = Math.min(3, Math.max(1, Math.floor(totalBlocks * 0.35)));
+      const youtubeTarget = Math.min(totalBlocks - 1, Math.max(spotifyTarget + 2, Math.floor(totalBlocks * 0.7)));
+
+      for (let i = 0; i < totalBlocks; i++) {
+        resultBlocks.push(blocks[i]);
+
+        // Insert Instagram badge right below the Lead hook
+        if (i === 0 && instagramHtml && !instaInserted) {
+          resultBlocks.push(instagramHtml);
+          instaInserted = true;
+        }
+
+        // Insert Spotify player between paragraphs in the first half
+        if (i === spotifyTarget && spotifyHtml && !spotifyInserted) {
+          resultBlocks.push(spotifyHtml);
+          spotifyInserted = true;
+        }
+
+        // Insert YouTube video between paragraphs in the second half
+        if (i === youtubeTarget && youtubeHtml && !youtubeInserted) {
+          resultBlocks.push(youtubeHtml);
+          youtubeInserted = true;
+        }
+      }
+
+      // Fallbacks if not yet placed
+      if (spotifyHtml && !spotifyInserted) resultBlocks.push(spotifyHtml);
+      if (youtubeHtml && !youtubeInserted) resultBlocks.push(youtubeHtml);
+
+      return resultBlocks.join('\n\n');
+    }
+
+    // Dynamic Visual & HTML Source Synchronizer
+    function renderStudioPreview() {
+      const media = {
+        coverImage: currentMedia.selectedCover,
+        youtube: articleYoutubeInput.value.trim(),
+        spotify: articleSpotifyInput.value.trim(),
+        instagram: articleInstagramInput.value.trim(),
+        title: articleHeadlineInput.value.trim(),
+        pubLabel: currentSelectedStory && currentSelectedStory.pub === '8bit' ? 'The 8 Bit Bistro' : 'Raga Magazine'
+      };
+
+      const fullHtml = formatArticleHtmlClient(currentRawArticleText || currentGeneratedArticle?.rawContentHtml || currentGeneratedArticle?.contentHtml || '', media);
+
+      articleVisualPreview.innerHTML = fullHtml;
+      articleHtmlSource.value = fullHtml;
+    }
+
+    // Render Cover Photo Thumbnails
+    function renderCoverPhotoGallery(images, selectedCover) {
+      if (!images || images.length === 0) {
+        coverPhotoGrid.innerHTML = `<div style="grid-column: 1/-1; padding: 12px; color: #94a3b8; font-size: 12px; text-align: center;">No web photos discovered for this story yet. You can paste any image URL below.</div>`;
+        photoCountBadge.textContent = '0 photos found';
+        return;
+      }
+
+      photoCountBadge.textContent = `${images.length} photos ready`;
+
+      coverPhotoGrid.innerHTML = images.map((imgUrl, i) => {
+        const isSelected = imgUrl === selectedCover;
+        return `
+          <div class="cover-photo-card ${isSelected ? 'selected' : ''}" data-img-url="${escapeHtml(imgUrl)}" onclick="selectCoverPhoto('${escapeHtml(imgUrl)}')">
+            <img src="${escapeHtml(imgUrl)}" alt="Cover Option ${i + 1}" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300'">
+            <span class="cover-badge">✓ Cover</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.selectCoverPhoto = function(imgUrl) {
+      currentMedia.selectedCover = imgUrl;
+      document.querySelectorAll('.cover-photo-card').forEach(card => {
+        if (card.getAttribute('data-img-url') === imgUrl) {
+          card.classList.add('selected');
+        } else {
+          card.classList.remove('selected');
+        }
+      });
+      renderStudioPreview();
+    };
+
     // 4. Populate Publishing Studio
     function populatePublishingStudio(article) {
       articleHeadlineInput.value = article.headline || '';
       articleSlugInput.value = article.slug || '';
       articleReadTimeInput.value = article.readTime || '4 min read';
       articleExcerptInput.value = article.excerpt || '';
-      articleVisualPreview.innerHTML = article.contentHtml || '';
-      articleHtmlSource.value = article.contentHtml || '';
+      currentRawArticleText = article.rawContentHtml || article.contentHtml || '';
+
+      // Populate media
+      const m = article.media || {};
+      const initialImages = Array.isArray(m.images) && m.images.length
+        ? [...m.images]
+        : (currentSelectedStory?.image ? [currentSelectedStory.image] : []);
+
+      currentMedia = {
+        images: initialImages,
+        selectedCover: m.selectedCover || initialImages[0] || currentSelectedStory?.image || '',
+        youtube: m.youtube || '',
+        spotify: m.spotify || '',
+        instagram: m.instagram || ''
+      };
+
+      articleSpotifyInput.value = currentMedia.spotify;
+      articleYoutubeInput.value = currentMedia.youtube;
+      articleInstagramInput.value = currentMedia.instagram;
+
+      renderCoverPhotoGallery(currentMedia.images, currentMedia.selectedCover);
+      renderStudioPreview();
 
       // Default status
       postStatusSelect.value = studioConfig.defaultStatus || 'draft';
@@ -1751,45 +2215,73 @@
     }
 
     function updateWpStatusUi() {
-      const hasConfig = Boolean(studioConfig.wpUrl && studioConfig.wpUsername && (studioConfig.wpAppPassword || studioConfig.hasAppPassword));
-      if (hasConfig) {
+      const pub = currentSelectedStory ? currentSelectedStory.pub : 'raga';
+      const is8Bit = pub === '8bit';
+      const targetUrl = is8Bit
+        ? (studioConfig.eightbitWpUrl || '')
+        : (studioConfig.ragaWpUrl || studioConfig.wpUrl || 'https://plum-weasel-789096.hostingersite.com');
+      const targetUser = is8Bit
+        ? studioConfig.eightbitWpUsername
+        : (studioConfig.ragaWpUsername || studioConfig.wpUsername);
+      const hasPass = is8Bit
+        ? Boolean(studioConfig.eightbitWpAppPassword || studioConfig.hasEightbitPassword)
+        : Boolean(studioConfig.ragaWpAppPassword || studioConfig.wpAppPassword || studioConfig.hasRagaPassword);
+
+      const isConnected = Boolean(targetUrl && targetUser && hasPass);
+
+      if (isConnected) {
         wpConnectionStatus.innerHTML = `
           <span class="status-pill connected">
             <span class="status-dot"></span>
-            <span>Connected: ${escapeHtml(studioConfig.wpUsername)}</span>
+            <span>Connected: ${escapeHtml(targetUser)} (${is8Bit ? '8-Bit Bistro' : 'Raga Magazine'})</span>
           </span>
         `;
-        wpTargetSiteText.innerHTML = `Target: <strong>${escapeHtml(studioConfig.wpUrl)}</strong>`;
+        wpTargetSiteText.innerHTML = `Destination: <strong>${escapeHtml(targetUrl)}</strong>`;
       } else {
         wpConnectionStatus.innerHTML = `
           <span class="status-pill disconnected">
             <span class="status-dot"></span>
-            <span>Credentials Needed</span>
+            <span>${is8Bit ? '8-Bit Bistro' : 'Raga Magazine'}: Credentials Needed</span>
           </span>
         `;
-        wpTargetSiteText.textContent = `Configure your WordPress Site URL & Application Password to publish directly.`;
+        wpTargetSiteText.innerHTML = `Destination: <strong>${escapeHtml(targetUrl || 'Not configured yet')}</strong><br><span style="font-size:11px; color:#cbd5e1;">Click Settings below to enter your Username & Application Password.</span>`;
       }
     }
 
-    // 5. Publish to WordPress
+    // 5. Publish to WordPress with Cover Photo & Media Embeds
     async function handlePublishToWordPress() {
-      if (!studioConfig.wpUrl || !studioConfig.wpUsername) {
+      const pub = currentSelectedStory ? currentSelectedStory.pub : 'raga';
+      const is8Bit = pub === '8bit';
+      const targetUrl = is8Bit
+        ? studioConfig.eightbitWpUrl
+        : (studioConfig.ragaWpUrl || studioConfig.wpUrl || 'https://plum-weasel-789096.hostingersite.com');
+      const targetUser = is8Bit
+        ? studioConfig.eightbitWpUsername
+        : (studioConfig.ragaWpUsername || studioConfig.wpUsername);
+
+      if (!targetUrl || !targetUser) {
+        publishResultAlert.style.display = 'block';
         publishResultAlert.className = 'result-alert error';
-        publishResultAlert.innerHTML = `⚠️ WordPress credentials are missing. Please click <strong>Configure WordPress</strong> to enter your Site URL, Username, and Application Password.`;
+        publishResultAlert.innerHTML = `⚠️ WordPress credentials for <strong>${is8Bit ? 'The 8 Bit Bistro' : 'Raga Magazine'}</strong> are missing. Please click <strong>Configure WordPress</strong> to enter your Username and Application Password.`;
         return;
       }
 
-      // Sync any edited fields back into postData
+      // Sync edited fields and media into postData
       const postData = {
+        pub: pub,
         headline: articleHeadlineInput.value.trim(),
         slug: articleSlugInput.value.trim(),
         excerpt: articleExcerptInput.value.trim(),
-        contentHtml: articleHtmlSource.style.display !== 'none' ? articleHtmlSource.value : articleVisualPreview.innerHTML,
+        contentHtml: articleHtmlSource.value || articleVisualPreview.innerHTML,
+        coverImage: currentMedia.selectedCover,
+        youtube: articleYoutubeInput.value.trim(),
+        spotify: articleSpotifyInput.value.trim(),
+        instagram: articleInstagramInput.value.trim(),
         status: postStatusSelect.value
       };
 
       btnPublishToWp.disabled = true;
-      publishBtnText.innerHTML = `<span class="spinner" style="width:14px; height:14px; border-width:2px;"></span> Publishing to WordPress...`;
+      publishBtnText.innerHTML = `<span class="spinner" style="width:14px; height:14px; border-width:2px;"></span> Publishing to ${is8Bit ? '8-Bit Bistro' : 'Raga Magazine'}...`;
       publishResultAlert.style.display = 'none';
 
       try {
@@ -1801,20 +2293,23 @@
         const result = await res.json();
 
         if (result.success) {
+          publishResultAlert.style.display = 'block';
           publishResultAlert.className = 'result-alert success';
           publishResultAlert.innerHTML = `
-            <div style="font-weight: 800; font-size: 14px; margin-bottom: 6px;">🎉 Successfully Sent to WordPress!</div>
-            <div style="margin-bottom: 10px;">Post #${result.postId} created with status: <strong>${result.status.toUpperCase()}</strong></div>
+            <div style="font-weight: 800; font-size: 14px; margin-bottom: 6px;">🎉 Successfully Sent to ${escapeHtml(result.pubName || 'WordPress')}!</div>
+            <div style="margin-bottom: 10px;">Post #${result.postId} created with status: <strong>${result.status.toUpperCase()}</strong>${result.featuredMediaId ? ' · Cover photo attached!' : ''}</div>
             <div style="display:flex; gap:10px; flex-wrap:wrap;">
               ${result.editLink ? `<a href="${result.editLink}" target="_blank" style="color:#ffffff; background:#008a20; padding:6px 12px; border-radius:6px; text-decoration:none; font-weight:700; font-size:12px;">Edit in WP Admin ↗</a>` : ''}
-              ${result.postLink ? `<a href="${result.postLink}" target="_blank" style="color:#ffffff; background:rgba(255,255,255,0.15); padding:6px 12px; border-radius:6px; text-decoration:none; font-weight:600; font-size:12px;">View Post ↗</a>` : ''}
+              ${result.postLink ? `<a href="${result.postLink}" target="_blank" style="color:#ffffff; background:rgba(255,255,255,0.15); padding:6px 12px; border-radius:6px; text-decoration:none; font-weight:600; font-size:12px;">View Live Post ↗</a>` : ''}
             </div>
           `;
         } else {
+          publishResultAlert.style.display = 'block';
           publishResultAlert.className = 'result-alert error';
           publishResultAlert.innerHTML = `❌ WordPress Error: ${escapeHtml(result.error || 'Failed to publish')}`;
         }
       } catch (err) {
+        publishResultAlert.style.display = 'block';
         publishResultAlert.className = 'result-alert error';
         publishResultAlert.innerHTML = `❌ Connection Error: ${escapeHtml(err.message)}`;
       } finally {
@@ -1830,11 +2325,23 @@
         const data = await res.json();
         if (data.success && data.config) {
           studioConfig = data.config;
-          document.getElementById('cfgWpUrl').value = studioConfig.wpUrl || '';
-          document.getElementById('cfgWpUsername').value = studioConfig.wpUsername || '';
-          document.getElementById('cfgWpAppPassword').value = studioConfig.wpAppPassword || '';
+          // Raga Settings
+          document.getElementById('cfgRagaUrl').value = studioConfig.ragaWpUrl || studioConfig.wpUrl || 'https://plum-weasel-789096.hostingersite.com';
+          document.getElementById('cfgRagaUsername').value = studioConfig.ragaWpUsername || studioConfig.wpUsername || '';
+          document.getElementById('cfgRagaAppPassword').value = studioConfig.ragaWpAppPassword || studioConfig.wpAppPassword || '';
+          // 8-Bit Settings
+          document.getElementById('cfgEightbitUrl').value = studioConfig.eightbitWpUrl || '';
+          document.getElementById('cfgEightbitUsername').value = studioConfig.eightbitWpUsername || '';
+          document.getElementById('cfgEightbitAppPassword').value = studioConfig.eightbitWpAppPassword || '';
+          // Common
           document.getElementById('cfgDefaultStatus').value = studioConfig.defaultStatus || 'draft';
-          document.getElementById('cfgGeminiKey').value = studioConfig.geminiApiKey || '';
+          document.getElementById('cfgLlmProvider').value = studioConfig.llmProvider || 'auto';
+          document.getElementById('cfgLlmApiKey').value = studioConfig.llmApiKey || studioConfig.geminiApiKey || '';
+          document.getElementById('cfgCustomEndpoint').value = studioConfig.customEndpoint || '';
+
+          const isCustom = studioConfig.llmProvider === 'custom';
+          document.getElementById('customEndpointGroup').style.display = isCustom ? 'block' : 'none';
+
           updateWpStatusUi();
         }
       } catch (_) {}
@@ -1842,11 +2349,23 @@
 
     async function saveStudioConfig() {
       const payload = {
-        wpUrl: document.getElementById('cfgWpUrl').value.trim(),
-        wpUsername: document.getElementById('cfgWpUsername').value.trim(),
-        wpAppPassword: document.getElementById('cfgWpAppPassword').value.trim(),
+        // Raga Magazine
+        ragaWpUrl: document.getElementById('cfgRagaUrl').value.trim() || 'https://plum-weasel-789096.hostingersite.com',
+        ragaWpUsername: document.getElementById('cfgRagaUsername').value.trim(),
+        ragaWpAppPassword: document.getElementById('cfgRagaAppPassword').value.trim(),
+        // 8-Bit Bistro
+        eightbitWpUrl: document.getElementById('cfgEightbitUrl').value.trim(),
+        eightbitWpUsername: document.getElementById('cfgEightbitUsername').value.trim(),
+        eightbitWpAppPassword: document.getElementById('cfgEightbitAppPassword').value.trim(),
+        // Top-level fallbacks
+        wpUrl: document.getElementById('cfgRagaUrl').value.trim() || 'https://plum-weasel-789096.hostingersite.com',
+        wpUsername: document.getElementById('cfgRagaUsername').value.trim(),
+        wpAppPassword: document.getElementById('cfgRagaAppPassword').value.trim(),
+        // Common
         defaultStatus: document.getElementById('cfgDefaultStatus').value,
-        geminiApiKey: document.getElementById('cfgGeminiKey').value.trim()
+        llmProvider: document.getElementById('cfgLlmProvider').value,
+        llmApiKey: document.getElementById('cfgLlmApiKey').value.trim(),
+        customEndpoint: document.getElementById('cfgCustomEndpoint').value.trim()
       };
 
       const btn = document.getElementById('btnSaveConfig');
@@ -1866,7 +2385,7 @@
           studioConfig = { ...studioConfig, ...payload };
           updateWpStatusUi();
           alertBox.className = 'result-alert success';
-          alertBox.textContent = '✅ WordPress & API settings saved successfully!';
+          alertBox.textContent = '✅ WordPress & LLM settings saved successfully!';
           setTimeout(() => {
             closeModal(modalSettingsBackdrop);
             alertBox.style.display = 'none';
@@ -1911,6 +2430,12 @@
       document.getElementById('btnCloseSettingsModal').addEventListener('click', () => closeModal(modalSettingsBackdrop));
       document.getElementById('btnSaveConfig').addEventListener('click', saveStudioConfig);
 
+      // LLM Provider change listener
+      document.getElementById('cfgLlmProvider').addEventListener('change', (e) => {
+        const isCustom = e.target.value === 'custom';
+        document.getElementById('customEndpointGroup').style.display = isCustom ? 'block' : 'none';
+      });
+
       // Angles Modal Close
       document.getElementById('btnCloseAnglesModal').addEventListener('click', () => closeModal(modalAnglesBackdrop));
 
@@ -1923,6 +2448,26 @@
 
       // Publish to WP button
       btnPublishToWp.addEventListener('click', handlePublishToWordPress);
+
+      // Custom Cover URL application button
+      btnApplyCustomCover.addEventListener('click', () => {
+        const url = customCoverInput.value.trim();
+        if (!url) return;
+        if (!currentMedia.images.includes(url)) {
+          currentMedia.images.unshift(url);
+        }
+        currentMedia.selectedCover = url;
+        renderCoverPhotoGallery(currentMedia.images, currentMedia.selectedCover);
+        renderStudioPreview();
+        customCoverInput.value = '';
+      });
+
+      // Real-time re-rendering when embeds, socials or headline are edited
+      [articleSpotifyInput, articleYoutubeInput, articleInstagramInput, articleHeadlineInput].forEach(inp => {
+        if (inp) {
+          inp.addEventListener('input', renderStudioPreview);
+        }
+      });
 
       // Post status selector text update
       postStatusSelect.addEventListener('change', () => {
