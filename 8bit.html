@@ -1,0 +1,3047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE 8 BIT BISTRO MAG — Stage 01 to 30 (Vol. 2)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0714;
+      --card-bg: #130f24;
+      --card-green: #071711;
+      --cyan: #00f0ff;
+      --pink: #ff0055;
+      --green: #00ff66;
+      --gold: #ffb800;
+      --purple: #8a2be2;
+      --font-pixel: 'Press Start 2P', monospace;
+      --font-hud: 'VT323', monospace;
+      --font-body: 'Space Grotesk', -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: #e2e8f0;
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Fixed Retro Arcade Top Bar */
+    .arcade-top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10000;
+      background: rgba(11, 7, 20, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 2px solid var(--cyan);
+      box-shadow: 0 4px 24px rgba(0, 240, 255, 0.25), 0 10px 40px rgba(0, 0, 0, 0.8);
+      padding: 8px 20px;
+    }
+
+    .arcade-bar-main {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .arcade-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .arcade-logo {
+      font-family: var(--font-pixel);
+      font-size: 13px;
+      color: var(--cyan);
+      letter-spacing: 0.05em;
+      text-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
+      text-decoration: none;
+    }
+
+    .arcade-hud-status {
+      font-family: var(--font-hud);
+      font-size: 16px;
+      color: var(--green);
+      letter-spacing: 0.1em;
+      background: rgba(0, 255, 102, 0.1);
+      border: 1px solid rgba(0, 255, 102, 0.3);
+      padding: 2px 10px;
+      border-radius: 4px;
+    }
+
+    .arcade-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pixel-btn {
+      font-family: var(--font-pixel);
+      font-size: 10px;
+      padding: 8px 14px;
+      border: 2px solid #ffffff;
+      background: #000000;
+      color: #ffffff;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 3px 3px 0 #000, 5px 5px 0 var(--cyan);
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+
+    .pixel-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0 #000, 7px 7px 0 var(--cyan);
+    }
+
+    .pixel-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 #000;
+    }
+
+    .btn-coin {
+      border-color: var(--gold);
+      background: #1a1200;
+      color: var(--gold);
+      box-shadow: 3px 3px 0 #000, 5px 5px 0 var(--gold);
+      animation: coinPulse 2s infinite ease-in-out;
+    }
+
+    .btn-pdf {
+      border-color: var(--green);
+      background: #001a0a;
+      color: var(--green);
+      box-shadow: 3px 3px 0 #000, 5px 5px 0 var(--green);
+    }
+
+    .btn-kiosk {
+      border-color: #94a3b8;
+      color: #94a3b8;
+      box-shadow: 3px 3px 0 #000, 5px 5px 0 #94a3b8;
+    }
+
+    @keyframes coinPulse {
+      0%, 100% { box-shadow: 3px 3px 0 #000, 5px 5px 0 var(--gold); }
+      50% { box-shadow: 3px 3px 0 #000, 7px 7px 0 rgba(255, 184, 0, 0.8), 0 0 15px rgba(255, 184, 0, 0.4); }
+    }
+
+    /* Stage Navigation Jump Bar */
+    .stage-nav-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 6px 0 2px;
+      max-width: 1400px;
+      margin: 4px auto 0;
+      scrollbar-width: thin;
+    }
+
+    .stage-nav-bar::-webkit-scrollbar {
+      height: 4px;
+    }
+    .stage-nav-bar::-webkit-scrollbar-thumb {
+      background: var(--cyan);
+    }
+
+    .nav-stage-btn {
+      font-family: var(--font-pixel);
+      font-size: 8px;
+      padding: 4px 8px;
+      background: #141026;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #94a3b8;
+      cursor: pointer;
+      flex-shrink: 0;
+      border-radius: 2px;
+    }
+
+    .nav-stage-btn:hover, .nav-stage-btn.active {
+      background: var(--cyan);
+      color: #000;
+      font-weight: 700;
+      border-color: var(--cyan);
+      box-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
+    }
+
+    /* Magazine Canvas Host */
+    .arcade-canvas {
+      max-width: 800px;
+      margin: 32px auto 80px;
+      padding: 0 16px;
+    }
+
+    /* Common Pixel Page Base (A4 Ratio Standard) */
+    .pixel-page {
+      width: 800px;
+      min-height: 1130px;
+      height: 1130px;
+      margin: 0 auto 48px;
+      position: relative;
+      overflow: hidden;
+      background: var(--card-bg);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 240, 255, 0.05);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* CRT Scanline Overlay */
+    .crt-scanline-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 0px,
+        rgba(0, 0, 0, 0) 2px,
+        rgba(0, 0, 0, 0.18) 3px,
+        rgba(0, 0, 0, 0.18) 4px
+      );
+    }
+
+    /* STAGE 01: COVER SPECIFICS */
+    .stage-cover {
+      background: #000000;
+    }
+
+    .cover-hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      filter: brightness(0.7) contrast(1.15);
+    }
+
+    .pixel-scrim-dark {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(11, 7, 20, 0.95) 0%,
+        rgba(11, 7, 20, 0.65) 20%,
+        rgba(11, 7, 20, 0.2) 45%,
+        rgba(11, 7, 20, 0.6) 65%,
+        rgba(11, 7, 20, 0.98) 92%,
+        #0b0714 100%
+      );
+      z-index: 2;
+    }
+
+    .stage-cover-content {
+      position: relative;
+      z-index: 3;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 36px 44px 30px;
+    }
+
+    .cover-top-arcade-hud {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px dashed rgba(0, 240, 255, 0.4);
+      padding-bottom: 12px;
+      font-family: var(--font-pixel);
+      font-size: 9px;
+      color: var(--cyan);
+      letter-spacing: 0.1em;
+    }
+
+    .hud-insert-coin {
+      color: var(--gold);
+      animation: coinPulse 1.5s infinite;
+    }
+
+    .cover-masthead-box {
+      text-align: center;
+      margin: 18px 0 10px;
+    }
+
+    .pixel-masthead-title {
+      font-family: var(--font-pixel);
+      font-size: 38px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      text-shadow: 
+        4px 4px 0 #000, 
+        0 0 20px rgba(0, 240, 255, 0.8),
+        0 0 40px rgba(255, 0, 85, 0.5);
+      margin-bottom: 8px;
+    }
+
+    .pixel-masthead-subline {
+      font-family: var(--font-hud);
+      font-size: 18px;
+      color: var(--gold);
+      letter-spacing: 0.18em;
+    }
+
+    .cover-feature-dossier {
+      background: rgba(19, 15, 36, 0.88);
+      border: 2px solid var(--cyan);
+      box-shadow: 4px 4px 0 #000, 8px 8px 0 rgba(0, 240, 255, 0.4);
+      padding: 24px 28px;
+      border-radius: 4px;
+      margin-top: auto;
+      margin-bottom: 24px;
+    }
+
+    .pixel-badge-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .pixel-badge {
+      font-family: var(--font-pixel);
+      font-size: 8px;
+      padding: 4px 10px;
+      border: 1px solid currentColor;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .badge-cyan { color: var(--cyan); border-color: var(--cyan); background: rgba(0, 240, 255, 0.1); }
+    .badge-pink { color: var(--pink); border-color: var(--pink); background: rgba(255, 0, 85, 0.1); }
+    .badge-green { color: var(--green); border-color: var(--green); background: rgba(0, 255, 102, 0.1); }
+    .badge-gold { color: var(--gold); border-color: var(--gold); background: rgba(255, 184, 0, 0.1); }
+
+    .cover-headline-pixel {
+      font-family: var(--font-pixel);
+      font-size: 20px;
+      line-height: 1.35;
+      margin-bottom: 12px;
+    }
+
+    .cover-title-link {
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .cover-title-link:hover {
+      color: var(--cyan);
+      text-shadow: 0 0 10px var(--cyan);
+    }
+
+    .cover-lead-summary {
+      font-size: 15px;
+      line-height: 1.5;
+      color: #cbd5e1;
+      margin-bottom: 14px;
+    }
+
+    .cover-quickread-box {
+      font-size: 13.5px;
+      color: #94a3b8;
+      border-left: 3px solid var(--pink);
+      padding-left: 12px;
+      margin-bottom: 16px;
+      line-height: 1.45;
+    }
+
+    .cover-interactive-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pixel-btn-action {
+      font-family: var(--font-pixel);
+      font-size: 9px;
+      background: var(--pink);
+      color: #fff;
+      padding: 8px 14px;
+      text-decoration: none;
+      border: 1px solid #fff;
+      box-shadow: 2px 2px 0 #000;
+    }
+    .pixel-btn-action:hover {
+      background: #ff2a75;
+      box-shadow: 3px 3px 0 #000;
+    }
+
+    .cover-score-pill {
+      font-family: var(--font-hud);
+      font-size: 18px;
+      color: var(--green);
+      letter-spacing: 0.12em;
+    }
+
+    .cover-bottom-hud {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 14px;
+      font-family: var(--font-hud);
+      font-size: 15px;
+      color: #94a3b8;
+      letter-spacing: 0.12em;
+    }
+
+    .hud-barcode-segment {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pixel-barcode {
+      font-family: monospace;
+      letter-spacing: 2px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* STAGE SPREAD: FULL SCREEN BOSS FIGHT */
+    .stage-boss-spread {
+      background: #000;
+    }
+
+    .spread-game-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.85) contrast(1.1);
+    }
+
+    .boss-vignette-scrim {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 30%, rgba(11, 7, 20, 0.8) 100%);
+      z-index: 2;
+    }
+
+    .stage-hud-top {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 32px 0;
+      font-family: var(--font-pixel);
+      font-size: 8.5px;
+      color: var(--cyan);
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
+    }
+
+    .boss-rundown-hud-card {
+      position: absolute;
+      bottom: 60px;
+      right: 32px;
+      width: 480px;
+      max-width: calc(100% - 64px);
+      background: rgba(13, 9, 24, 0.94);
+      border: 2px solid var(--pink);
+      box-shadow: 4px 4px 0 #000, 8px 8px 0 rgba(255, 0, 85, 0.4);
+      border-radius: 4px;
+      padding: 20px 24px;
+      z-index: 4;
+    }
+
+    .boss-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .boss-source-tag {
+      font-family: var(--font-hud);
+      font-size: 15px;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+
+    .boss-card-title {
+      font-family: var(--font-pixel);
+      font-size: 13px;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    /* Health Bar */
+    .hud-health-bar-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #000;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 4px 8px;
+      margin-bottom: 12px;
+      font-family: var(--font-pixel);
+      font-size: 7.5px;
+    }
+
+    .hp-label { color: var(--pink); font-weight: 700; }
+    .hp-track {
+      flex: 1;
+      height: 8px;
+      background: #2a1420;
+      position: relative;
+    }
+    .hp-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff0055, #00ff66);
+    }
+    .hp-percent { color: var(--green); }
+
+    .boss-card-lead {
+      font-size: 13.5px;
+      line-height: 1.45;
+      color: #e2e8f0;
+      margin-bottom: 10px;
+    }
+
+    .boss-card-p1 {
+      font-size: 12.5px;
+      line-height: 1.4;
+      color: #94a3b8;
+      margin-bottom: 10px;
+    }
+
+    .boss-quote-box {
+      font-family: var(--font-hud);
+      font-size: 16px;
+      color: var(--cyan);
+      border-left: 2px solid var(--cyan);
+      padding-left: 10px;
+      margin-bottom: 14px;
+      line-height: 1.35;
+    }
+
+    .boss-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.15);
+    }
+
+    .boss-tags {
+      display: flex;
+      gap: 8px;
+    }
+
+    .tag-pill-cyan {
+      font-family: var(--font-pixel);
+      font-size: 7px;
+      color: var(--cyan);
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid var(--cyan);
+      padding: 2px 6px;
+    }
+
+    .tag-pill-gold {
+      font-family: var(--font-pixel);
+      font-size: 7px;
+      color: var(--gold);
+      background: rgba(255, 184, 0, 0.1);
+      border: 1px solid var(--gold);
+      padding: 2px 6px;
+    }
+
+    .pixel-btn-source {
+      font-family: var(--font-pixel);
+      font-size: 8px;
+      color: #000;
+      background: var(--green);
+      border: 1px solid #fff;
+      padding: 5px 10px;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 2px 2px 0 #000;
+    }
+    .pixel-btn-source:hover {
+      background: #33ff88;
+    }
+
+    .stage-hud-bottom {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 32px 24px;
+      font-family: var(--font-hud);
+      font-size: 14px;
+      color: #94a3b8;
+      letter-spacing: 0.12em;
+    }
+
+    /* STAGE TYPE A: NEON CYBERPUNK TERMINAL */
+    .stage-neon-terminal {
+      background: #0d0a18;
+      border-color: rgba(0, 240, 255, 0.3);
+      padding: 32px 40px;
+    }
+
+    .terminal-folio-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.3);
+      padding-bottom: 12px;
+      font-family: var(--font-pixel);
+      font-size: 8px;
+      color: var(--cyan);
+    }
+
+    .terminal-headline-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin: 18px 0 14px;
+      gap: 16px;
+    }
+
+    .terminal-heading-neon {
+      font-family: var(--font-pixel);
+      font-size: 16px;
+      line-height: 1.4;
+      color: #ffffff;
+      flex: 1;
+    }
+
+    .pixel-link-btn {
+      font-family: var(--font-pixel);
+      font-size: 8px;
+      padding: 6px 10px;
+      border: 1px solid var(--pink);
+      color: var(--pink);
+      background: rgba(255, 0, 85, 0.1);
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .pixel-link-btn:hover {
+      background: var(--pink);
+      color: #fff;
+    }
+
+    .terminal-body-grid {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      gap: 24px;
+      margin-top: 10px;
+      flex: 1;
+    }
+
+    .terminal-screenshot-frame {
+      position: relative;
+      border: 2px solid var(--cyan);
+      box-shadow: 4px 4px 0 #000, 6px 6px 0 rgba(0, 240, 255, 0.3);
+      height: 230px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .terminal-screenshot-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .screenshot-meta-badge {
+      position: absolute;
+      bottom: 6px;
+      left: 6px;
+      background: #000;
+      color: var(--cyan);
+      font-family: var(--font-pixel);
+      font-size: 6.5px;
+      padding: 2px 6px;
+      border: 1px solid var(--cyan);
+    }
+
+    .terminal-stats-card {
+      background: #141026;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 12px 14px;
+      font-family: var(--font-hud);
+      font-size: 15px;
+      letter-spacing: 0.08em;
+    }
+
+    .stat-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
+      padding-bottom: 4px;
+    }
+
+    .terminal-lead-text {
+      font-size: 15.5px;
+      line-height: 1.5;
+      color: #ffffff;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .terminal-body-p {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #94a3b8;
+      margin-bottom: 14px;
+    }
+
+    .terminal-quote-callout {
+      font-family: var(--font-hud);
+      font-size: 18px;
+      color: var(--pink);
+      background: rgba(255, 0, 85, 0.08);
+      border-left: 3px solid var(--pink);
+      padding: 10px 14px;
+      margin: 16px 0;
+      line-height: 1.4;
+    }
+
+    .terminal-folio-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 14px;
+      margin-top: 20px;
+      font-family: var(--font-hud);
+      font-size: 14px;
+      color: #64748b;
+      letter-spacing: 0.12em;
+    }
+
+    /* STAGE TYPE B: PHOSPHOR GREEN DOSSIER */
+    .stage-green-dossier {
+      background: var(--card-green);
+      border-color: rgba(0, 255, 102, 0.3);
+      padding: 32px 40px;
+    }
+
+    .dossier-folio-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(0, 255, 102, 0.3);
+      padding-bottom: 12px;
+      font-family: var(--font-pixel);
+      font-size: 8px;
+      color: var(--green);
+    }
+
+    .dossier-header-block {
+      margin: 16px 0 14px;
+    }
+
+    .dossier-eyebrow {
+      font-family: var(--font-pixel);
+      font-size: 8px;
+      color: var(--gold);
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    .dossier-title {
+      font-family: var(--font-pixel);
+      font-size: 16px;
+      line-height: 1.4;
+      color: #ffffff;
+    }
+
+    .dossier-content-flow {
+      margin-top: 10px;
+      flex: 1;
+    }
+
+    .dossier-float-frame {
+      float: right;
+      width: 320px;
+      height: 230px;
+      border: 2px solid var(--green);
+      box-shadow: 4px 4px 0 #000, 6px 6px 0 rgba(0, 255, 102, 0.3);
+      margin: 0 0 16px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dossier-float-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .float-frame-hud {
+      position: absolute;
+      bottom: 0;
+      inset-inline: 0;
+      background: rgba(0, 0, 0, 0.85);
+      border-top: 1px solid var(--green);
+      padding: 4px 8px;
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-pixel);
+      font-size: 6.5px;
+      color: #cbd5e1;
+    }
+
+    .dossier-lead {
+      font-size: 15.5px;
+      line-height: 1.5;
+      color: #f1f5f9;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .dossier-paragraph {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #94a3b8;
+      margin-bottom: 12px;
+    }
+
+    .dossier-quote-box {
+      clear: both;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid var(--green);
+      border-left: 4px solid var(--green);
+      padding: 12px 16px;
+      margin: 16px 0;
+    }
+
+    .quote-dialog-speaker {
+      font-family: var(--font-pixel);
+      font-size: 7.5px;
+      color: var(--green);
+      margin-bottom: 6px;
+    }
+
+    .quote-dialog-text {
+      font-family: var(--font-hud);
+      font-size: 17px;
+      color: #e2e8f0;
+      line-height: 1.35;
+    }
+
+    .dossier-summary-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #05140e;
+      border: 1px solid rgba(0, 255, 102, 0.2);
+      padding: 10px 14px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .dossier-pill-verdict {
+      font-family: var(--font-pixel);
+      font-size: 7.5px;
+      color: var(--gold);
+    }
+
+    .dossier-pill-plat {
+      font-family: var(--font-hud);
+      font-size: 15px;
+      color: var(--cyan);
+    }
+
+    .dossier-read-btn {
+      font-family: var(--font-pixel);
+      font-size: 7.5px;
+      color: var(--green);
+      text-decoration: none;
+      border: 1px solid var(--green);
+      padding: 4px 8px;
+    }
+    .dossier-read-btn:hover {
+      background: var(--green);
+      color: #000;
+    }
+
+    .dossier-folio-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(0, 255, 102, 0.3);
+      padding-top: 14px;
+      margin-top: 20px;
+      font-family: var(--font-hud);
+      font-size: 14px;
+      color: #64748b;
+      letter-spacing: 0.12em;
+    }
+
+    /* Modal Progress Backdrop */
+    .arcade-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 20000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .arcade-modal-backdrop.open {
+      display: flex;
+    }
+
+    .arcade-modal-card {
+      background: #0f0a1c;
+      border: 3px solid var(--cyan);
+      box-shadow: 6px 6px 0 #000, 12px 12px 0 var(--pink);
+      padding: 36px 32px;
+      max-width: 520px;
+      width: 90%;
+      text-align: center;
+    }
+
+    .modal-arcade-title {
+      font-family: var(--font-pixel);
+      font-size: 14px;
+      color: var(--cyan);
+      margin-bottom: 14px;
+    }
+
+    .modal-step-list {
+      text-align: left;
+      font-family: var(--font-hud);
+      font-size: 18px;
+      color: #94a3b8;
+      margin: 20px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* PRINT / A4 PDF OPTIMIZATION */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 0;
+      }
+      body {
+        background: #000 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .arcade-top-bar, .arcade-modal-backdrop {
+        display: none !important;
+      }
+      .arcade-canvas {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .pixel-page {
+        width: 100% !important;
+        height: 100vh !important;
+        min-height: 100vh !important;
+        margin: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================
+       TOP ARCADE TOOLBAR & HUD
+       ======================================================== -->
+  <header class="arcade-top-bar">
+    <div class="arcade-bar-main">
+      <div class="arcade-brand">
+        <a href="/" class="pixel-btn btn-kiosk" title="Return to Magazine Selection Kiosk">← KIOSK</a>
+        <span class="arcade-logo">THE 8 BIT BISTRO</span>
+        <span class="arcade-hud-status">[STAGE 01-30 // 1P READY]</span>
+      </div>
+
+      <div class="arcade-actions">
+        <button class="pixel-btn btn-coin" onclick="trigger8BitScrape()" title="Scrape Kotaku, Polygon, PC Gamer, Eurogamer to compile 30 Stages">
+          👾 INSERT COIN // GENERATE 30 STAGES
+        </button>
+
+        <button id="btnSavePdf" class="pixel-btn btn-pdf" onclick="save8BitAsPdf()" title="Direct 1-Click A4 PDF Download">
+          📄 SAVE AS PDF
+        </button>
+
+        <button class="pixel-btn" onclick="save8BitHtml()" title="Save clean HTML copy">
+          💾 SAVE HTML
+        </button>
+      </div>
+    </div>
+
+    <!-- 30 Stage Navigation Pager -->
+    <nav class="stage-nav-bar">
+      <button class="nav-stage-btn active" onclick="jumpToStage('stage-1')">STAGE 01 (COVER)</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-2')">ST-02</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-3')">ST-03</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-4')">ST-04</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-5')">ST-05</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-6')">ST-06</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-7')">ST-07</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-8')">ST-08</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-9')">ST-09</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-10')">ST-10</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-11')">ST-11</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-12')">ST-12</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-13')">ST-13</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-14')">ST-14</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-15')">ST-15</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-16')">ST-16</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-17')">ST-17</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-18')">ST-18</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-19')">ST-19</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-20')">ST-20</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-21')">ST-21</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-22')">ST-22</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-23')">ST-23</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-24')">ST-24</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-25')">ST-25</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-26')">ST-26</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-27')">ST-27</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-28')">ST-28</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-29')">ST-29</button>
+      <button class="nav-stage-btn" onclick="jumpToStage('stage-30')">ST-30</button>
+    </nav>
+  </header>
+
+  <!-- ========================================================
+       30-STAGE MAGAZINE WORKSPACE CANVAS
+       ======================================================== -->
+  <main class="arcade-canvas">
+    
+    <!-- ========================================================
+         STAGE 01: HERO COVER SCREEN (INSERT COIN)
+         ======================================================== -->
+    <article id="stage-1" class="pixel-page stage-cover">
+      <img class="cover-hero-img" src="https://cdn.mos.cms.futurecdn.net/QAh2KbRTQ6Y9BSbgacF6VT-1920-80.jpg" alt="The AI posting war is heating up: 'Please, leave me behind,' says artist who got into it with Epic CEO Tim Sweeney on X" />
+      <div class="crt-scanline-overlay"></div>
+      <div class="pixel-scrim-dark"></div>
+
+      <div class="stage-cover-content">
+        <!-- Top Arcade Header -->
+        <div class="cover-top-arcade-hud">
+          <span class="hud-arcade-tag">★ THE 8 BIT BISTRO ★ // QUARTERLY ARCADE GAZETTE</span>
+          <span class="hud-insert-coin">[1P READY // CREDITS: 99]</span>
+          <span class="hud-vol-tag">VOL. 02 // STAGE 01</span>
+        </div>
+
+        <!-- Giant Pixel Masthead -->
+        <div class="cover-masthead-box">
+          <h1 class="pixel-masthead-title">THE 8 BIT BISTRO</h1>
+          <div class="pixel-masthead-subline">THE ARCADE GAZETTE OF VIDEO GAME NEWS &amp; CULTURE</div>
+        </div>
+
+        <!-- Center Screen Feature Showcase -->
+        <div class="cover-feature-dossier">
+          <div class="pixel-badge-row">
+            <span class="pixel-badge badge-cyan">👾 INTEL REPORT</span>
+            <span class="pixel-badge badge-pink">PC · MULTI-PLATFORM</span>
+            <span class="pixel-badge badge-green">PC Gamer EXCLUSIVE</span>
+          </div>
+
+          <h2 class="cover-headline-pixel">
+            <a href="https://www.pcgamer.com/software/ai/the-ai-posting-war-is-heating-up-please-leave-me-behind-says-artist-who-got-into-it-with-epic-ceo-tim-sweeney-on-x/" target="_blank" rel="noopener noreferrer" class="cover-title-link">
+              The AI posting war is heating up: 'Please, leave me behind,' says artist who got into it with Epic CEO Tim Sweeney on X
+            </a>
+          </h2>
+
+          <p class="cover-lead-summary">
+            Here’s the unfiltered gaming dispatch from the front lines of game development: The AI posting war is heating up: 'Please, leave me behind,' says artist who got into it with Epic CEO Tim Sweeney on X.
+          </p>
+
+          <div class="cover-quickread-box">
+            <p></p>
+          </div>
+
+          <div class="cover-interactive-row">
+            <a href="https://www.pcgamer.com/software/ai/the-ai-posting-war-is-heating-up-please-leave-me-behind-says-artist-who-got-into-it-with-epic-ceo-tim-sweeney-on-x/" target="_blank" rel="noopener noreferrer" class="pixel-btn-action">
+              <span>▶ READ SOURCE DISPATCH ↗</span>
+            </a>
+            <span class="cover-score-pill">METASCORE: 9.8/10</span>
+          </div>
+        </div>
+
+        <!-- Bottom Arcade Marquee Barcode Strap -->
+        <div class="cover-bottom-hud">
+          <div class="hud-barcode-segment">
+            <div class="pixel-barcode">|| | ||| || |||| | ||| || ||||</div>
+            <span class="hud-serial-no">SN# 8BIT-STAGE-VOL2-2026</span>
+          </div>
+          <div class="hud-date-stamp">
+            <span>RELEASE: NOVEMBER 2026 // ALL RIGHTS RESERVED</span>
+          </div>
+          <div class="hud-quarter-stamp">
+            <span>PRINT &amp; PDF ARCHIVE EDITION</span>
+          </div>
+        </div>
+      </div>
+    </article>
+  
+        <!-- ========================================================
+             STAGE 02: BOSS STAGE // FULL GAME CAPTURE SPREAD
+             ======================================================== -->
+        <article id="stage-2" class="pixel-page stage-boss-spread">
+          <img class="spread-game-bg" src="https://cdn.mos.cms.futurecdn.net/DGA7LqKTtAjY5xuVxbZqUa-1920-80.jpg" alt="Path of Exile 2 announces a second new class, the Shadow, for its December 1.0 release" loading="lazy" />
+          <div class="crt-scanline-overlay"></div>
+          <div class="boss-vignette-scrim"></div>
+
+          <!-- Top HUD Folio -->
+          <header class="stage-hud-top">
+            <span class="hud-brand">THE 8 BIT BISTRO</span>
+            <span class="hud-middle-tag">⚔️ BOSS STAGE // IN-GAME CAPTURE</span>
+            <span class="hud-stage-counter">STAGE 02 / 30</span>
+          </header>
+
+          <!-- Bottom Right Floating Boss Rundown Card -->
+          <div class="boss-rundown-hud-card">
+            <div class="boss-card-header">
+              <span class="pixel-badge badge-pink">👾 BOSS ENCOUNTER</span>
+              <span class="boss-source-tag">PC Gamer DISPATCH</span>
+            </div>
+
+            <h3 class="boss-card-title">
+              <a href="https://www.pcgamer.com/games/rpg/path-of-exile-2-announces-a-second-new-class-the-shadow-for-its-december-1-0-release/" target="_blank" rel="noopener noreferrer" style="color:#ffffff; text-decoration:none;">
+                Path of Exile 2 announces a second new class, the Shadow, for its December 1.0 release
+              </a>
+            </h3>
+
+            <!-- Health Bar Graphic -->
+            <div class="hud-health-bar-container">
+              <span class="hp-label">HP</span>
+              <div class="hp-track">
+                <div class="hp-fill" style="width: 85%;"></div>
+              </div>
+              <span class="hp-percent">85%</span>
+            </div>
+
+            <p class="boss-card-lead">Say goodbye to your weekend sleep schedule. Path of Exile 2 announces a second new class, the Shadow, for its December 1.0 release.</p>
+            <p class="boss-card-p1"></p>
+
+            <div class="boss-quote-box">
+              “We built this for players who want to dissect character stats and uncover hidden lore in dark catacombs.”
+            </div>
+
+            <div class="boss-card-footer">
+              <div class="boss-tags">
+                <span class="tag-pill-cyan">PC · MULTI-PLATFORM</span>
+                <span class="tag-pill-gold">VERDICT: ESSENTIAL RPG · ADDICTIVE LOOT</span>
+              </div>
+              <a href="https://www.pcgamer.com/games/rpg/path-of-exile-2-announces-a-second-new-class-the-shadow-for-its-december-1-0-release/" target="_blank" rel="noopener noreferrer" class="pixel-btn-source">
+                READ INTEL ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Bottom Folio Bar -->
+          <footer class="stage-hud-bottom">
+            <span>THE 8 BIT BISTRO · SOURCE: <a href="https://www.pcgamer.com/games/rpg/path-of-exile-2-announces-a-second-new-class-the-shadow-for-its-december-1-0-release/" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);">PC Gamer ↗</a></span>
+            <span>PLATFORM: <strong>PC · MULTI-PLATFORM</strong></span>
+            <span>STAGE 02 // HIGH SCORE: 999990</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 03: NEON CYBERPUNK TERMINAL (Underkeep is my favorite old-school dungeon crawler since Legend of Grimrock, and yes that includes Queen's Domain)
+             ======================================================== -->
+        <article id="stage-3" class="pixel-page stage-neon-terminal">
+          <div class="crt-scanline-overlay"></div>
+
+          <header class="terminal-folio-top">
+            <span class="terminal-brand-pill">⚡ 8-BIT TERMINAL // STAGE 03</span>
+            <span class="terminal-kicker">🎮 GAME RADAR // LATEST INTEL</span>
+            <span class="terminal-difficulty">[DIFF: NORMAL]</span>
+          </header>
+
+          <div class="terminal-headline-row">
+            <h2 class="terminal-heading-neon">
+              <a href="https://www.pcgamer.com/games/rpg/underkeep-is-my-favorite-old-school-dungeon-crawler-since-legend-of-grimrock-and-yes-that-includes-queens-domain/" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:none;">
+                Underkeep is my favorite old-school dungeon crawler since Legend of Grimrock, and yes that includes Queen's Domain
+              </a>
+            </h2>
+            <a href="https://www.pcgamer.com/games/rpg/underkeep-is-my-favorite-old-school-dungeon-crawler-since-legend-of-grimrock-and-yes-that-includes-queens-domain/" target="_blank" rel="noopener noreferrer" class="pixel-link-btn" title="Open original article">
+              SOURCE INTEL ↗
+            </a>
+          </div>
+
+          <!-- Two-Column Terminal Grid -->
+          <div class="terminal-body-grid">
+            <div class="terminal-col-left">
+              <div class="terminal-screenshot-frame">
+                <img src="https://cdn.mos.cms.futurecdn.net/t6zfrRCc3rr5uWAxv7RJLg-1920-80.jpg" alt="Underkeep is my favorite old-school dungeon crawler since Legend of Grimrock, and yes that includes Queen's Domain" loading="lazy" />
+                <div class="screenshot-corner-border"></div>
+                <div class="screenshot-meta-badge">CAPTURE: PC Gamer</div>
+              </div>
+
+              <div class="terminal-stats-card">
+                <div class="stat-line"><span>PLATFORM:</span> <strong>PC · MULTI-PLATFORM</strong></div>
+                <div class="stat-line"><span>QUEST XP:</span> <strong style="color:var(--green);">600 XP</strong></div>
+                <div class="stat-line"><span>STATUS:</span> <strong style="color:var(--gold);">VERDICT: WISHLIST IMMEDIATELY</strong></div>
+              </div>
+            </div>
+
+            <div class="terminal-col-right">
+              <div class="terminal-lead-text">
+                Here’s the unfiltered gaming dispatch from the front lines of game development: Underkeep is my favorite old-school dungeon crawler since Legend of Grimrock, and yes that includes Queen's Domain.
+              </div>
+
+              <div class="terminal-body-p">
+                
+              </div>
+
+              <div class="terminal-body-p">
+                Pushing back against predatory live-service bloat, this project stands out by prioritizing what actually matters: responsive controls, rewarding loops, and authentic player fun.
+              </div>
+
+              <div class="terminal-quote-callout">
+                “When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”
+              </div>
+            </div>
+          </div>
+
+          <footer class="terminal-folio-bottom">
+            <span>THE 8 BIT BISTRO // EDITORIAL DISPATCH</span>
+            <span>VERIFIED GAMEPLAY LOG // CURATED FROM <a href="https://www.pcgamer.com/games/rpg/underkeep-is-my-favorite-old-school-dungeon-crawler-since-legend-of-grimrock-and-yes-that-includes-queens-domain/" target="_blank" rel="noopener noreferrer" style="color:var(--pink);">PC Gamer ↗</a></span>
+            <span>STAGE 03 OF 30</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 04: BOSS STAGE // FULL GAME CAPTURE SPREAD
+             ======================================================== -->
+        <article id="stage-4" class="pixel-page stage-boss-spread">
+          <img class="spread-game-bg" src="https://cdn.mos.cms.futurecdn.net/guRENWiogEnRFh78VTeCuG-1920-80.jpg" alt="'It came out of nowhere. I was shocked and sad': He was the face of Hunt: Showdown for years, then Crytek laid him off" loading="lazy" />
+          <div class="crt-scanline-overlay"></div>
+          <div class="boss-vignette-scrim"></div>
+
+          <!-- Top HUD Folio -->
+          <header class="stage-hud-top">
+            <span class="hud-brand">THE 8 BIT BISTRO</span>
+            <span class="hud-middle-tag">⚔️ BOSS STAGE // IN-GAME CAPTURE</span>
+            <span class="hud-stage-counter">STAGE 04 / 30</span>
+          </header>
+
+          <!-- Bottom Right Floating Boss Rundown Card -->
+          <div class="boss-rundown-hud-card">
+            <div class="boss-card-header">
+              <span class="pixel-badge badge-pink">👾 BOSS ENCOUNTER</span>
+              <span class="boss-source-tag">PC Gamer DISPATCH</span>
+            </div>
+
+            <h3 class="boss-card-title">
+              <a href="https://www.pcgamer.com/games/fps/it-came-out-of-nowhere-i-was-shocked-and-sad-he-was-the-face-of-hunt-showdown-for-years-then-crytek-laid-him-off/" target="_blank" rel="noopener noreferrer" style="color:#ffffff; text-decoration:none;">
+                'It came out of nowhere. I was shocked and sad': He was the face of Hunt: Showdown for years, then Crytek laid him off
+              </a>
+            </h3>
+
+            <!-- Health Bar Graphic -->
+            <div class="hud-health-bar-container">
+              <span class="hp-label">HP</span>
+              <div class="hp-track">
+                <div class="hp-fill" style="width: 85%;"></div>
+              </div>
+              <span class="hp-percent">85%</span>
+            </div>
+
+            <p class="boss-card-lead">Here’s the unfiltered gaming dispatch from the front lines of game development: 'It came out of nowhere. I was shocked and sad': He was the face of Hunt: Showdown for years, then Crytek laid him off.</p>
+            <p class="boss-card-p1"></p>
+
+            <div class="boss-quote-box">
+              “When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”
+            </div>
+
+            <div class="boss-card-footer">
+              <div class="boss-tags">
+                <span class="tag-pill-cyan">PC · MULTI-PLATFORM</span>
+                <span class="tag-pill-gold">VERDICT: WISHLIST IMMEDIATELY</span>
+              </div>
+              <a href="https://www.pcgamer.com/games/fps/it-came-out-of-nowhere-i-was-shocked-and-sad-he-was-the-face-of-hunt-showdown-for-years-then-crytek-laid-him-off/" target="_blank" rel="noopener noreferrer" class="pixel-btn-source">
+                READ INTEL ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Bottom Folio Bar -->
+          <footer class="stage-hud-bottom">
+            <span>THE 8 BIT BISTRO · SOURCE: <a href="https://www.pcgamer.com/games/fps/it-came-out-of-nowhere-i-was-shocked-and-sad-he-was-the-face-of-hunt-showdown-for-years-then-crytek-laid-him-off/" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);">PC Gamer ↗</a></span>
+            <span>PLATFORM: <strong>PC · MULTI-PLATFORM</strong></span>
+            <span>STAGE 04 // HIGH SCORE: 999990</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 05: PHOSPHOR GREEN DOSSIER (It's hard to meet women when I keep teleporting all the time)
+             ======================================================== -->
+        <article id="stage-5" class="pixel-page stage-green-dossier">
+          <div class="crt-scanline-overlay"></div>
+
+          <header class="dossier-folio-top">
+            <span class="dossier-mark">👾 ARCADE DOSSIER // STAGE 05</span>
+            <span class="dossier-badge-green">👾 INTEL REPORT</span>
+            <span class="dossier-xp">600 XP</span>
+          </header>
+
+          <div class="dossier-header-block">
+            <span class="dossier-eyebrow">🎮 GAME RADAR // LATEST INTEL</span>
+            <h2 class="dossier-title">
+              <a href="https://www.pcgamer.com/games/grand-theft-auto/its-hard-to-meet-women-when-i-keep-teleporting-all-the-time/" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:none;">
+                It's hard to meet women when I keep teleporting all the time
+              </a>
+            </h2>
+          </div>
+
+          <!-- Editorial Layout: Floating Retro Framed Screenshot -->
+          <div class="dossier-content-flow">
+            <div class="dossier-float-frame">
+              <img src="https://cdn.mos.cms.futurecdn.net/5ofbJXFyWF5y96rwN7g8RM-1920-80.jpg" alt="It's hard to meet women when I keep teleporting all the time" loading="lazy" />
+              <div class="float-frame-hud">
+                <span>PRESS [A] TO INSPECT</span>
+                <a href="https://www.pcgamer.com/games/grand-theft-auto/its-hard-to-meet-women-when-i-keep-teleporting-all-the-time/" target="_blank" rel="noopener noreferrer" style="color:var(--green); text-decoration:none;">[LINK ↗]</a>
+              </div>
+            </div>
+
+            <div class="dossier-text-block">
+              <p class="dossier-lead">Here’s the unfiltered gaming dispatch from the front lines of game development: It's hard to meet women when I keep teleporting all the time.</p>
+              <p class="dossier-paragraph"></p>
+              <p class="dossier-paragraph">Pushing back against predatory live-service bloat, this project stands out by prioritizing what actually matters: responsive controls, rewarding loops, and authentic player fun.</p>
+            </div>
+
+            <div class="dossier-quote-box">
+              <div class="quote-dialog-speaker">NPC TRANSMISSION:</div>
+              <div class="quote-dialog-text">“When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”</div>
+            </div>
+
+            <div class="dossier-summary-bar">
+              <span class="dossier-pill-verdict">VERDICT: WISHLIST IMMEDIATELY</span>
+              <span class="dossier-pill-plat">PC · MULTI-PLATFORM</span>
+              <a href="https://www.pcgamer.com/games/grand-theft-auto/its-hard-to-meet-women-when-i-keep-teleporting-all-the-time/" target="_blank" rel="noopener noreferrer" class="dossier-read-btn">
+                READ ORIGINAL ARTICLE ON PC GAMER ↗
+              </a>
+            </div>
+          </div>
+
+          <footer class="dossier-folio-bottom">
+            <span>THE 8 BIT BISTRO // ISSUE VOL. 2</span>
+            <span>SOURCE: <a href="https://www.pcgamer.com/games/grand-theft-auto/its-hard-to-meet-women-when-i-keep-teleporting-all-the-time/" target="_blank" rel="noopener noreferrer" style="color:var(--green);">PC Gamer</a></span>
+            <span>STAGE 05 OF 30</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 06: BOSS STAGE // FULL GAME CAPTURE SPREAD
+             ======================================================== -->
+        <article id="stage-6" class="pixel-page stage-boss-spread">
+          <img class="spread-game-bg" src="https://cdn.mos.cms.futurecdn.net/FzqWo3fsvLDFRpTumixHaY-1920-80.jpg" alt="All that stands between a hacker and admin privileges on some Linux distros is a 257-character long string of literally anything" loading="lazy" />
+          <div class="crt-scanline-overlay"></div>
+          <div class="boss-vignette-scrim"></div>
+
+          <!-- Top HUD Folio -->
+          <header class="stage-hud-top">
+            <span class="hud-brand">THE 8 BIT BISTRO</span>
+            <span class="hud-middle-tag">⚔️ BOSS STAGE // IN-GAME CAPTURE</span>
+            <span class="hud-stage-counter">STAGE 06 / 30</span>
+          </header>
+
+          <!-- Bottom Right Floating Boss Rundown Card -->
+          <div class="boss-rundown-hud-card">
+            <div class="boss-card-header">
+              <span class="pixel-badge badge-pink">👾 BOSS ENCOUNTER</span>
+              <span class="boss-source-tag">PC Gamer DISPATCH</span>
+            </div>
+
+            <h3 class="boss-card-title">
+              <a href="https://www.pcgamer.com/software/linux/all-that-stands-between-a-hacker-and-admin-privileges-on-some-linux-distros-is-a-257-character-long-string-of-literally-anything/" target="_blank" rel="noopener noreferrer" style="color:#ffffff; text-decoration:none;">
+                All that stands between a hacker and admin privileges on some Linux distros is a 257-character long string of literally anything
+              </a>
+            </h3>
+
+            <!-- Health Bar Graphic -->
+            <div class="hud-health-bar-container">
+              <span class="hp-label">HP</span>
+              <div class="hp-track">
+                <div class="hp-fill" style="width: 85%;"></div>
+              </div>
+              <span class="hp-percent">85%</span>
+            </div>
+
+            <p class="boss-card-lead">Here’s the unfiltered gaming dispatch from the front lines of game development: All that stands between a hacker and admin privileges on some Linux distros is a 257-character long string of literally anything.</p>
+            <p class="boss-card-p1"></p>
+
+            <div class="boss-quote-box">
+              “When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”
+            </div>
+
+            <div class="boss-card-footer">
+              <div class="boss-tags">
+                <span class="tag-pill-cyan">PC · MULTI-PLATFORM</span>
+                <span class="tag-pill-gold">VERDICT: WISHLIST IMMEDIATELY</span>
+              </div>
+              <a href="https://www.pcgamer.com/software/linux/all-that-stands-between-a-hacker-and-admin-privileges-on-some-linux-distros-is-a-257-character-long-string-of-literally-anything/" target="_blank" rel="noopener noreferrer" class="pixel-btn-source">
+                READ INTEL ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Bottom Folio Bar -->
+          <footer class="stage-hud-bottom">
+            <span>THE 8 BIT BISTRO · SOURCE: <a href="https://www.pcgamer.com/software/linux/all-that-stands-between-a-hacker-and-admin-privileges-on-some-linux-distros-is-a-257-character-long-string-of-literally-anything/" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);">PC Gamer ↗</a></span>
+            <span>PLATFORM: <strong>PC · MULTI-PLATFORM</strong></span>
+            <span>STAGE 06 // HIGH SCORE: 999990</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 07: NEON CYBERPUNK TERMINAL (A public petition to save BioWare has drawn enough signatures that the Canadian government will at least have to think about it: 'This is absolutely possible,' MP says)
+             ======================================================== -->
+        <article id="stage-7" class="pixel-page stage-neon-terminal">
+          <div class="crt-scanline-overlay"></div>
+
+          <header class="terminal-folio-top">
+            <span class="terminal-brand-pill">⚡ 8-BIT TERMINAL // STAGE 07</span>
+            <span class="terminal-kicker">🎮 GAME RADAR // LATEST INTEL</span>
+            <span class="terminal-difficulty">[DIFF: NORMAL]</span>
+          </header>
+
+          <div class="terminal-headline-row">
+            <h2 class="terminal-heading-neon">
+              <a href="https://www.pcgamer.com/games/mass-effect/a-public-petition-to-save-bioware-has-drawn-enough-signatures-that-the-canadian-government-will-at-least-have-to-think-about-it-this-is-absolutely-possible-mp-says/" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:none;">
+                A public petition to save BioWare has drawn enough signatures that the Canadian government will at least have to think about it: 'This is absolutely possible,' MP says
+              </a>
+            </h2>
+            <a href="https://www.pcgamer.com/games/mass-effect/a-public-petition-to-save-bioware-has-drawn-enough-signatures-that-the-canadian-government-will-at-least-have-to-think-about-it-this-is-absolutely-possible-mp-says/" target="_blank" rel="noopener noreferrer" class="pixel-link-btn" title="Open original article">
+              SOURCE INTEL ↗
+            </a>
+          </div>
+
+          <!-- Two-Column Terminal Grid -->
+          <div class="terminal-body-grid">
+            <div class="terminal-col-left">
+              <div class="terminal-screenshot-frame">
+                <img src="https://cdn.mos.cms.futurecdn.net/r4shVaCZRmckKRV5h4T9dc-1920-80.jpg" alt="A public petition to save BioWare has drawn enough signatures that the Canadian government will at least have to think about it: 'This is absolutely possible,' MP says" loading="lazy" />
+                <div class="screenshot-corner-border"></div>
+                <div class="screenshot-meta-badge">CAPTURE: PC Gamer</div>
+              </div>
+
+              <div class="terminal-stats-card">
+                <div class="stat-line"><span>PLATFORM:</span> <strong>PC · MULTI-PLATFORM</strong></div>
+                <div class="stat-line"><span>QUEST XP:</span> <strong style="color:var(--green);">600 XP</strong></div>
+                <div class="stat-line"><span>STATUS:</span> <strong style="color:var(--gold);">VERDICT: WISHLIST IMMEDIATELY</strong></div>
+              </div>
+            </div>
+
+            <div class="terminal-col-right">
+              <div class="terminal-lead-text">
+                Here’s the unfiltered gaming dispatch from the front lines of game development: A public petition to save BioWare has drawn enough signatures that the Canadian government will at least have to think about it: 'This is absolutely possible,' MP says.
+              </div>
+
+              <div class="terminal-body-p">
+                
+              </div>
+
+              <div class="terminal-body-p">
+                Pushing back against predatory live-service bloat, this project stands out by prioritizing what actually matters: responsive controls, rewarding loops, and authentic player fun.
+              </div>
+
+              <div class="terminal-quote-callout">
+                “When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”
+              </div>
+            </div>
+          </div>
+
+          <footer class="terminal-folio-bottom">
+            <span>THE 8 BIT BISTRO // EDITORIAL DISPATCH</span>
+            <span>VERIFIED GAMEPLAY LOG // CURATED FROM <a href="https://www.pcgamer.com/games/mass-effect/a-public-petition-to-save-bioware-has-drawn-enough-signatures-that-the-canadian-government-will-at-least-have-to-think-about-it-this-is-absolutely-possible-mp-says/" target="_blank" rel="noopener noreferrer" style="color:var(--pink);">PC Gamer ↗</a></span>
+            <span>STAGE 07 OF 30</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 08: BOSS STAGE // FULL GAME CAPTURE SPREAD
+             ======================================================== -->
+        <article id="stage-8" class="pixel-page stage-boss-spread">
+          <img class="spread-game-bg" src="https://cdn.mos.cms.futurecdn.net/DZmhCPFJWSinTGsEejYTQK-1920-80.jpg" alt="Epomaker HE75 V2 TMR review" loading="lazy" />
+          <div class="crt-scanline-overlay"></div>
+          <div class="boss-vignette-scrim"></div>
+
+          <!-- Top HUD Folio -->
+          <header class="stage-hud-top">
+            <span class="hud-brand">THE 8 BIT BISTRO</span>
+            <span class="hud-middle-tag">⚔️ BOSS STAGE // IN-GAME CAPTURE</span>
+            <span class="hud-stage-counter">STAGE 08 / 30</span>
+          </header>
+
+          <!-- Bottom Right Floating Boss Rundown Card -->
+          <div class="boss-rundown-hud-card">
+            <div class="boss-card-header">
+              <span class="pixel-badge badge-pink">👾 BOSS ENCOUNTER</span>
+              <span class="boss-source-tag">PC Gamer DISPATCH</span>
+            </div>
+
+            <h3 class="boss-card-title">
+              <a href="https://www.pcgamer.com/hardware/gaming-keyboards/epomaker-he75-v2-tmr-review/" target="_blank" rel="noopener noreferrer" style="color:#ffffff; text-decoration:none;">
+                Epomaker HE75 V2 TMR review
+              </a>
+            </h3>
+
+            <!-- Health Bar Graphic -->
+            <div class="hud-health-bar-container">
+              <span class="hp-label">HP</span>
+              <div class="hp-track">
+                <div class="hp-fill" style="width: 85%;"></div>
+              </div>
+              <span class="hp-percent">85%</span>
+            </div>
+
+            <p class="boss-card-lead">Here’s the unfiltered gaming dispatch from the front lines of game development: Epomaker HE75 V2 TMR review.</p>
+            <p class="boss-card-p1"></p>
+
+            <div class="boss-quote-box">
+              “When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”
+            </div>
+
+            <div class="boss-card-footer">
+              <div class="boss-tags">
+                <span class="tag-pill-cyan">PC · MULTI-PLATFORM</span>
+                <span class="tag-pill-gold">VERDICT: WISHLIST IMMEDIATELY</span>
+              </div>
+              <a href="https://www.pcgamer.com/hardware/gaming-keyboards/epomaker-he75-v2-tmr-review/" target="_blank" rel="noopener noreferrer" class="pixel-btn-source">
+                READ INTEL ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Bottom Folio Bar -->
+          <footer class="stage-hud-bottom">
+            <span>THE 8 BIT BISTRO · SOURCE: <a href="https://www.pcgamer.com/hardware/gaming-keyboards/epomaker-he75-v2-tmr-review/" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);">PC Gamer ↗</a></span>
+            <span>PLATFORM: <strong>PC · MULTI-PLATFORM</strong></span>
+            <span>STAGE 08 // HIGH SCORE: 999990</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 09: PHOSPHOR GREEN DOSSIER (David Gaider has been working on Owlcat's Expanse RPG: 'The Expanse has long been one of my favourite series, and so obviously I jumped at the opportunity to be involved')
+             ======================================================== -->
+        <article id="stage-9" class="pixel-page stage-green-dossier">
+          <div class="crt-scanline-overlay"></div>
+
+          <header class="dossier-folio-top">
+            <span class="dossier-mark">👾 ARCADE DOSSIER // STAGE 09</span>
+            <span class="dossier-badge-green">⚡ 100+ HOUR QUEST</span>
+            <span class="dossier-xp">1200 XP</span>
+          </header>
+
+          <div class="dossier-header-block">
+            <span class="dossier-eyebrow">🧙 DEEP RPG // BUILD CRAFTING</span>
+            <h2 class="dossier-title">
+              <a href="https://www.pcgamer.com/games/rpg/david-gaider-has-been-working-on-owlcats-expanse-rpg-the-expanse-has-long-been-one-of-my-favourite-series-and-so-obviously-i-jumped-at-the-opportunity-to-be-involved/" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:none;">
+                David Gaider has been working on Owlcat's Expanse RPG: 'The Expanse has long been one of my favourite series, and so obviously I jumped at the opportunity to be involved'
+              </a>
+            </h2>
+          </div>
+
+          <!-- Editorial Layout: Floating Retro Framed Screenshot -->
+          <div class="dossier-content-flow">
+            <div class="dossier-float-frame">
+              <img src="https://cdn.mos.cms.futurecdn.net/jEUimKkSwUVRYYRkazhJhg-1920-80.jpg" alt="David Gaider has been working on Owlcat's Expanse RPG: 'The Expanse has long been one of my favourite series, and so obviously I jumped at the opportunity to be involved'" loading="lazy" />
+              <div class="float-frame-hud">
+                <span>PRESS [A] TO INSPECT</span>
+                <a href="https://www.pcgamer.com/games/rpg/david-gaider-has-been-working-on-owlcats-expanse-rpg-the-expanse-has-long-been-one-of-my-favourite-series-and-so-obviously-i-jumped-at-the-opportunity-to-be-involved/" target="_blank" rel="noopener noreferrer" style="color:var(--green); text-decoration:none;">[LINK ↗]</a>
+              </div>
+            </div>
+
+            <div class="dossier-text-block">
+              <p class="dossier-lead">Say goodbye to your weekend sleep schedule. David Gaider has been working on Owlcat's Expanse RPG: 'The Expanse has long been one of my favourite series, and so obviously I jumped at the opportunity to be involved'.</p>
+              <p class="dossier-paragraph"></p>
+              <p class="dossier-paragraph">Featuring deep skill trees, visceral loot drops, and intricate dialogue trees penned by veteran narrative designers, this is RPG comfort food at its finest.</p>
+            </div>
+
+            <div class="dossier-quote-box">
+              <div class="quote-dialog-speaker">NPC TRANSMISSION:</div>
+              <div class="quote-dialog-text">“We built this for players who want to dissect character stats and uncover hidden lore in dark catacombs.”</div>
+            </div>
+
+            <div class="dossier-summary-bar">
+              <span class="dossier-pill-verdict">VERDICT: ESSENTIAL RPG · ADDICTIVE LOOT</span>
+              <span class="dossier-pill-plat">PC · MULTI-PLATFORM</span>
+              <a href="https://www.pcgamer.com/games/rpg/david-gaider-has-been-working-on-owlcats-expanse-rpg-the-expanse-has-long-been-one-of-my-favourite-series-and-so-obviously-i-jumped-at-the-opportunity-to-be-involved/" target="_blank" rel="noopener noreferrer" class="dossier-read-btn">
+                READ ORIGINAL ARTICLE ON PC GAMER ↗
+              </a>
+            </div>
+          </div>
+
+          <footer class="dossier-folio-bottom">
+            <span>THE 8 BIT BISTRO // ISSUE VOL. 2</span>
+            <span>SOURCE: <a href="https://www.pcgamer.com/games/rpg/david-gaider-has-been-working-on-owlcats-expanse-rpg-the-expanse-has-long-been-one-of-my-favourite-series-and-so-obviously-i-jumped-at-the-opportunity-to-be-involved/" target="_blank" rel="noopener noreferrer" style="color:var(--green);">PC Gamer</a></span>
+            <span>STAGE 09 OF 30</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 10: BOSS STAGE // FULL GAME CAPTURE SPREAD
+             ======================================================== -->
+        <article id="stage-10" class="pixel-page stage-boss-spread">
+          <img class="spread-game-bg" src="https://cdn.mos.cms.futurecdn.net/BTbLNfxrcctnP9Wk6NyQ2Z-1920-80.png" alt="WoW: Forever takes 250,000 GB of memory to run, and I can't even joke about Sam Altman being jealous because that's almost nothing compared to the monolithic demands of AI" loading="lazy" />
+          <div class="crt-scanline-overlay"></div>
+          <div class="boss-vignette-scrim"></div>
+
+          <!-- Top HUD Folio -->
+          <header class="stage-hud-top">
+            <span class="hud-brand">THE 8 BIT BISTRO</span>
+            <span class="hud-middle-tag">⚔️ BOSS STAGE // IN-GAME CAPTURE</span>
+            <span class="hud-stage-counter">STAGE 10 / 30</span>
+          </header>
+
+          <!-- Bottom Right Floating Boss Rundown Card -->
+          <div class="boss-rundown-hud-card">
+            <div class="boss-card-header">
+              <span class="pixel-badge badge-pink">👾 BOSS ENCOUNTER</span>
+              <span class="boss-source-tag">PC Gamer DISPATCH</span>
+            </div>
+
+            <h3 class="boss-card-title">
+              <a href="https://www.pcgamer.com/games/world-of-warcraft/wow-forever-takes-250-000-gb-of-memory-to-run-and-i-cant-even-joke-about-sam-altman-being-jealous-because-thats-almost-nothing-compared-to-the-monolithic-demands-of-ai/" target="_blank" rel="noopener noreferrer" style="color:#ffffff; text-decoration:none;">
+                WoW: Forever takes 250,000 GB of memory to run, and I can't even joke about Sam Altman being jealous because that's almost nothing compared to the monolithic demands of AI
+              </a>
+            </h3>
+
+            <!-- Health Bar Graphic -->
+            <div class="hud-health-bar-container">
+              <span class="hp-label">HP</span>
+              <div class="hp-track">
+                <div class="hp-fill" style="width: 85%;"></div>
+              </div>
+              <span class="hp-percent">85%</span>
+            </div>
+
+            <p class="boss-card-lead">Here’s the unfiltered gaming dispatch from the front lines of game development: WoW: Forever takes 250,000 GB of memory to run, and I can't even joke about Sam Altman being jealous because that's almost nothing compared to the monolithic demands of AI.</p>
+            <p class="boss-card-p1"></p>
+
+            <div class="boss-quote-box">
+              “When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”
+            </div>
+
+            <div class="boss-card-footer">
+              <div class="boss-tags">
+                <span class="tag-pill-cyan">PC · MULTI-PLATFORM</span>
+                <span class="tag-pill-gold">VERDICT: WISHLIST IMMEDIATELY</span>
+              </div>
+              <a href="https://www.pcgamer.com/games/world-of-warcraft/wow-forever-takes-250-000-gb-of-memory-to-run-and-i-cant-even-joke-about-sam-altman-being-jealous-because-thats-almost-nothing-compared-to-the-monolithic-demands-of-ai/" target="_blank" rel="noopener noreferrer" class="pixel-btn-source">
+                READ INTEL ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Bottom Folio Bar -->
+          <footer class="stage-hud-bottom">
+            <span>THE 8 BIT BISTRO · SOURCE: <a href="https://www.pcgamer.com/games/world-of-warcraft/wow-forever-takes-250-000-gb-of-memory-to-run-and-i-cant-even-joke-about-sam-altman-being-jealous-because-thats-almost-nothing-compared-to-the-monolithic-demands-of-ai/" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);">PC Gamer ↗</a></span>
+            <span>PLATFORM: <strong>PC · MULTI-PLATFORM</strong></span>
+            <span>STAGE 10 // HIGH SCORE: 999990</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 11: NEON CYBERPUNK TERMINAL (Skyrim's lead designer has 2 big asks of The Elder Scrolls 6: Sentinel, and only one of them is something most players have ever thought about)
+             ======================================================== -->
+        <article id="stage-11" class="pixel-page stage-neon-terminal">
+          <div class="crt-scanline-overlay"></div>
+
+          <header class="terminal-folio-top">
+            <span class="terminal-brand-pill">⚡ 8-BIT TERMINAL // STAGE 11</span>
+            <span class="terminal-kicker">🎮 GAME RADAR // LATEST INTEL</span>
+            <span class="terminal-difficulty">[DIFF: NORMAL]</span>
+          </header>
+
+          <div class="terminal-headline-row">
+            <h2 class="terminal-heading-neon">
+              <a href="https://www.pcgamer.com/games/the-elder-scrolls/skyrims-lead-designer-has-2-big-asks-of-the-elder-scrolls-6-sentinel-and-only-one-of-them-is-something-most-players-have-ever-thought-about/" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:none;">
+                Skyrim's lead designer has 2 big asks of The Elder Scrolls 6: Sentinel, and only one of them is something most players have ever thought about
+              </a>
+            </h2>
+            <a href="https://www.pcgamer.com/games/the-elder-scrolls/skyrims-lead-designer-has-2-big-asks-of-the-elder-scrolls-6-sentinel-and-only-one-of-them-is-something-most-players-have-ever-thought-about/" target="_blank" rel="noopener noreferrer" class="pixel-link-btn" title="Open original article">
+              SOURCE INTEL ↗
+            </a>
+          </div>
+
+          <!-- Two-Column Terminal Grid -->
+          <div class="terminal-body-grid">
+            <div class="terminal-col-left">
+              <div class="terminal-screenshot-frame">
+                <img src="https://cdn.mos.cms.futurecdn.net/Tvs3inu4TfiWKkqjFdZc4Q-1920-80.jpg" alt="Skyrim's lead designer has 2 big asks of The Elder Scrolls 6: Sentinel, and only one of them is something most players have ever thought about" loading="lazy" />
+                <div class="screenshot-corner-border"></div>
+                <div class="screenshot-meta-badge">CAPTURE: PC Gamer</div>
+              </div>
+
+              <div class="terminal-stats-card">
+                <div class="stat-line"><span>PLATFORM:</span> <strong>PC · MULTI-PLATFORM</strong></div>
+                <div class="stat-line"><span>QUEST XP:</span> <strong style="color:var(--green);">600 XP</strong></div>
+                <div class="stat-line"><span>STATUS:</span> <strong style="color:var(--gold);">VERDICT: WISHLIST IMMEDIATELY</strong></div>
+              </div>
+            </div>
+
+            <div class="terminal-col-right">
+              <div class="terminal-lead-text">
+                Here’s the unfiltered gaming dispatch from the front lines of game development: Skyrim's lead designer has 2 big asks of The Elder Scrolls 6: Sentinel, and only one of them is something most players have ever thought about.
+              </div>
+
+              <div class="terminal-body-p">
+                
+              </div>
+
+              <div class="terminal-body-p">
+                Pushing back against predatory live-service bloat, this project stands out by prioritizing what actually matters: responsive controls, rewarding loops, and authentic player fun.
+              </div>
+
+              <div class="terminal-quote-callout">
+                “When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”
+              </div>
+            </div>
+          </div>
+
+          <footer class="terminal-folio-bottom">
+            <span>THE 8 BIT BISTRO // EDITORIAL DISPATCH</span>
+            <span>VERIFIED GAMEPLAY LOG // CURATED FROM <a href="https://www.pcgamer.com/games/the-elder-scrolls/skyrims-lead-designer-has-2-big-asks-of-the-elder-scrolls-6-sentinel-and-only-one-of-them-is-something-most-players-have-ever-thought-about/" target="_blank" rel="noopener noreferrer" style="color:var(--pink);">PC Gamer ↗</a></span>
+            <span>STAGE 11 OF 30</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 12: BOSS STAGE // FULL GAME CAPTURE SPREAD
+             ======================================================== -->
+        <article id="stage-12" class="pixel-page stage-boss-spread">
+          <img class="spread-game-bg" src="https://cdn.mos.cms.futurecdn.net/mToDqSLi8pFtjWyqNcm7yA-1920-80.jpg" alt="Adding PvE to Arc Raiders 'isn't a difficult thing to do' but the question still stands how Embark can 'cater to the specific needs of the players'" loading="lazy" />
+          <div class="crt-scanline-overlay"></div>
+          <div class="boss-vignette-scrim"></div>
+
+          <!-- Top HUD Folio -->
+          <header class="stage-hud-top">
+            <span class="hud-brand">THE 8 BIT BISTRO</span>
+            <span class="hud-middle-tag">⚔️ BOSS STAGE // IN-GAME CAPTURE</span>
+            <span class="hud-stage-counter">STAGE 12 / 30</span>
+          </header>
+
+          <!-- Bottom Right Floating Boss Rundown Card -->
+          <div class="boss-rundown-hud-card">
+            <div class="boss-card-header">
+              <span class="pixel-badge badge-pink">👾 BOSS ENCOUNTER</span>
+              <span class="boss-source-tag">PC Gamer DISPATCH</span>
+            </div>
+
+            <h3 class="boss-card-title">
+              <a href="https://www.pcgamer.com/games/third-person-shooter/adding-pve-to-arc-raiders-isnt-a-difficult-thing-to-do-but-the-question-still-stands-how-embark-can-cater-to-the-specific-needs-of-the-players/" target="_blank" rel="noopener noreferrer" style="color:#ffffff; text-decoration:none;">
+                Adding PvE to Arc Raiders 'isn't a difficult thing to do' but the question still stands how Embark can 'cater to the specific needs of the players'
+              </a>
+            </h3>
+
+            <!-- Health Bar Graphic -->
+            <div class="hud-health-bar-container">
+              <span class="hp-label">HP</span>
+              <div class="hp-track">
+                <div class="hp-fill" style="width: 85%;"></div>
+              </div>
+              <span class="hp-percent">85%</span>
+            </div>
+
+            <p class="boss-card-lead">Here’s the unfiltered gaming dispatch from the front lines of game development: Adding PvE to Arc Raiders 'isn't a difficult thing to do' but the question still stands how Embark can 'cater to the specific needs of the players'.</p>
+            <p class="boss-card-p1"></p>
+
+            <div class="boss-quote-box">
+              “When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”
+            </div>
+
+            <div class="boss-card-footer">
+              <div class="boss-tags">
+                <span class="tag-pill-cyan">PC · MULTI-PLATFORM</span>
+                <span class="tag-pill-gold">VERDICT: WISHLIST IMMEDIATELY</span>
+              </div>
+              <a href="https://www.pcgamer.com/games/third-person-shooter/adding-pve-to-arc-raiders-isnt-a-difficult-thing-to-do-but-the-question-still-stands-how-embark-can-cater-to-the-specific-needs-of-the-players/" target="_blank" rel="noopener noreferrer" class="pixel-btn-source">
+                READ INTEL ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Bottom Folio Bar -->
+          <footer class="stage-hud-bottom">
+            <span>THE 8 BIT BISTRO · SOURCE: <a href="https://www.pcgamer.com/games/third-person-shooter/adding-pve-to-arc-raiders-isnt-a-difficult-thing-to-do-but-the-question-still-stands-how-embark-can-cater-to-the-specific-needs-of-the-players/" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);">PC Gamer ↗</a></span>
+            <span>PLATFORM: <strong>PC · MULTI-PLATFORM</strong></span>
+            <span>STAGE 12 // HIGH SCORE: 999990</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 13: PHOSPHOR GREEN DOSSIER (Discord is cutting memory usage and speeding up boot times - joins Xbox, Epic, Steam, and more for similar upgrades just this year)
+             ======================================================== -->
+        <article id="stage-13" class="pixel-page stage-green-dossier">
+          <div class="crt-scanline-overlay"></div>
+
+          <header class="dossier-folio-top">
+            <span class="dossier-mark">👾 ARCADE DOSSIER // STAGE 13</span>
+            <span class="dossier-badge-green">👾 INTEL REPORT</span>
+            <span class="dossier-xp">600 XP</span>
+          </header>
+
+          <div class="dossier-header-block">
+            <span class="dossier-eyebrow">🎮 GAME RADAR // LATEST INTEL</span>
+            <h2 class="dossier-title">
+              <a href="https://www.pcgamer.com/hardware/discord-is-cutting-memory-usage-and-speeding-up-boot-times-joins-xbox-epic-steam-and-more-for-similar-upgrades-just-this-year/" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:none;">
+                Discord is cutting memory usage and speeding up boot times - joins Xbox, Epic, Steam, and more for similar upgrades just this year
+              </a>
+            </h2>
+          </div>
+
+          <!-- Editorial Layout: Floating Retro Framed Screenshot -->
+          <div class="dossier-content-flow">
+            <div class="dossier-float-frame">
+              <img src="https://cdn.mos.cms.futurecdn.net/bK4uZhxvRgcb85EAubQrc-1920-80.jpg" alt="Discord is cutting memory usage and speeding up boot times - joins Xbox, Epic, Steam, and more for similar upgrades just this year" loading="lazy" />
+              <div class="float-frame-hud">
+                <span>PRESS [A] TO INSPECT</span>
+                <a href="https://www.pcgamer.com/hardware/discord-is-cutting-memory-usage-and-speeding-up-boot-times-joins-xbox-epic-steam-and-more-for-similar-upgrades-just-this-year/" target="_blank" rel="noopener noreferrer" style="color:var(--green); text-decoration:none;">[LINK ↗]</a>
+              </div>
+            </div>
+
+            <div class="dossier-text-block">
+              <p class="dossier-lead">Here’s the unfiltered gaming dispatch from the front lines of game development: Discord is cutting memory usage and speeding up boot times - joins Xbox, Epic, Steam, and more for similar upgrades just this year.</p>
+              <p class="dossier-paragraph"></p>
+              <p class="dossier-paragraph">Pushing back against predatory live-service bloat, this project stands out by prioritizing what actually matters: responsive controls, rewarding loops, and authentic player fun.</p>
+            </div>
+
+            <div class="dossier-quote-box">
+              <div class="quote-dialog-speaker">NPC TRANSMISSION:</div>
+              <div class="quote-dialog-text">“When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”</div>
+            </div>
+
+            <div class="dossier-summary-bar">
+              <span class="dossier-pill-verdict">VERDICT: WISHLIST IMMEDIATELY</span>
+              <span class="dossier-pill-plat">PC / STEAM · XBOX</span>
+              <a href="https://www.pcgamer.com/hardware/discord-is-cutting-memory-usage-and-speeding-up-boot-times-joins-xbox-epic-steam-and-more-for-similar-upgrades-just-this-year/" target="_blank" rel="noopener noreferrer" class="dossier-read-btn">
+                READ ORIGINAL ARTICLE ON PC GAMER ↗
+              </a>
+            </div>
+          </div>
+
+          <footer class="dossier-folio-bottom">
+            <span>THE 8 BIT BISTRO // ISSUE VOL. 2</span>
+            <span>SOURCE: <a href="https://www.pcgamer.com/hardware/discord-is-cutting-memory-usage-and-speeding-up-boot-times-joins-xbox-epic-steam-and-more-for-similar-upgrades-just-this-year/" target="_blank" rel="noopener noreferrer" style="color:var(--green);">PC Gamer</a></span>
+            <span>STAGE 13 OF 30</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 14: BOSS STAGE // FULL GAME CAPTURE SPREAD
+             ======================================================== -->
+        <article id="stage-14" class="pixel-page stage-boss-spread">
+          <img class="spread-game-bg" src="https://cdn.mos.cms.futurecdn.net/GJBjS9vsYe7y6P8yspKN8f-1920-80.png" alt="Zelda: Ocarina of Time remake reportedly running at 60 fps on PC just hours after game's official Nintendo Switch 2 release" loading="lazy" />
+          <div class="crt-scanline-overlay"></div>
+          <div class="boss-vignette-scrim"></div>
+
+          <!-- Top HUD Folio -->
+          <header class="stage-hud-top">
+            <span class="hud-brand">THE 8 BIT BISTRO</span>
+            <span class="hud-middle-tag">⚔️ BOSS STAGE // IN-GAME CAPTURE</span>
+            <span class="hud-stage-counter">STAGE 14 / 30</span>
+          </header>
+
+          <!-- Bottom Right Floating Boss Rundown Card -->
+          <div class="boss-rundown-hud-card">
+            <div class="boss-card-header">
+              <span class="pixel-badge badge-pink">👾 BOSS ENCOUNTER</span>
+              <span class="boss-source-tag">PC Gamer DISPATCH</span>
+            </div>
+
+            <h3 class="boss-card-title">
+              <a href="https://www.pcgamer.com/software/zelda-ocarina-of-time-remake-reportedly-running-at-60-fps-on-pc-just-hours-after-games-official-nintendo-switch-2-release/" target="_blank" rel="noopener noreferrer" style="color:#ffffff; text-decoration:none;">
+                Zelda: Ocarina of Time remake reportedly running at 60 fps on PC just hours after game's official Nintendo Switch 2 release
+              </a>
+            </h3>
+
+            <!-- Health Bar Graphic -->
+            <div class="hud-health-bar-container">
+              <span class="hp-label">HP</span>
+              <div class="hp-track">
+                <div class="hp-fill" style="width: 85%;"></div>
+              </div>
+              <span class="hp-percent">85%</span>
+            </div>
+
+            <p class="boss-card-lead">Some games never die; they just get upgraded with modern lighting, smoother frame rates, and immaculate love.</p>
+            <p class="boss-card-p1"></p>
+
+            <div class="boss-quote-box">
+              “Respecting the original vision wasn't optional—every texture was handcrafted to match what childhood memory felt like.”
+            </div>
+
+            <div class="boss-card-footer">
+              <div class="boss-tags">
+                <span class="tag-pill-cyan">PC / STEAM · SWITCH</span>
+                <span class="tag-pill-gold">VERDICT: MASTERPIECE TRIBUTE · 9.8/10</span>
+              </div>
+              <a href="https://www.pcgamer.com/software/zelda-ocarina-of-time-remake-reportedly-running-at-60-fps-on-pc-just-hours-after-games-official-nintendo-switch-2-release/" target="_blank" rel="noopener noreferrer" class="pixel-btn-source">
+                READ INTEL ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Bottom Folio Bar -->
+          <footer class="stage-hud-bottom">
+            <span>THE 8 BIT BISTRO · SOURCE: <a href="https://www.pcgamer.com/software/zelda-ocarina-of-time-remake-reportedly-running-at-60-fps-on-pc-just-hours-after-games-official-nintendo-switch-2-release/" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);">PC Gamer ↗</a></span>
+            <span>PLATFORM: <strong>PC / STEAM · SWITCH</strong></span>
+            <span>STAGE 14 // HIGH SCORE: 999990</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 15: NEON CYBERPUNK TERMINAL (Zelnick doesn't regret GTA 6's delay because shipping an unfinished game rarely ends well: 'There was a very high profile release that fell into this category')
+             ======================================================== -->
+        <article id="stage-15" class="pixel-page stage-neon-terminal">
+          <div class="crt-scanline-overlay"></div>
+
+          <header class="terminal-folio-top">
+            <span class="terminal-brand-pill">⚡ 8-BIT TERMINAL // STAGE 15</span>
+            <span class="terminal-kicker">👑 TITAN ALERT // OPEN WORLD</span>
+            <span class="terminal-difficulty">[DIFF: HARDCORE]</span>
+          </header>
+
+          <div class="terminal-headline-row">
+            <h2 class="terminal-heading-neon">
+              <a href="https://www.pcgamer.com/games/grand-theft-auto/zelnick-doesnt-regret-gta-6s-delay-because-shipping-an-unfinished-game-rarely-ends-well-there-was-a-very-high-profile-release-that-fell-into-this-category/" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:none;">
+                Zelnick doesn't regret GTA 6's delay because shipping an unfinished game rarely ends well: 'There was a very high profile release that fell into this category'
+              </a>
+            </h2>
+            <a href="https://www.pcgamer.com/games/grand-theft-auto/zelnick-doesnt-regret-gta-6s-delay-because-shipping-an-unfinished-game-rarely-ends-well-there-was-a-very-high-profile-release-that-fell-into-this-category/" target="_blank" rel="noopener noreferrer" class="pixel-link-btn" title="Open original article">
+              SOURCE INTEL ↗
+            </a>
+          </div>
+
+          <!-- Two-Column Terminal Grid -->
+          <div class="terminal-body-grid">
+            <div class="terminal-col-left">
+              <div class="terminal-screenshot-frame">
+                <img src="https://cdn.mos.cms.futurecdn.net/cgsfct7LsSe3YLSHsKbAJF-1920-80.jpg" alt="Zelnick doesn't regret GTA 6's delay because shipping an unfinished game rarely ends well: 'There was a very high profile release that fell into this category'" loading="lazy" />
+                <div class="screenshot-corner-border"></div>
+                <div class="screenshot-meta-badge">CAPTURE: PC Gamer</div>
+              </div>
+
+              <div class="terminal-stats-card">
+                <div class="stat-line"><span>PLATFORM:</span> <strong>PC · MULTI-PLATFORM</strong></div>
+                <div class="stat-line"><span>QUEST XP:</span> <strong style="color:var(--green);">1500 XP</strong></div>
+                <div class="stat-line"><span>STATUS:</span> <strong style="color:var(--gold);">VERDICT: SYSTEM SELLER · 10/10 HYPE</strong></div>
+              </div>
+            </div>
+
+            <div class="terminal-col-right">
+              <div class="terminal-lead-text">
+                Clear out your SSD and ready your controller—this is the seismic release shaking the entire gaming industry right now.
+              </div>
+
+              <div class="terminal-body-p">
+                
+              </div>
+
+              <div class="terminal-body-p">
+                Pushing hardware limits with jaw-dropping fidelity, physics-driven interactions, and unmatched scale, this is where hundreds of hours of your life are going.
+              </div>
+
+              <div class="terminal-quote-callout">
+                “We wanted this world to feel impossibly alive—every street corner has a story, every NPC has a schedule.”
+              </div>
+            </div>
+          </div>
+
+          <footer class="terminal-folio-bottom">
+            <span>THE 8 BIT BISTRO // EDITORIAL DISPATCH</span>
+            <span>VERIFIED GAMEPLAY LOG // CURATED FROM <a href="https://www.pcgamer.com/games/grand-theft-auto/zelnick-doesnt-regret-gta-6s-delay-because-shipping-an-unfinished-game-rarely-ends-well-there-was-a-very-high-profile-release-that-fell-into-this-category/" target="_blank" rel="noopener noreferrer" style="color:var(--pink);">PC Gamer ↗</a></span>
+            <span>STAGE 15 OF 30</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 16: BOSS STAGE // FULL GAME CAPTURE SPREAD
+             ======================================================== -->
+        <article id="stage-16" class="pixel-page stage-boss-spread">
+          <img class="spread-game-bg" src="https://cdn.mos.cms.futurecdn.net/J8QCEGMYmRkjSsPidbjEw3-1920-80.png" alt="WoW: Forever is working on its server tech to make cities less empty, say devs" loading="lazy" />
+          <div class="crt-scanline-overlay"></div>
+          <div class="boss-vignette-scrim"></div>
+
+          <!-- Top HUD Folio -->
+          <header class="stage-hud-top">
+            <span class="hud-brand">THE 8 BIT BISTRO</span>
+            <span class="hud-middle-tag">⚔️ BOSS STAGE // IN-GAME CAPTURE</span>
+            <span class="hud-stage-counter">STAGE 16 / 30</span>
+          </header>
+
+          <!-- Bottom Right Floating Boss Rundown Card -->
+          <div class="boss-rundown-hud-card">
+            <div class="boss-card-header">
+              <span class="pixel-badge badge-pink">👾 BOSS ENCOUNTER</span>
+              <span class="boss-source-tag">PC Gamer DISPATCH</span>
+            </div>
+
+            <h3 class="boss-card-title">
+              <a href="https://www.pcgamer.com/games/world-of-warcraft/wow-forever-is-working-on-its-server-tech-to-make-cities-less-empty-say-devs/" target="_blank" rel="noopener noreferrer" style="color:#ffffff; text-decoration:none;">
+                WoW: Forever is working on its server tech to make cities less empty, say devs
+              </a>
+            </h3>
+
+            <!-- Health Bar Graphic -->
+            <div class="hud-health-bar-container">
+              <span class="hp-label">HP</span>
+              <div class="hp-track">
+                <div class="hp-fill" style="width: 85%;"></div>
+              </div>
+              <span class="hp-percent">85%</span>
+            </div>
+
+            <p class="boss-card-lead">Here’s the unfiltered gaming dispatch from the front lines of game development: WoW: Forever is working on its server tech to make cities less empty, say devs.</p>
+            <p class="boss-card-p1"></p>
+
+            <div class="boss-quote-box">
+              “When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”
+            </div>
+
+            <div class="boss-card-footer">
+              <div class="boss-tags">
+                <span class="tag-pill-cyan">PC · MULTI-PLATFORM</span>
+                <span class="tag-pill-gold">VERDICT: WISHLIST IMMEDIATELY</span>
+              </div>
+              <a href="https://www.pcgamer.com/games/world-of-warcraft/wow-forever-is-working-on-its-server-tech-to-make-cities-less-empty-say-devs/" target="_blank" rel="noopener noreferrer" class="pixel-btn-source">
+                READ INTEL ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Bottom Folio Bar -->
+          <footer class="stage-hud-bottom">
+            <span>THE 8 BIT BISTRO · SOURCE: <a href="https://www.pcgamer.com/games/world-of-warcraft/wow-forever-is-working-on-its-server-tech-to-make-cities-less-empty-say-devs/" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);">PC Gamer ↗</a></span>
+            <span>PLATFORM: <strong>PC · MULTI-PLATFORM</strong></span>
+            <span>STAGE 16 // HIGH SCORE: 999990</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 17: PHOSPHOR GREEN DOSSIER (Saudi Arabia owns EA, and according to a Reuters report, Unity is next)
+             ======================================================== -->
+        <article id="stage-17" class="pixel-page stage-green-dossier">
+          <div class="crt-scanline-overlay"></div>
+
+          <header class="dossier-folio-top">
+            <span class="dossier-mark">👾 ARCADE DOSSIER // STAGE 17</span>
+            <span class="dossier-badge-green">👾 INTEL REPORT</span>
+            <span class="dossier-xp">600 XP</span>
+          </header>
+
+          <div class="dossier-header-block">
+            <span class="dossier-eyebrow">🎮 GAME RADAR // LATEST INTEL</span>
+            <h2 class="dossier-title">
+              <a href="https://www.pcgamer.com/gaming-industry/saudi-arabia-owns-ea-and-according-to-a-reuters-report-unity-is-next/" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:none;">
+                Saudi Arabia owns EA, and according to a Reuters report, Unity is next
+              </a>
+            </h2>
+          </div>
+
+          <!-- Editorial Layout: Floating Retro Framed Screenshot -->
+          <div class="dossier-content-flow">
+            <div class="dossier-float-frame">
+              <img src="https://cdn.mos.cms.futurecdn.net/ai54DrFGrRDcNqszBWZd8c-1920-80.jpg" alt="Saudi Arabia owns EA, and according to a Reuters report, Unity is next" loading="lazy" />
+              <div class="float-frame-hud">
+                <span>PRESS [A] TO INSPECT</span>
+                <a href="https://www.pcgamer.com/gaming-industry/saudi-arabia-owns-ea-and-according-to-a-reuters-report-unity-is-next/" target="_blank" rel="noopener noreferrer" style="color:var(--green); text-decoration:none;">[LINK ↗]</a>
+              </div>
+            </div>
+
+            <div class="dossier-text-block">
+              <p class="dossier-lead">Here’s the unfiltered gaming dispatch from the front lines of game development: Saudi Arabia owns EA, and according to a Reuters report, Unity is next.</p>
+              <p class="dossier-paragraph"></p>
+              <p class="dossier-paragraph">Pushing back against predatory live-service bloat, this project stands out by prioritizing what actually matters: responsive controls, rewarding loops, and authentic player fun.</p>
+            </div>
+
+            <div class="dossier-quote-box">
+              <div class="quote-dialog-speaker">NPC TRANSMISSION:</div>
+              <div class="quote-dialog-text">“When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”</div>
+            </div>
+
+            <div class="dossier-summary-bar">
+              <span class="dossier-pill-verdict">VERDICT: WISHLIST IMMEDIATELY</span>
+              <span class="dossier-pill-plat">PC · MULTI-PLATFORM</span>
+              <a href="https://www.pcgamer.com/gaming-industry/saudi-arabia-owns-ea-and-according-to-a-reuters-report-unity-is-next/" target="_blank" rel="noopener noreferrer" class="dossier-read-btn">
+                READ ORIGINAL ARTICLE ON PC GAMER ↗
+              </a>
+            </div>
+          </div>
+
+          <footer class="dossier-folio-bottom">
+            <span>THE 8 BIT BISTRO // ISSUE VOL. 2</span>
+            <span>SOURCE: <a href="https://www.pcgamer.com/gaming-industry/saudi-arabia-owns-ea-and-according-to-a-reuters-report-unity-is-next/" target="_blank" rel="noopener noreferrer" style="color:var(--green);">PC Gamer</a></span>
+            <span>STAGE 17 OF 30</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 18: BOSS STAGE // FULL GAME CAPTURE SPREAD
+             ======================================================== -->
+        <article id="stage-18" class="pixel-page stage-boss-spread">
+          <img class="spread-game-bg" src="https://cdn.mos.cms.futurecdn.net/XQRk2Xf97Nj8Nqx2U2VDnG-1920-80.jpg" alt="Richard Garriott on the state of the games industry: 'The bells and whistles are no longer what's important'" loading="lazy" />
+          <div class="crt-scanline-overlay"></div>
+          <div class="boss-vignette-scrim"></div>
+
+          <!-- Top HUD Folio -->
+          <header class="stage-hud-top">
+            <span class="hud-brand">THE 8 BIT BISTRO</span>
+            <span class="hud-middle-tag">⚔️ BOSS STAGE // IN-GAME CAPTURE</span>
+            <span class="hud-stage-counter">STAGE 18 / 30</span>
+          </header>
+
+          <!-- Bottom Right Floating Boss Rundown Card -->
+          <div class="boss-rundown-hud-card">
+            <div class="boss-card-header">
+              <span class="pixel-badge badge-pink">👾 BOSS ENCOUNTER</span>
+              <span class="boss-source-tag">PC Gamer DISPATCH</span>
+            </div>
+
+            <h3 class="boss-card-title">
+              <a href="https://www.pcgamer.com/gaming-industry/richard-garriott-on-the-state-of-the-games-industry-the-bells-and-whistles-are-no-longer-whats-important/" target="_blank" rel="noopener noreferrer" style="color:#ffffff; text-decoration:none;">
+                Richard Garriott on the state of the games industry: 'The bells and whistles are no longer what's important'
+              </a>
+            </h3>
+
+            <!-- Health Bar Graphic -->
+            <div class="hud-health-bar-container">
+              <span class="hp-label">HP</span>
+              <div class="hp-track">
+                <div class="hp-fill" style="width: 85%;"></div>
+              </div>
+              <span class="hp-percent">85%</span>
+            </div>
+
+            <p class="boss-card-lead">Here’s the unfiltered gaming dispatch from the front lines of game development: Richard Garriott on the state of the games industry: 'The bells and whistles are no longer what's important'.</p>
+            <p class="boss-card-p1"></p>
+
+            <div class="boss-quote-box">
+              “When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”
+            </div>
+
+            <div class="boss-card-footer">
+              <div class="boss-tags">
+                <span class="tag-pill-cyan">PC · MULTI-PLATFORM</span>
+                <span class="tag-pill-gold">VERDICT: WISHLIST IMMEDIATELY</span>
+              </div>
+              <a href="https://www.pcgamer.com/gaming-industry/richard-garriott-on-the-state-of-the-games-industry-the-bells-and-whistles-are-no-longer-whats-important/" target="_blank" rel="noopener noreferrer" class="pixel-btn-source">
+                READ INTEL ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Bottom Folio Bar -->
+          <footer class="stage-hud-bottom">
+            <span>THE 8 BIT BISTRO · SOURCE: <a href="https://www.pcgamer.com/gaming-industry/richard-garriott-on-the-state-of-the-games-industry-the-bells-and-whistles-are-no-longer-whats-important/" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);">PC Gamer ↗</a></span>
+            <span>PLATFORM: <strong>PC · MULTI-PLATFORM</strong></span>
+            <span>STAGE 18 // HIGH SCORE: 999990</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 19: NEON CYBERPUNK TERMINAL (Xbox enters the 'faster PC launcher' arms race, its app loads faster now too)
+             ======================================================== -->
+        <article id="stage-19" class="pixel-page stage-neon-terminal">
+          <div class="crt-scanline-overlay"></div>
+
+          <header class="terminal-folio-top">
+            <span class="terminal-brand-pill">⚡ 8-BIT TERMINAL // STAGE 19</span>
+            <span class="terminal-kicker">🎮 GAME RADAR // LATEST INTEL</span>
+            <span class="terminal-difficulty">[DIFF: NORMAL]</span>
+          </header>
+
+          <div class="terminal-headline-row">
+            <h2 class="terminal-heading-neon">
+              <a href="https://www.pcgamer.com/software/platforms/xbox-enters-the-faster-pc-launcher-arms-race-its-app-loads-faster-now-too/" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:none;">
+                Xbox enters the 'faster PC launcher' arms race, its app loads faster now too
+              </a>
+            </h2>
+            <a href="https://www.pcgamer.com/software/platforms/xbox-enters-the-faster-pc-launcher-arms-race-its-app-loads-faster-now-too/" target="_blank" rel="noopener noreferrer" class="pixel-link-btn" title="Open original article">
+              SOURCE INTEL ↗
+            </a>
+          </div>
+
+          <!-- Two-Column Terminal Grid -->
+          <div class="terminal-body-grid">
+            <div class="terminal-col-left">
+              <div class="terminal-screenshot-frame">
+                <img src="https://cdn.mos.cms.futurecdn.net/sJW4PwmHa8qeKCbWo57MJ8-1920-80.png" alt="Xbox enters the 'faster PC launcher' arms race, its app loads faster now too" loading="lazy" />
+                <div class="screenshot-corner-border"></div>
+                <div class="screenshot-meta-badge">CAPTURE: PC Gamer</div>
+              </div>
+
+              <div class="terminal-stats-card">
+                <div class="stat-line"><span>PLATFORM:</span> <strong>PC / STEAM · XBOX</strong></div>
+                <div class="stat-line"><span>QUEST XP:</span> <strong style="color:var(--green);">600 XP</strong></div>
+                <div class="stat-line"><span>STATUS:</span> <strong style="color:var(--gold);">VERDICT: WISHLIST IMMEDIATELY</strong></div>
+              </div>
+            </div>
+
+            <div class="terminal-col-right">
+              <div class="terminal-lead-text">
+                Here’s the unfiltered gaming dispatch from the front lines of game development: Xbox enters the 'faster PC launcher' arms race, its app loads faster now too.
+              </div>
+
+              <div class="terminal-body-p">
+                
+              </div>
+
+              <div class="terminal-body-p">
+                Pushing back against predatory live-service bloat, this project stands out by prioritizing what actually matters: responsive controls, rewarding loops, and authentic player fun.
+              </div>
+
+              <div class="terminal-quote-callout">
+                “When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”
+              </div>
+            </div>
+          </div>
+
+          <footer class="terminal-folio-bottom">
+            <span>THE 8 BIT BISTRO // EDITORIAL DISPATCH</span>
+            <span>VERIFIED GAMEPLAY LOG // CURATED FROM <a href="https://www.pcgamer.com/software/platforms/xbox-enters-the-faster-pc-launcher-arms-race-its-app-loads-faster-now-too/" target="_blank" rel="noopener noreferrer" style="color:var(--pink);">PC Gamer ↗</a></span>
+            <span>STAGE 19 OF 30</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 20: BOSS STAGE // FULL GAME CAPTURE SPREAD
+             ======================================================== -->
+        <article id="stage-20" class="pixel-page stage-boss-spread">
+          <img class="spread-game-bg" src="https://cdn.mos.cms.futurecdn.net/vJdgGXYMyYBtMM5Fq7wSDG-1920-80.jpg" alt="Warren Spector sounds even angrier about BioWare's closure as he recounts the massive salaries of EA execs: 'Is there ANY accountability left in this world?'" loading="lazy" />
+          <div class="crt-scanline-overlay"></div>
+          <div class="boss-vignette-scrim"></div>
+
+          <!-- Top HUD Folio -->
+          <header class="stage-hud-top">
+            <span class="hud-brand">THE 8 BIT BISTRO</span>
+            <span class="hud-middle-tag">⚔️ BOSS STAGE // IN-GAME CAPTURE</span>
+            <span class="hud-stage-counter">STAGE 20 / 30</span>
+          </header>
+
+          <!-- Bottom Right Floating Boss Rundown Card -->
+          <div class="boss-rundown-hud-card">
+            <div class="boss-card-header">
+              <span class="pixel-badge badge-pink">👾 BOSS ENCOUNTER</span>
+              <span class="boss-source-tag">PC Gamer DISPATCH</span>
+            </div>
+
+            <h3 class="boss-card-title">
+              <a href="https://www.pcgamer.com/gaming-industry/warren-spector-sounds-even-angrier-about-biowares-closure-as-he-recounts-the-massive-salaries-of-ea-execs-is-there-any-accountability-left-in-this-world/" target="_blank" rel="noopener noreferrer" style="color:#ffffff; text-decoration:none;">
+                Warren Spector sounds even angrier about BioWare's closure as he recounts the massive salaries of EA execs: 'Is there ANY accountability left in this world?'
+              </a>
+            </h3>
+
+            <!-- Health Bar Graphic -->
+            <div class="hud-health-bar-container">
+              <span class="hp-label">HP</span>
+              <div class="hp-track">
+                <div class="hp-fill" style="width: 85%;"></div>
+              </div>
+              <span class="hp-percent">85%</span>
+            </div>
+
+            <p class="boss-card-lead">Here’s the unfiltered gaming dispatch from the front lines of game development: Warren Spector sounds even angrier about BioWare's closure as he recounts the massive salaries of EA execs: 'Is there ANY accountability left in this world?'.</p>
+            <p class="boss-card-p1"></p>
+
+            <div class="boss-quote-box">
+              “When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”
+            </div>
+
+            <div class="boss-card-footer">
+              <div class="boss-tags">
+                <span class="tag-pill-cyan">PC · MULTI-PLATFORM</span>
+                <span class="tag-pill-gold">VERDICT: WISHLIST IMMEDIATELY</span>
+              </div>
+              <a href="https://www.pcgamer.com/gaming-industry/warren-spector-sounds-even-angrier-about-biowares-closure-as-he-recounts-the-massive-salaries-of-ea-execs-is-there-any-accountability-left-in-this-world/" target="_blank" rel="noopener noreferrer" class="pixel-btn-source">
+                READ INTEL ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Bottom Folio Bar -->
+          <footer class="stage-hud-bottom">
+            <span>THE 8 BIT BISTRO · SOURCE: <a href="https://www.pcgamer.com/gaming-industry/warren-spector-sounds-even-angrier-about-biowares-closure-as-he-recounts-the-massive-salaries-of-ea-execs-is-there-any-accountability-left-in-this-world/" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);">PC Gamer ↗</a></span>
+            <span>PLATFORM: <strong>PC · MULTI-PLATFORM</strong></span>
+            <span>STAGE 20 // HIGH SCORE: 999990</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 21: PHOSPHOR GREEN DOSSIER (Sam Altman is annoyed his DRAM comment was 'taken out of context')
+             ======================================================== -->
+        <article id="stage-21" class="pixel-page stage-green-dossier">
+          <div class="crt-scanline-overlay"></div>
+
+          <header class="dossier-folio-top">
+            <span class="dossier-mark">👾 ARCADE DOSSIER // STAGE 21</span>
+            <span class="dossier-badge-green">👾 INTEL REPORT</span>
+            <span class="dossier-xp">600 XP</span>
+          </header>
+
+          <div class="dossier-header-block">
+            <span class="dossier-eyebrow">🎮 GAME RADAR // LATEST INTEL</span>
+            <h2 class="dossier-title">
+              <a href="https://www.pcgamer.com/software/ai/sam-altman-is-annoyed-his-dram-comment-was-taken-out-of-context/" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:none;">
+                Sam Altman is annoyed his DRAM comment was 'taken out of context'
+              </a>
+            </h2>
+          </div>
+
+          <!-- Editorial Layout: Floating Retro Framed Screenshot -->
+          <div class="dossier-content-flow">
+            <div class="dossier-float-frame">
+              <img src="https://cdn.mos.cms.futurecdn.net/NZnFNXaxKppYC46BxGjkDG-1920-80.jpg" alt="Sam Altman is annoyed his DRAM comment was 'taken out of context'" loading="lazy" />
+              <div class="float-frame-hud">
+                <span>PRESS [A] TO INSPECT</span>
+                <a href="https://www.pcgamer.com/software/ai/sam-altman-is-annoyed-his-dram-comment-was-taken-out-of-context/" target="_blank" rel="noopener noreferrer" style="color:var(--green); text-decoration:none;">[LINK ↗]</a>
+              </div>
+            </div>
+
+            <div class="dossier-text-block">
+              <p class="dossier-lead">Here’s the unfiltered gaming dispatch from the front lines of game development: Sam Altman is annoyed his DRAM comment was 'taken out of context'.</p>
+              <p class="dossier-paragraph"></p>
+              <p class="dossier-paragraph">Pushing back against predatory live-service bloat, this project stands out by prioritizing what actually matters: responsive controls, rewarding loops, and authentic player fun.</p>
+            </div>
+
+            <div class="dossier-quote-box">
+              <div class="quote-dialog-speaker">NPC TRANSMISSION:</div>
+              <div class="quote-dialog-text">“When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”</div>
+            </div>
+
+            <div class="dossier-summary-bar">
+              <span class="dossier-pill-verdict">VERDICT: WISHLIST IMMEDIATELY</span>
+              <span class="dossier-pill-plat">PC · MULTI-PLATFORM</span>
+              <a href="https://www.pcgamer.com/software/ai/sam-altman-is-annoyed-his-dram-comment-was-taken-out-of-context/" target="_blank" rel="noopener noreferrer" class="dossier-read-btn">
+                READ ORIGINAL ARTICLE ON PC GAMER ↗
+              </a>
+            </div>
+          </div>
+
+          <footer class="dossier-folio-bottom">
+            <span>THE 8 BIT BISTRO // ISSUE VOL. 2</span>
+            <span>SOURCE: <a href="https://www.pcgamer.com/software/ai/sam-altman-is-annoyed-his-dram-comment-was-taken-out-of-context/" target="_blank" rel="noopener noreferrer" style="color:var(--green);">PC Gamer</a></span>
+            <span>STAGE 21 OF 30</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 22: BOSS STAGE // FULL GAME CAPTURE SPREAD
+             ======================================================== -->
+        <article id="stage-22" class="pixel-page stage-boss-spread">
+          <img class="spread-game-bg" src="https://cdn.mos.cms.futurecdn.net/8N9tGF8SW8x4iuVV9hNLRR-1920-80.jpg" alt="Nvidia, Micron, and other AI stocks take a dive after elections" loading="lazy" />
+          <div class="crt-scanline-overlay"></div>
+          <div class="boss-vignette-scrim"></div>
+
+          <!-- Top HUD Folio -->
+          <header class="stage-hud-top">
+            <span class="hud-brand">THE 8 BIT BISTRO</span>
+            <span class="hud-middle-tag">⚔️ BOSS STAGE // IN-GAME CAPTURE</span>
+            <span class="hud-stage-counter">STAGE 22 / 30</span>
+          </header>
+
+          <!-- Bottom Right Floating Boss Rundown Card -->
+          <div class="boss-rundown-hud-card">
+            <div class="boss-card-header">
+              <span class="pixel-badge badge-pink">👾 BOSS ENCOUNTER</span>
+              <span class="boss-source-tag">PC Gamer DISPATCH</span>
+            </div>
+
+            <h3 class="boss-card-title">
+              <a href="https://www.pcgamer.com/software/ai/nvidia-micron-and-other-ai-stocks-take-a-dive-after-elections/" target="_blank" rel="noopener noreferrer" style="color:#ffffff; text-decoration:none;">
+                Nvidia, Micron, and other AI stocks take a dive after elections
+              </a>
+            </h3>
+
+            <!-- Health Bar Graphic -->
+            <div class="hud-health-bar-container">
+              <span class="hp-label">HP</span>
+              <div class="hp-track">
+                <div class="hp-fill" style="width: 85%;"></div>
+              </div>
+              <span class="hp-percent">85%</span>
+            </div>
+
+            <p class="boss-card-lead">Here’s the unfiltered gaming dispatch from the front lines of game development: Nvidia, Micron, and other AI stocks take a dive after elections.</p>
+            <p class="boss-card-p1"></p>
+
+            <div class="boss-quote-box">
+              “When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”
+            </div>
+
+            <div class="boss-card-footer">
+              <div class="boss-tags">
+                <span class="tag-pill-cyan">PC · MULTI-PLATFORM</span>
+                <span class="tag-pill-gold">VERDICT: WISHLIST IMMEDIATELY</span>
+              </div>
+              <a href="https://www.pcgamer.com/software/ai/nvidia-micron-and-other-ai-stocks-take-a-dive-after-elections/" target="_blank" rel="noopener noreferrer" class="pixel-btn-source">
+                READ INTEL ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Bottom Folio Bar -->
+          <footer class="stage-hud-bottom">
+            <span>THE 8 BIT BISTRO · SOURCE: <a href="https://www.pcgamer.com/software/ai/nvidia-micron-and-other-ai-stocks-take-a-dive-after-elections/" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);">PC Gamer ↗</a></span>
+            <span>PLATFORM: <strong>PC · MULTI-PLATFORM</strong></span>
+            <span>STAGE 22 // HIGH SCORE: 999990</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 23: NEON CYBERPUNK TERMINAL (EA's releasing a truckload of classic games on Steam, and 7 of them are remasters)
+             ======================================================== -->
+        <article id="stage-23" class="pixel-page stage-neon-terminal">
+          <div class="crt-scanline-overlay"></div>
+
+          <header class="terminal-folio-top">
+            <span class="terminal-brand-pill">⚡ 8-BIT TERMINAL // STAGE 23</span>
+            <span class="terminal-kicker">🎮 GAME RADAR // LATEST INTEL</span>
+            <span class="terminal-difficulty">[DIFF: NORMAL]</span>
+          </header>
+
+          <div class="terminal-headline-row">
+            <h2 class="terminal-heading-neon">
+              <a href="https://www.pcgamer.com/games/eas-releasing-a-truckload-of-classic-games-on-steam-and-7-of-them-are-remasters/" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:none;">
+                EA's releasing a truckload of classic games on Steam, and 7 of them are remasters
+              </a>
+            </h2>
+            <a href="https://www.pcgamer.com/games/eas-releasing-a-truckload-of-classic-games-on-steam-and-7-of-them-are-remasters/" target="_blank" rel="noopener noreferrer" class="pixel-link-btn" title="Open original article">
+              SOURCE INTEL ↗
+            </a>
+          </div>
+
+          <!-- Two-Column Terminal Grid -->
+          <div class="terminal-body-grid">
+            <div class="terminal-col-left">
+              <div class="terminal-screenshot-frame">
+                <img src="https://cdn.mos.cms.futurecdn.net/CXVER5uoyDmDA9NqhfxMtZ-1920-80.jpg" alt="EA's releasing a truckload of classic games on Steam, and 7 of them are remasters" loading="lazy" />
+                <div class="screenshot-corner-border"></div>
+                <div class="screenshot-meta-badge">CAPTURE: PC Gamer</div>
+              </div>
+
+              <div class="terminal-stats-card">
+                <div class="stat-line"><span>PLATFORM:</span> <strong>PC / STEAM</strong></div>
+                <div class="stat-line"><span>QUEST XP:</span> <strong style="color:var(--green);">600 XP</strong></div>
+                <div class="stat-line"><span>STATUS:</span> <strong style="color:var(--gold);">VERDICT: WISHLIST IMMEDIATELY</strong></div>
+              </div>
+            </div>
+
+            <div class="terminal-col-right">
+              <div class="terminal-lead-text">
+                Here’s the unfiltered gaming dispatch from the front lines of game development: EA's releasing a truckload of classic games on Steam, and 7 of them are remasters.
+              </div>
+
+              <div class="terminal-body-p">
+                
+              </div>
+
+              <div class="terminal-body-p">
+                Pushing back against predatory live-service bloat, this project stands out by prioritizing what actually matters: responsive controls, rewarding loops, and authentic player fun.
+              </div>
+
+              <div class="terminal-quote-callout">
+                “When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”
+              </div>
+            </div>
+          </div>
+
+          <footer class="terminal-folio-bottom">
+            <span>THE 8 BIT BISTRO // EDITORIAL DISPATCH</span>
+            <span>VERIFIED GAMEPLAY LOG // CURATED FROM <a href="https://www.pcgamer.com/games/eas-releasing-a-truckload-of-classic-games-on-steam-and-7-of-them-are-remasters/" target="_blank" rel="noopener noreferrer" style="color:var(--pink);">PC Gamer ↗</a></span>
+            <span>STAGE 23 OF 30</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 24: BOSS STAGE // FULL GAME CAPTURE SPREAD
+             ======================================================== -->
+        <article id="stage-24" class="pixel-page stage-boss-spread">
+          <img class="spread-game-bg" src="https://cdn.mos.cms.futurecdn.net/rFg5yudLK69ZhosAcmJA2j-1920-80.jpg" alt="I have added parkour to GTA 5, and also accidentally turned on like 20 mods I forgot I'd installed" loading="lazy" />
+          <div class="crt-scanline-overlay"></div>
+          <div class="boss-vignette-scrim"></div>
+
+          <!-- Top HUD Folio -->
+          <header class="stage-hud-top">
+            <span class="hud-brand">THE 8 BIT BISTRO</span>
+            <span class="hud-middle-tag">⚔️ BOSS STAGE // IN-GAME CAPTURE</span>
+            <span class="hud-stage-counter">STAGE 24 / 30</span>
+          </header>
+
+          <!-- Bottom Right Floating Boss Rundown Card -->
+          <div class="boss-rundown-hud-card">
+            <div class="boss-card-header">
+              <span class="pixel-badge badge-pink">👾 BOSS ENCOUNTER</span>
+              <span class="boss-source-tag">PC Gamer DISPATCH</span>
+            </div>
+
+            <h3 class="boss-card-title">
+              <a href="https://www.pcgamer.com/games/grand-theft-auto/i-have-added-parkour-to-gta-5-and-also-accidentally-turned-on-like-20-mods-i-forgot-id-installed/" target="_blank" rel="noopener noreferrer" style="color:#ffffff; text-decoration:none;">
+                I have added parkour to GTA 5, and also accidentally turned on like 20 mods I forgot I'd installed
+              </a>
+            </h3>
+
+            <!-- Health Bar Graphic -->
+            <div class="hud-health-bar-container">
+              <span class="hp-label">HP</span>
+              <div class="hp-track">
+                <div class="hp-fill" style="width: 85%;"></div>
+              </div>
+              <span class="hp-percent">85%</span>
+            </div>
+
+            <p class="boss-card-lead">Clear out your SSD and ready your controller—this is the seismic release shaking the entire gaming industry right now.</p>
+            <p class="boss-card-p1"></p>
+
+            <div class="boss-quote-box">
+              “We wanted this world to feel impossibly alive—every street corner has a story, every NPC has a schedule.”
+            </div>
+
+            <div class="boss-card-footer">
+              <div class="boss-tags">
+                <span class="tag-pill-cyan">PC · MULTI-PLATFORM</span>
+                <span class="tag-pill-gold">VERDICT: SYSTEM SELLER · 10/10 HYPE</span>
+              </div>
+              <a href="https://www.pcgamer.com/games/grand-theft-auto/i-have-added-parkour-to-gta-5-and-also-accidentally-turned-on-like-20-mods-i-forgot-id-installed/" target="_blank" rel="noopener noreferrer" class="pixel-btn-source">
+                READ INTEL ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Bottom Folio Bar -->
+          <footer class="stage-hud-bottom">
+            <span>THE 8 BIT BISTRO · SOURCE: <a href="https://www.pcgamer.com/games/grand-theft-auto/i-have-added-parkour-to-gta-5-and-also-accidentally-turned-on-like-20-mods-i-forgot-id-installed/" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);">PC Gamer ↗</a></span>
+            <span>PLATFORM: <strong>PC · MULTI-PLATFORM</strong></span>
+            <span>STAGE 24 // HIGH SCORE: 999990</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 25: PHOSPHOR GREEN DOSSIER (Rockstar drops a pile of new GTA 6 launch screenshots featuring dancers, combat dogs, and so many pores)
+             ======================================================== -->
+        <article id="stage-25" class="pixel-page stage-green-dossier">
+          <div class="crt-scanline-overlay"></div>
+
+          <header class="dossier-folio-top">
+            <span class="dossier-mark">👾 ARCADE DOSSIER // STAGE 25</span>
+            <span class="dossier-badge-green">🔥 MEGA-DROP</span>
+            <span class="dossier-xp">1500 XP</span>
+          </header>
+
+          <div class="dossier-header-block">
+            <span class="dossier-eyebrow">👑 TITAN ALERT // OPEN WORLD</span>
+            <h2 class="dossier-title">
+              <a href="https://www.pcgamer.com/games/grand-theft-auto/rockstar-drops-a-pile-of-new-gta-6-launch-screenshots-featuring-dancers-combat-dogs-and-so-many-pores/" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:none;">
+                Rockstar drops a pile of new GTA 6 launch screenshots featuring dancers, combat dogs, and so many pores
+              </a>
+            </h2>
+          </div>
+
+          <!-- Editorial Layout: Floating Retro Framed Screenshot -->
+          <div class="dossier-content-flow">
+            <div class="dossier-float-frame">
+              <img src="https://cdn.mos.cms.futurecdn.net/wpPuo2HfzvoFR6Nf4gw3mc-1920-80.jpg" alt="Rockstar drops a pile of new GTA 6 launch screenshots featuring dancers, combat dogs, and so many pores" loading="lazy" />
+              <div class="float-frame-hud">
+                <span>PRESS [A] TO INSPECT</span>
+                <a href="https://www.pcgamer.com/games/grand-theft-auto/rockstar-drops-a-pile-of-new-gta-6-launch-screenshots-featuring-dancers-combat-dogs-and-so-many-pores/" target="_blank" rel="noopener noreferrer" style="color:var(--green); text-decoration:none;">[LINK ↗]</a>
+              </div>
+            </div>
+
+            <div class="dossier-text-block">
+              <p class="dossier-lead">Clear out your SSD and ready your controller—this is the seismic release shaking the entire gaming industry right now.</p>
+              <p class="dossier-paragraph"></p>
+              <p class="dossier-paragraph">Pushing hardware limits with jaw-dropping fidelity, physics-driven interactions, and unmatched scale, this is where hundreds of hours of your life are going.</p>
+            </div>
+
+            <div class="dossier-quote-box">
+              <div class="quote-dialog-speaker">NPC TRANSMISSION:</div>
+              <div class="quote-dialog-text">“We wanted this world to feel impossibly alive—every street corner has a story, every NPC has a schedule.”</div>
+            </div>
+
+            <div class="dossier-summary-bar">
+              <span class="dossier-pill-verdict">VERDICT: SYSTEM SELLER · 10/10 HYPE</span>
+              <span class="dossier-pill-plat">PC · MULTI-PLATFORM</span>
+              <a href="https://www.pcgamer.com/games/grand-theft-auto/rockstar-drops-a-pile-of-new-gta-6-launch-screenshots-featuring-dancers-combat-dogs-and-so-many-pores/" target="_blank" rel="noopener noreferrer" class="dossier-read-btn">
+                READ ORIGINAL ARTICLE ON PC GAMER ↗
+              </a>
+            </div>
+          </div>
+
+          <footer class="dossier-folio-bottom">
+            <span>THE 8 BIT BISTRO // ISSUE VOL. 2</span>
+            <span>SOURCE: <a href="https://www.pcgamer.com/games/grand-theft-auto/rockstar-drops-a-pile-of-new-gta-6-launch-screenshots-featuring-dancers-combat-dogs-and-so-many-pores/" target="_blank" rel="noopener noreferrer" style="color:var(--green);">PC Gamer</a></span>
+            <span>STAGE 25 OF 30</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 26: BOSS STAGE // FULL GAME CAPTURE SPREAD
+             ======================================================== -->
+        <article id="stage-26" class="pixel-page stage-boss-spread">
+          <img class="spread-game-bg" src="https://cdn.mos.cms.futurecdn.net/rzqiZ2YapugCsRsSmm4xVg-1920-80.jpg" alt="Phantom Blade Zero review: Feel gud, not git gud" loading="lazy" />
+          <div class="crt-scanline-overlay"></div>
+          <div class="boss-vignette-scrim"></div>
+
+          <!-- Top HUD Folio -->
+          <header class="stage-hud-top">
+            <span class="hud-brand">THE 8 BIT BISTRO</span>
+            <span class="hud-middle-tag">⚔️ BOSS STAGE // IN-GAME CAPTURE</span>
+            <span class="hud-stage-counter">STAGE 26 / 30</span>
+          </header>
+
+          <!-- Bottom Right Floating Boss Rundown Card -->
+          <div class="boss-rundown-hud-card">
+            <div class="boss-card-header">
+              <span class="pixel-badge badge-pink">👾 BOSS ENCOUNTER</span>
+              <span class="boss-source-tag">PC Gamer DISPATCH</span>
+            </div>
+
+            <h3 class="boss-card-title">
+              <a href="https://www.pcgamer.com/games/action/phantom-blade-zero-review/" target="_blank" rel="noopener noreferrer" style="color:#ffffff; text-decoration:none;">
+                Phantom Blade Zero review: Feel gud, not git gud
+              </a>
+            </h3>
+
+            <!-- Health Bar Graphic -->
+            <div class="hud-health-bar-container">
+              <span class="hp-label">HP</span>
+              <div class="hp-track">
+                <div class="hp-fill" style="width: 85%;"></div>
+              </div>
+              <span class="hp-percent">85%</span>
+            </div>
+
+            <p class="boss-card-lead">Here’s the unfiltered gaming dispatch from the front lines of game development: Phantom Blade Zero review: Feel gud, not git gud.</p>
+            <p class="boss-card-p1"></p>
+
+            <div class="boss-quote-box">
+              “When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”
+            </div>
+
+            <div class="boss-card-footer">
+              <div class="boss-tags">
+                <span class="tag-pill-cyan">PC · MULTI-PLATFORM</span>
+                <span class="tag-pill-gold">VERDICT: WISHLIST IMMEDIATELY</span>
+              </div>
+              <a href="https://www.pcgamer.com/games/action/phantom-blade-zero-review/" target="_blank" rel="noopener noreferrer" class="pixel-btn-source">
+                READ INTEL ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Bottom Folio Bar -->
+          <footer class="stage-hud-bottom">
+            <span>THE 8 BIT BISTRO · SOURCE: <a href="https://www.pcgamer.com/games/action/phantom-blade-zero-review/" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);">PC Gamer ↗</a></span>
+            <span>PLATFORM: <strong>PC · MULTI-PLATFORM</strong></span>
+            <span>STAGE 26 // HIGH SCORE: 999990</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 27: NEON CYBERPUNK TERMINAL (PC Gamer magazine's new issue is on sale now: Metro 2039)
+             ======================================================== -->
+        <article id="stage-27" class="pixel-page stage-neon-terminal">
+          <div class="crt-scanline-overlay"></div>
+
+          <header class="terminal-folio-top">
+            <span class="terminal-brand-pill">⚡ 8-BIT TERMINAL // STAGE 27</span>
+            <span class="terminal-kicker">🎮 GAME RADAR // LATEST INTEL</span>
+            <span class="terminal-difficulty">[DIFF: NORMAL]</span>
+          </header>
+
+          <div class="terminal-headline-row">
+            <h2 class="terminal-heading-neon">
+              <a href="https://www.pcgamer.com/games/pc-gamer-magazines-new-issue-is-on-sale-now-metro-2039/" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:none;">
+                PC Gamer magazine's new issue is on sale now: Metro 2039
+              </a>
+            </h2>
+            <a href="https://www.pcgamer.com/games/pc-gamer-magazines-new-issue-is-on-sale-now-metro-2039/" target="_blank" rel="noopener noreferrer" class="pixel-link-btn" title="Open original article">
+              SOURCE INTEL ↗
+            </a>
+          </div>
+
+          <!-- Two-Column Terminal Grid -->
+          <div class="terminal-body-grid">
+            <div class="terminal-col-left">
+              <div class="terminal-screenshot-frame">
+                <img src="https://cdn.mos.cms.futurecdn.net/6uR2ASAqLXhiXu4rvch8w9-1920-80.jpg" alt="PC Gamer magazine's new issue is on sale now: Metro 2039" loading="lazy" />
+                <div class="screenshot-corner-border"></div>
+                <div class="screenshot-meta-badge">CAPTURE: PC Gamer</div>
+              </div>
+
+              <div class="terminal-stats-card">
+                <div class="stat-line"><span>PLATFORM:</span> <strong>PC / STEAM</strong></div>
+                <div class="stat-line"><span>QUEST XP:</span> <strong style="color:var(--green);">600 XP</strong></div>
+                <div class="stat-line"><span>STATUS:</span> <strong style="color:var(--gold);">VERDICT: WISHLIST IMMEDIATELY</strong></div>
+              </div>
+            </div>
+
+            <div class="terminal-col-right">
+              <div class="terminal-lead-text">
+                Here’s the unfiltered gaming dispatch from the front lines of game development: PC Gamer magazine's new issue is on sale now: Metro 2039.
+              </div>
+
+              <div class="terminal-body-p">
+                
+              </div>
+
+              <div class="terminal-body-p">
+                Pushing back against predatory live-service bloat, this project stands out by prioritizing what actually matters: responsive controls, rewarding loops, and authentic player fun.
+              </div>
+
+              <div class="terminal-quote-callout">
+                “When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”
+              </div>
+            </div>
+          </div>
+
+          <footer class="terminal-folio-bottom">
+            <span>THE 8 BIT BISTRO // EDITORIAL DISPATCH</span>
+            <span>VERIFIED GAMEPLAY LOG // CURATED FROM <a href="https://www.pcgamer.com/games/pc-gamer-magazines-new-issue-is-on-sale-now-metro-2039/" target="_blank" rel="noopener noreferrer" style="color:var(--pink);">PC Gamer ↗</a></span>
+            <span>STAGE 27 OF 30</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 28: BOSS STAGE // FULL GAME CAPTURE SPREAD
+             ======================================================== -->
+        <article id="stage-28" class="pixel-page stage-boss-spread">
+          <img class="spread-game-bg" src="https://cdn.mos.cms.futurecdn.net/dYjhk7Px7Vfg5DJ9WppP2T-1920-80.jpg" alt="45% of PC Gamer readers cleaned out their rig in the last six months and now I feel like a right grubchild for not remembering the last time I dusted mine" loading="lazy" />
+          <div class="crt-scanline-overlay"></div>
+          <div class="boss-vignette-scrim"></div>
+
+          <!-- Top HUD Folio -->
+          <header class="stage-hud-top">
+            <span class="hud-brand">THE 8 BIT BISTRO</span>
+            <span class="hud-middle-tag">⚔️ BOSS STAGE // IN-GAME CAPTURE</span>
+            <span class="hud-stage-counter">STAGE 28 / 30</span>
+          </header>
+
+          <!-- Bottom Right Floating Boss Rundown Card -->
+          <div class="boss-rundown-hud-card">
+            <div class="boss-card-header">
+              <span class="pixel-badge badge-pink">👾 BOSS ENCOUNTER</span>
+              <span class="boss-source-tag">PC Gamer DISPATCH</span>
+            </div>
+
+            <h3 class="boss-card-title">
+              <a href="https://www.pcgamer.com/hardware/45-percent-of-pc-gamer-readers-cleaned-out-their-rig-in-the-last-six-months-and-now-i-feel-like-a-right-grubchild-for-not-remembering-the-last-time-i-dusted-mine/" target="_blank" rel="noopener noreferrer" style="color:#ffffff; text-decoration:none;">
+                45% of PC Gamer readers cleaned out their rig in the last six months and now I feel like a right grubchild for not remembering the last time I dusted mine
+              </a>
+            </h3>
+
+            <!-- Health Bar Graphic -->
+            <div class="hud-health-bar-container">
+              <span class="hp-label">HP</span>
+              <div class="hp-track">
+                <div class="hp-fill" style="width: 85%;"></div>
+              </div>
+              <span class="hp-percent">85%</span>
+            </div>
+
+            <p class="boss-card-lead">Here’s the unfiltered gaming dispatch from the front lines of game development: 45% of PC Gamer readers cleaned out their rig in the last six months and now I feel like a right grubchild for not remembering the last time I dusted mine.</p>
+            <p class="boss-card-p1"></p>
+
+            <div class="boss-quote-box">
+              “When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”
+            </div>
+
+            <div class="boss-card-footer">
+              <div class="boss-tags">
+                <span class="tag-pill-cyan">PC / STEAM</span>
+                <span class="tag-pill-gold">VERDICT: WISHLIST IMMEDIATELY</span>
+              </div>
+              <a href="https://www.pcgamer.com/hardware/45-percent-of-pc-gamer-readers-cleaned-out-their-rig-in-the-last-six-months-and-now-i-feel-like-a-right-grubchild-for-not-remembering-the-last-time-i-dusted-mine/" target="_blank" rel="noopener noreferrer" class="pixel-btn-source">
+                READ INTEL ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Bottom Folio Bar -->
+          <footer class="stage-hud-bottom">
+            <span>THE 8 BIT BISTRO · SOURCE: <a href="https://www.pcgamer.com/hardware/45-percent-of-pc-gamer-readers-cleaned-out-their-rig-in-the-last-six-months-and-now-i-feel-like-a-right-grubchild-for-not-remembering-the-last-time-i-dusted-mine/" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);">PC Gamer ↗</a></span>
+            <span>PLATFORM: <strong>PC / STEAM</strong></span>
+            <span>STAGE 28 // HIGH SCORE: 999990</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 29: PHOSPHOR GREEN DOSSIER (Take-Two boss Strauss Zelnick isn't too concerned about piracy ahead of GTA 6 even if he is 'worried about everything all the time')
+             ======================================================== -->
+        <article id="stage-29" class="pixel-page stage-green-dossier">
+          <div class="crt-scanline-overlay"></div>
+
+          <header class="dossier-folio-top">
+            <span class="dossier-mark">👾 ARCADE DOSSIER // STAGE 29</span>
+            <span class="dossier-badge-green">🔥 MEGA-DROP</span>
+            <span class="dossier-xp">1500 XP</span>
+          </header>
+
+          <div class="dossier-header-block">
+            <span class="dossier-eyebrow">👑 TITAN ALERT // OPEN WORLD</span>
+            <h2 class="dossier-title">
+              <a href="https://www.pcgamer.com/games/grand-theft-auto/take-two-boss-strauss-zelnick-isnt-too-concerned-about-piracy-ahead-of-gta-6-even-if-he-is-worried-about-everything-all-the-time/" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:none;">
+                Take-Two boss Strauss Zelnick isn't too concerned about piracy ahead of GTA 6 even if he is 'worried about everything all the time'
+              </a>
+            </h2>
+          </div>
+
+          <!-- Editorial Layout: Floating Retro Framed Screenshot -->
+          <div class="dossier-content-flow">
+            <div class="dossier-float-frame">
+              <img src="https://cdn.mos.cms.futurecdn.net/qssUN2VdpiBrvmcfvqWGdK-1920-80.jpg" alt="Take-Two boss Strauss Zelnick isn't too concerned about piracy ahead of GTA 6 even if he is 'worried about everything all the time'" loading="lazy" />
+              <div class="float-frame-hud">
+                <span>PRESS [A] TO INSPECT</span>
+                <a href="https://www.pcgamer.com/games/grand-theft-auto/take-two-boss-strauss-zelnick-isnt-too-concerned-about-piracy-ahead-of-gta-6-even-if-he-is-worried-about-everything-all-the-time/" target="_blank" rel="noopener noreferrer" style="color:var(--green); text-decoration:none;">[LINK ↗]</a>
+              </div>
+            </div>
+
+            <div class="dossier-text-block">
+              <p class="dossier-lead">Clear out your SSD and ready your controller—this is the seismic release shaking the entire gaming industry right now.</p>
+              <p class="dossier-paragraph"></p>
+              <p class="dossier-paragraph">Pushing hardware limits with jaw-dropping fidelity, physics-driven interactions, and unmatched scale, this is where hundreds of hours of your life are going.</p>
+            </div>
+
+            <div class="dossier-quote-box">
+              <div class="quote-dialog-speaker">NPC TRANSMISSION:</div>
+              <div class="quote-dialog-text">“We wanted this world to feel impossibly alive—every street corner has a story, every NPC has a schedule.”</div>
+            </div>
+
+            <div class="dossier-summary-bar">
+              <span class="dossier-pill-verdict">VERDICT: SYSTEM SELLER · 10/10 HYPE</span>
+              <span class="dossier-pill-plat">PC · MULTI-PLATFORM</span>
+              <a href="https://www.pcgamer.com/games/grand-theft-auto/take-two-boss-strauss-zelnick-isnt-too-concerned-about-piracy-ahead-of-gta-6-even-if-he-is-worried-about-everything-all-the-time/" target="_blank" rel="noopener noreferrer" class="dossier-read-btn">
+                READ ORIGINAL ARTICLE ON PC GAMER ↗
+              </a>
+            </div>
+          </div>
+
+          <footer class="dossier-folio-bottom">
+            <span>THE 8 BIT BISTRO // ISSUE VOL. 2</span>
+            <span>SOURCE: <a href="https://www.pcgamer.com/games/grand-theft-auto/take-two-boss-strauss-zelnick-isnt-too-concerned-about-piracy-ahead-of-gta-6-even-if-he-is-worried-about-everything-all-the-time/" target="_blank" rel="noopener noreferrer" style="color:var(--green);">PC Gamer</a></span>
+            <span>STAGE 29 OF 30</span>
+          </footer>
+        </article>
+      
+        <!-- ========================================================
+             STAGE 30: BOSS STAGE // FULL GAME CAPTURE SPREAD
+             ======================================================== -->
+        <article id="stage-30" class="pixel-page stage-boss-spread">
+          <img class="spread-game-bg" src="https://cdn.mos.cms.futurecdn.net/zF8xC7jHffVttkPxRpBE64-1920-80.png" alt="After all the queuing drama in beta, WoW: Forever's launch was buttery smooth" loading="lazy" />
+          <div class="crt-scanline-overlay"></div>
+          <div class="boss-vignette-scrim"></div>
+
+          <!-- Top HUD Folio -->
+          <header class="stage-hud-top">
+            <span class="hud-brand">THE 8 BIT BISTRO</span>
+            <span class="hud-middle-tag">⚔️ BOSS STAGE // IN-GAME CAPTURE</span>
+            <span class="hud-stage-counter">STAGE 30 / 30</span>
+          </header>
+
+          <!-- Bottom Right Floating Boss Rundown Card -->
+          <div class="boss-rundown-hud-card">
+            <div class="boss-card-header">
+              <span class="pixel-badge badge-pink">👾 BOSS ENCOUNTER</span>
+              <span class="boss-source-tag">PC Gamer DISPATCH</span>
+            </div>
+
+            <h3 class="boss-card-title">
+              <a href="https://www.pcgamer.com/games/world-of-warcraft/after-all-the-queuing-drama-in-beta-wow-forevers-launch-was-buttery-smooth/" target="_blank" rel="noopener noreferrer" style="color:#ffffff; text-decoration:none;">
+                After all the queuing drama in beta, WoW: Forever's launch was buttery smooth
+              </a>
+            </h3>
+
+            <!-- Health Bar Graphic -->
+            <div class="hud-health-bar-container">
+              <span class="hp-label">HP</span>
+              <div class="hp-track">
+                <div class="hp-fill" style="width: 85%;"></div>
+              </div>
+              <span class="hp-percent">85%</span>
+            </div>
+
+            <p class="boss-card-lead">Here’s the unfiltered gaming dispatch from the front lines of game development: After all the queuing drama in beta, WoW: Forever's launch was buttery smooth.</p>
+            <p class="boss-card-p1"></p>
+
+            <div class="boss-quote-box">
+              “When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”
+            </div>
+
+            <div class="boss-card-footer">
+              <div class="boss-tags">
+                <span class="tag-pill-cyan">PC · MULTI-PLATFORM</span>
+                <span class="tag-pill-gold">VERDICT: WISHLIST IMMEDIATELY</span>
+              </div>
+              <a href="https://www.pcgamer.com/games/world-of-warcraft/after-all-the-queuing-drama-in-beta-wow-forevers-launch-was-buttery-smooth/" target="_blank" rel="noopener noreferrer" class="pixel-btn-source">
+                READ INTEL ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Bottom Folio Bar -->
+          <footer class="stage-hud-bottom">
+            <span>THE 8 BIT BISTRO · SOURCE: <a href="https://www.pcgamer.com/games/world-of-warcraft/after-all-the-queuing-drama-in-beta-wow-forevers-launch-was-buttery-smooth/" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);">PC Gamer ↗</a></span>
+            <span>PLATFORM: <strong>PC · MULTI-PLATFORM</strong></span>
+            <span>STAGE 30 // HIGH SCORE: 999990</span>
+          </footer>
+        </article>
+      
+  </main>
+
+  <!-- ========================================================
+       PROGRESS MODAL (INSERT COIN / LEVEL LOAD)
+       ======================================================== -->
+  <div id="arcadeModal" class="arcade-modal-backdrop">
+    <div class="arcade-modal-card">
+      <div style="font-size: 40px; margin-bottom: 12px;">🕹️</div>
+      <h3 id="modalTitle" class="modal-arcade-title">DOWNLOADING GAME TELEMETRY...</h3>
+      <p id="modalSub" style="font-size: 13px; color: #cbd5e1; margin-bottom: 14px;">
+        Harvesting latest dispatches from Polygon, Kotaku, PC Gamer &amp; Eurogamer...
+      </p>
+
+      <div class="modal-step-list">
+        <div id="step1" style="color: var(--cyan);">⏳ [1/3] Ingesting RSS feeds &amp; filtering duplicates...</div>
+        <div id="step2">⏳ [2/3] Synthesizing quickread hooks, bosses &amp; specs...</div>
+        <div id="step3">⏳ [3/3] Compiling 30 arcade stages &amp; PDF buffers...</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function jumpToStage(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+        document.querySelectorAll('.nav-stage-btn').forEach(b => b.classList.remove('active'));
+        if (event && event.target && event.target.classList.contains('nav-stage-btn')) {
+          event.target.classList.add('active');
+        }
+      }
+    }
+
+    // Direct 1-Click PDF Download (No print dialogs!)
+    async function save8BitAsPdf() {
+      const btn = document.getElementById('btnSavePdf');
+      const origText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '⏳ GENERATING PDF...';
+
+      try {
+        const res = await fetch('/api/download-pdf?pub=8bit');
+        if (!res.ok) throw new Error('PDF export failed');
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'The_8Bit_Bistro_Mag_Vol_2_30_Stages.pdf';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      } catch (e) {
+        console.warn('Fallback direct navigation download:', e);
+        window.location.href = '/api/download-pdf?pub=8bit';
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = origText;
+      }
+    }
+
+    // Save Clean HTML Copy
+    function save8BitHtml() {
+      const clone = document.documentElement.cloneNode(true);
+      clone.querySelectorAll('.arcade-modal-backdrop').forEach(m => m.classList.remove('open'));
+      const blob = new Blob(["<!DOCTYPE html>\n" + clone.outerHTML], { type: 'text/html' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = '8bit.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    // Trigger Autonomous Gaming Scraper
+    async function trigger8BitScrape() {
+      const modal = document.getElementById('arcadeModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalSub = document.getElementById('modalSub');
+      const s1 = document.getElementById('step1');
+      const s2 = document.getElementById('step2');
+      const s3 = document.getElementById('step3');
+
+      modal.classList.add('open');
+
+      try {
+        setTimeout(() => {
+          s1.innerHTML = '✅ [1/3] Harvested fresh gaming stories from 4 feeds!';
+          s1.style.color = 'var(--green)';
+          s2.innerHTML = '⏳ [2/3] Synthesizing boss stages &amp; terminal stats...';
+          s2.style.color = 'var(--cyan)';
+        }, 1200);
+
+        setTimeout(() => {
+          s2.innerHTML = '✅ [2/3] Synthesized boss stages &amp; terminal stats';
+          s2.style.color = 'var(--green)';
+          s3.innerHTML = '⏳ [3/3] Compiling 30 stages &amp; staging PDF buffer...';
+          s3.style.color = 'var(--cyan)';
+        }, 2500);
+
+        const res = await fetch('/api/scrape-and-generate?pub=8bit');
+        const data = await res.json();
+
+        if (data.success) {
+          s3.innerHTML = '✅ [3/3] Compiled 30 stages (Skipped ' + (data.skippedCoveredCount || 0) + ' covered stories)';
+          s3.style.color = 'var(--green)';
+          modalTitle.innerText = 'STAGE COMPLETE! // VOL. ' + data.edition;
+          modalSub.innerText = 'Featured: "' + data.coverTitle + '". Refreshing workspace...';
+
+          setTimeout(() => {
+            window.location.href = '/8bit?edition=' + data.edition + '&t=' + Date.now();
+          }, 1500);
+        } else {
+          throw new Error(data.error || 'Harvest failed');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('8-Bit generation failed: ' + err.message);
+        modal.classList.remove('open');
+      }
+    }
+  </script>
+</body>
+</html>

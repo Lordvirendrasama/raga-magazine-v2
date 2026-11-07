@@ -3,21 +3,29 @@ const fs = require('fs');
 const path = require('path');
 
 const EDGE_PATH = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
-const CACHED_PDF_PATH = path.join(__dirname, 'raga-magazine-latest.pdf');
+const CACHED_RAGA_PDF = path.join(__dirname, 'raga-magazine-latest.pdf');
+const CACHED_8BIT_PDF = path.join(__dirname, '8bit-magazine-latest.pdf');
 
-let isGenerating = false;
-let pendingResolvers = [];
+const isGeneratingMap = { raga: false, '8bit': false };
+const pendingResolversMap = { raga: [], '8bit': [] };
 
-async function generateMagazinePdf(port = 3000) {
-  if (isGenerating) {
-    console.log('PDF generation already in progress, queuing listener...');
+function getPdfPath(pub = 'raga') {
+  return pub === '8bit' ? CACHED_8BIT_PDF : CACHED_RAGA_PDF;
+}
+
+async function generateMagazinePdf(port = 3000, pub = 'raga') {
+  const normPub = (pub === '8bit' || pub === 'eightbit') ? '8bit' : 'raga';
+  const cachedPdfPath = getPdfPath(normPub);
+
+  if (isGeneratingMap[normPub]) {
+    console.log(`[PDF GENERATOR - ${normPub.toUpperCase()}] PDF generation already in progress, queuing listener...`);
     return new Promise((resolve, reject) => {
-      pendingResolvers.push({ resolve, reject });
+      pendingResolversMap[normPub].push({ resolve, reject });
     });
   }
 
-  isGenerating = true;
-  console.log('📄 [PDF GENERATOR] Starting headless Edge PDF compilation...');
+  isGeneratingMap[normPub] = true;
+  console.log(`📄 [PDF GENERATOR - ${normPub.toUpperCase()}] Starting headless Edge PDF compilation...`);
   const start = Date.now();
 
   try {
@@ -36,47 +44,56 @@ async function generateMagazinePdf(port = 3000) {
     const page = await browser.newPage();
     await page.setViewport({ width: 1200, height: 1600 });
 
-    const targetUrl = `http://localhost:${port}/?pdf_export=1`;
+    const targetUrl = normPub === '8bit'
+      ? `http://localhost:${port}/8bit.html?pdf_export=1`
+      : `http://localhost:${port}/raga.html?pdf_export=1`;
+
     console.log(`📡 [PDF GENERATOR] Navigating to ${targetUrl}...`);
 
     await page.goto(targetUrl, {
-      waitUntil: 'networkidle2',
-      timeout: 35000
+      waitUntil: 'load',
+      timeout: 60000
     });
 
-    console.log('🖨️ [PDF GENERATOR] Printing 30 pages to PDF...');
+    // Brief settling wait for CSS fonts and layout calculations
+    await new Promise(r => setTimeout(r, 2000));
+
+    console.log(`🖨️ [PDF GENERATOR] Printing 30 ${normPub.toUpperCase()} pages to PDF...`);
     const pdfBuffer = await page.pdf({
       format: 'A4',
       printBackground: true,
-      margin: { top: 0, right: 0, bottom: 0, left: 0 }
+      margin: { top: 0, right: 0, bottom: 0, left: 0 },
+      timeout: 120000
     });
 
     await browser.close();
 
-    fs.writeFileSync(CACHED_PDF_PATH, pdfBuffer);
+    fs.writeFileSync(cachedPdfPath, pdfBuffer);
     const dur = ((Date.now() - start) / 1000).toFixed(2);
-    console.log(`✅ [PDF GENERATOR COMPLETE] Compiled ${CACHED_PDF_PATH} in ${dur}s! Size: ${(pdfBuffer.length / 1024).toFixed(1)} KB`);
+    console.log(`✅ [PDF GENERATOR COMPLETE] Compiled ${cachedPdfPath} in ${dur}s! Size: ${(pdfBuffer.length / 1024).toFixed(1)} KB`);
 
     // Notify any queued requests
-    const resolvers = [...pendingResolvers];
-    pendingResolvers = [];
+    const resolvers = [...pendingResolversMap[normPub]];
+    pendingResolversMap[normPub] = [];
     resolvers.forEach(r => r.resolve(pdfBuffer));
 
     return pdfBuffer;
   } catch (err) {
-    console.error('❌ [PDF GENERATOR ERROR]:', err);
-    const resolvers = [...pendingResolvers];
-    pendingResolvers = [];
+    console.error(`❌ [PDF GENERATOR ERROR - ${normPub.toUpperCase()}]:`, err);
+    const resolvers = [...pendingResolversMap[normPub]];
+    pendingResolversMap[normPub] = [];
     resolvers.forEach(r => r.reject(err));
     throw err;
   } finally {
-    isGenerating = false;
+    isGeneratingMap[normPub] = false;
   }
 }
 
-function getLatestPdf() {
-  if (fs.existsSync(CACHED_PDF_PATH)) {
-    return fs.readFileSync(CACHED_PDF_PATH);
+function getLatestPdf(pub = 'raga') {
+  const normPub = (pub === '8bit' || pub === 'eightbit') ? '8bit' : 'raga';
+  const cachedPdfPath = getPdfPath(normPub);
+  if (fs.existsSync(cachedPdfPath)) {
+    return fs.readFileSync(cachedPdfPath);
   }
   return null;
 }
@@ -84,6 +101,6 @@ function getLatestPdf() {
 module.exports = {
   generateMagazinePdf,
   getLatestPdf,
-  CACHED_PDF_PATH
+  CACHED_RAGA_PDF,
+  CACHED_8BIT_PDF
 };
-

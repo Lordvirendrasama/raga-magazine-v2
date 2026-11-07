@@ -1,29 +1,41 @@
-# Raga Magazine 🎵📖
+# Antigravity Magazine OS 🎵🕹️📖
 
-> **The Journal of South Asian Sound** — An autonomous, editorial-grade 30-page digital and print magazine with live RSS news harvesting, casual Gen-Z quickread re-writing, interactive web layout, and direct 1-click A4 print PDF compilation.
+> **Dual Publication Autonomous Publishing Suite** featuring **Raga Magazine** (South Asian Sound & Culture) and **The 8 Bit Bistro Mag** (Retro Arcade Gaming News). Powered by autonomous live RSS scraping, dynamic quickread synthesis, dual-kiosk selection portal, and 1-click A4 vector print PDF export.
 
 ---
 
-## 🌟 Key Features
+## 🏛️ The Publications
 
-* **30-Page Alternating Visual Editorial:**
-  * **Full Photographic Negative Space Spreads:** Canopy sky, asymmetric left flank, obsidian monolith, and stage shadow wells.
-  * **Crisp Editorial Text Sheets:** High-contrast White sheets and Deep Luxury Black sheets with flowing float image wrappers.
-* **Autonomous Live News Scraper:**
-  * Live crawler harvesting stories from **Rolling Stone India** and **The Indian Music Diaries**.
-  * **Deep Archive Crawling:** Dynamically pages through RSS archives to continuously find fresh news.
-  * **Issue Memory & Duplicate Protection:** Remembers all stories covered across previous volumes in `editions.json` and skips duplicate coverage.
-* **Casual Print-Magazine Quickread Rewriter:**
-  * Strips generic press release boilerplate and transforms raw articles into casual, hook-filled quickreads.
-  * Contextual tone detection (Tributes & Obituaries, Live Concerts & Tours, Album Drops, In-depth Interviews, Heritage Folk, Vernacular Hip-Hop).
-  * Real artist quotes and facts extracted directly from source text.
-* **Interactive Story Rundown Cards & PDF Hyperlinks:**
-  * Redesigned floating story cards on full photo spreads with frosted glassmorphism and clear layout.
-  * **Vector PDF Hyperlink Preservation:** Direct clickable hyperlinks (`<a>` tags) embedded across the web view and the exported PDF to open original live articles.
-* **1-Click Direct Vector PDF Generator:**
+### 1. 🎵 RAGA MAGAZINE — The Journal of South Asian Sound
+* **Focus:** Contemporary South Asian sound, indie rock, vernacular hip-hop, electronic crossover, acoustic folk, and tour captures.
+* **Live Feeds:** Harvested dynamically from *Rolling Stone India* & *The Indian Music Diaries*.
+* **Aesthetic:** High-fashion editorial, full-bleed photographic negative space spreads, and crisp black-and-white print sheets.
+* **Workspace URL:** `http://localhost:3000/raga`
+
+### 2. 👾 THE 8 BIT BISTRO MAG — The Arcade Gazette of Video Game News
+* **Focus:** Video game releases, open-world titans, patch meta breakdowns, retro remakes, hardware specs, and developer intel.
+* **Live Feeds:** Harvested dynamically from *Polygon*, *Kotaku*, *PC Gamer* & *Eurogamer*.
+* **Aesthetic:** Pixel art retro arcade, CRT scanlines, arcade HUD headers (`[1P READY // CREDITS: 99]`), boss fight health bars, inventory stats, and coin-op styling.
+* **Workspace URL:** `http://localhost:3000/8bit`
+
+---
+
+## 🌟 Core Features Across Both Publications
+
+* **Dual-Cabinet Kiosk Selection Portal (`/`):**
+  * Interactive 3D entrance portal allowing the reader to choose their publication cabinet.
+* **Autonomous 30-Page Live News Harvester:**
+  * One-click trigger crawls live RSS feeds across publication-specific sources.
+  * **Zero Duplicate Coverage:** Dedicated issue memory (`editions-raga.json` and `editions-8bit.json`) tracks covered stories across every volume and skips previously covered stories.
+* **Dynamic Quickread Rewriter:**
+  * Transforms raw news into casual, hook-filled magazine quickreads.
+  * Extracts genuine quotes, key facts, platform metadata (`PC`, `PS5`, `SWITCH`, `XBOX`), and custom verdicts.
+* **Clickable Source Hyperlinks (Web + Vector PDF):**
+  * Every article retains active `<a>` hyperlinks to the original publisher articles in both the web reader and exported PDF.
+* **1-Click Direct Vector PDF Engine:**
   * Headless Microsoft Edge / Chromium compilation powered by `puppeteer-core`.
-  * Generates an exact 30-page A4 print PDF (`210mm x 297mm`) with margins, backgrounds, and clickable links preserved.
-  * Pre-renders in the background for instant 1-click downloads with no browser print dialogs.
+  * Generates exact A4 print-ready PDFs (`210mm x 297mm`) with margins, backgrounds, and clickable links preserved.
+  * Instant download with 0 browser print dialogs.
 
 ---
 
@@ -38,25 +50,26 @@ npm install
 ```bash
 node server.js
 ```
-The magazine will run on `http://localhost:3000/`.
 
-### 3. Usage & Controls
-* **Preview Mode:** Smooth page scrolling, navigation bar (Cover + Pages 01–29).
-* **⚡ Scrape & Generate 30 Pages:** Trigger a fresh crawl of Rolling Stone India & The Indian Music Diaries to compile a brand-new 30-page issue with zero duplicate news.
-* **📄 Save as PDF:** Directly download the full 30-page high-res vector PDF with one click.
-* **✏️ Edit Mode:** In-place visual editing of headlines, leads, image sizing, shapes, and photo replacement.
+### 3. Open in Browser
+* **Selection Kiosk:** [`http://localhost:3000/`](http://localhost:3000/)
+* **Raga Magazine:** [`http://localhost:3000/raga`](http://localhost:3000/raga)
+* **The 8 Bit Bistro Mag:** [`http://localhost:3000/8bit`](http://localhost:3000/8bit)
 
 ---
 
-## 🛠️ Tech Stack
+## 📡 API Endpoints
 
-* **Frontend:** Vanilla HTML5, CSS3 (Modern Flexbox, CSS Grid, Negative Space Scrims, Print CSS `@media print`).
-* **Backend:** Node.js HTTP server.
-* **PDF Compilation:** `puppeteer-core` driving headless Microsoft Edge / Chromium.
-* **Data & Memory:** Dynamic JSON edition store (`editions.json`) and live XML/RSS parsers.
+* `GET /` — Dual-cabinet Selection Kiosk Portal.
+* `GET /raga` — Raga Magazine 30-page workspace.
+* `GET /8bit` — The 8 Bit Bistro 30-stage arcade workspace.
+* `GET /api/scrape-and-generate?pub=raga` — Scrape music news and compile new Raga issue.
+* `GET /api/scrape-and-generate?pub=8bit` — Scrape gaming news and compile new 8-Bit stage issue.
+* `GET /api/download-pdf?pub=raga` — Direct download vector PDF of Raga Magazine.
+* `GET /api/download-pdf?pub=8bit` — Direct download vector PDF of The 8 Bit Bistro Mag.
 
 ---
 
 ## 📜 License
 
-MIT License. Curated for independent South Asian sound culture.
+MIT License.

@@ -1,7 +1,9 @@
 const fs = require('fs');
 const path = require('path');
+const { scrapeAndGenerate8BitMagazine } = require('./8bit-generator');
 
 const EDITIONS_FILE = path.join(__dirname, 'editions.json');
+const EDITIONS_RAGA_FILE = path.join(__dirname, 'editions-raga.json');
 
 // Curated high-resolution editorial backup images (authentic South Asian & indie music photography)
 const CURATED_EDITORIAL_IMAGES = [
@@ -522,8 +524,12 @@ function formatPage(s, pageNum) {
 }
 
 // Generate complete Cover + 29 alternating pages with ONLY UNCOVERED stories!
-async function scrapeAndGenerateMagazine() {
-  console.log('⚡ [GENERATOR ENGINE] Starting live harvest & checking previous editions...');
+async function scrapeAndGenerateMagazine(pub = 'raga') {
+  if (pub === '8bit' || pub === 'eightbit') {
+    return await scrapeAndGenerate8BitMagazine();
+  }
+
+  console.log('⚡ [GENERATOR ENGINE - RAGA] Starting live harvest & checking previous editions...');
 
   // 1. Load editions memory to check what news has already been covered
   let memory = { activeEdition: 24, history: [] };
@@ -791,9 +797,10 @@ async function scrapeAndGenerateMagazine() {
 
   // Write updated files
   fs.writeFileSync(path.join(__dirname, 'index.html'), currentHtml, 'utf8');
+  fs.writeFileSync(path.join(__dirname, 'raga.html'), currentHtml, 'utf8');
   fs.writeFileSync(path.join(__dirname, 'raga-magazine-issue.html'), currentHtml, 'utf8');
 
-  // Update editions.json memory store with newly covered stories so future runs skip them
+  // Update editions.json and editions-raga.json memory store with newly covered stories so future runs skip them
   memory.activeEdition = newVol;
   if (!memory.history) memory.history = [];
   
@@ -813,6 +820,7 @@ async function scrapeAndGenerateMagazine() {
     editorialNotes: `Autonomous live harvest generated on ${new Date().toISOString()} - Verified 100% fresh news; skipped ${skippedCount} previously covered stories.`
   });
   fs.writeFileSync(EDITIONS_FILE, JSON.stringify(memory, null, 2), 'utf8');
+  fs.writeFileSync(EDITIONS_RAGA_FILE, JSON.stringify(memory, null, 2), 'utf8');
 
   console.log(`✅ [GENERATION COMPLETE] Successfully compiled Issue ${newVol} featuring "${heroCoverStory.title}"! Skipped ${skippedCount} previously covered stories.`);
   return {

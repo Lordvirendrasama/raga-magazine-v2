@@ -2050,6 +2050,7 @@
   <header class="editor-top-bar">
     <div class="editor-bar-main">
       <div class="editor-bar-left">
+        <a href="/" class="btn-editor" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; color:#cbd5e1; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); border-radius:6px; padding:6px 12px; font-weight:700; font-size:12px;">← Kiosk</a>
         <span class="editor-brand-logo">RAGA EDITOR</span>
         <span id="editorStatus" class="editor-mode-indicator">Preview Mode</span>
       </div>
@@ -4601,7 +4602,7 @@
       const filename = `${editionText}_30_Pages.pdf`;
 
       try {
-        const response = await fetch('/api/download-pdf');
+        const response = await fetch('/api/download-pdf?pub=raga');
         if (!response.ok) throw new Error('PDF download failed');
 
         const blob = await response.blob();
@@ -4622,7 +4623,7 @@
       } catch (err) {
         console.warn('Direct fetch error, falling back to direct navigation:', err);
         // Fallback: window.location directly triggers browser attachment download
-        window.location.href = '/api/download-pdf';
+        window.location.href = '/api/download-pdf?pub=raga';
         if (toast) {
           setTimeout(() => { toast.style.display = 'none'; }, 2200);
         }
@@ -4714,7 +4715,7 @@
           s3.style.fontWeight = '700';
         }, 2500);
 
-        const res = await fetch('/api/scrape-and-generate');
+        const res = await fetch('/api/scrape-and-generate?pub=raga');
         const data = await res.json();
 
         if (data.success) {
