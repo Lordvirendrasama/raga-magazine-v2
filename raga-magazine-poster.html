@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raga Magazine — The Living Geometry of Indian Classical Music</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f5f0e4;
+      --ink: #1a1714;
+      --muted: #6b665c;
+      --rule: #d5cebf;
+      --accent: #b44322;
+      --tint: #ece4d2;
+      --tint-border: #d9cdb6;
+      --serif-display: 'Playfair Display', 'Cinzel', 'Iowan Old Style', Georgia, serif;
+      --serif-body: 'Iowan Old Style', 'Charter', Georgia, serif;
+      --mono: 'IBM Plex Mono', ui-monospace, 'JetBrains Mono', monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background-color: var(--paper);
+      background-image:
+        radial-gradient(circle, rgba(26,23,20,0.06) 1px, transparent 1.2px),
+        linear-gradient(to right, rgba(0,0,0,0.015) 1px, transparent 1px);
+      background-size: 14px 14px, 48px 48px;
+      font: 14.5px/1.58 var(--serif-body);
+      -webkit-font-smoothing: antialiased;
+    }
+    .page {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 40px 60px 56px;
+    }
+
+    .top-rule {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font: 11px/1.4 var(--mono);
+      color: var(--muted);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding-bottom: 12px;
+      border-bottom: 1.5px solid var(--ink);
+    }
+    .top-rule .brand {
+      font-weight: 600;
+      color: var(--ink);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .top-rule .brand-badge {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 2px 7px;
+      font-size: 9.5px;
+      letter-spacing: 0.15em;
+    }
+
+    .eyebrow-row {
+      padding: 18px 0 24px;
+      font: 11px/1.4 var(--mono);
+      color: var(--muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .eyebrow-row::before {
+      content: '';
+      display: inline-block;
+      width: 28px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1.headline {
+      font-family: var(--serif-display);
+      font-weight: 900;
+      font-size: clamp(52px, 6.8vw, 92px);
+      line-height: 0.98;
+      letter-spacing: -0.015em;
+      margin: 0 0 20px;
+      max-width: 20ch;
+      color: var(--ink);
+    }
+    h1.headline .strike {
+      text-decoration: line-through;
+      text-decoration-thickness: 3.5px;
+      text-decoration-color: var(--accent);
+      color: var(--ink);
+    }
+    h1.headline .accent {
+      font-style: italic;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .deck {
+      max-width: 82ch;
+      font: italic 20px/1.48 var(--serif-body);
+      color: var(--ink);
+      margin: 0 0 24px;
+    }
+    .deck b {
+      font-style: normal;
+      color: var(--accent);
+      font-weight: 600;
+      padding: 1px 6px;
+      background: var(--tint);
+      border-radius: 2px;
+      border-bottom: 1px solid var(--tint-border);
+    }
+
+    .accent-rule {
+      width: 88px;
+      height: 3px;
+      background: var(--accent);
+      margin: 8px 0 36px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px 64px;
+      padding-top: 8px;
+      border-top: 1.5px solid var(--rule);
+    }
+    .cell {
+      padding: 26px 0 10px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .cell:nth-last-child(-n+2) {
+      border-bottom: none;
+    }
+    .cell .num {
+      font: 11px/1.4 var(--mono);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+    }
+    .cell .num span.bar {
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.7;
+    }
+    .cell h3 {
+      font-family: var(--serif-display);
+      font-weight: 800;
+      font-size: 23px;
+      line-height: 1.22;
+      letter-spacing: -0.01em;
+      margin: 0 0 12px;
+      color: var(--ink);
+    }
+    .cell p {
+      margin: 0 0 16px;
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: 50ch;
+      color: var(--ink);
+    }
+    .cell .quote {
+      background: var(--tint);
+      border-left: 3px solid var(--accent);
+      padding: 12px 14px;
+      font: 12.5px/1.55 var(--mono);
+      color: var(--ink);
+      max-width: 52ch;
+      border-radius: 0 3px 3px 0;
+    }
+    .cell .quote::before {
+      content: '“ ';
+      font-family: var(--serif-display);
+      font-size: 15px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+    .cell .quote::after {
+      content: ' ”';
+      font-family: var(--serif-display);
+      font-size: 15px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .footer {
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 1.5px solid var(--ink);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 28px;
+      align-items: center;
+      font: 11px/1.4 var(--mono);
+      color: var(--muted);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .pro-tip {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      border: 1px solid var(--rule);
+      background: rgba(255,255,255,0.35);
+      max-width: 82%;
+    }
+    .pro-tip .badge {
+      font: 9.5px/1 var(--mono);
+      letter-spacing: 0.22em;
+      padding: 6px 9px;
+      background: var(--ink);
+      color: var(--paper);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .pro-tip .text {
+      font: italic 13.5px/1.45 var(--serif-body);
+      color: var(--ink);
+      text-transform: none;
+      letter-spacing: 0;
+    }
+    .pro-tip .text b {
+      color: var(--accent);
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    @media (max-width: 960px) {
+      .grid { grid-template-columns: 1fr; }
+      .cell { border-bottom: 1px solid var(--rule); }
+      .cell:last-child { border-bottom: none; }
+      .footer { grid-template-columns: 1fr; gap: 16px; }
+      .pro-tip { max-width: 100%; }
+      .page { padding: 24px 24px 36px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="top-rule" data-od-id="top-rule">
+      <div class="brand">
+        <span class="brand-badge">RAGA</span>
+        <span>MAGAZINE · FOLIO XIV · NEW DELHI · CHENNAI · KOLKATA</span>
+      </div>
+      <div>VOL. 28 · NOVEMBER 2026</div>
+    </div>
+
+    <div class="eyebrow-row" data-od-id="eyebrow">
+      AN EDITORIAL ESSAY &amp; LISTENING MANIFESTO ON INDIAN CLASSICAL MUSIC
+    </div>
+
+    <h1 class="headline" data-od-id="headline">
+      A raga is never just a <span class="strike">scale</span> —<br />
+      it is the living <span class="accent">geometry</span><br />
+      of human emotion.
+    </h1>
+
+    <p class="deck" data-od-id="deck">
+      Six unvarnished truths on navigating Hindustani and Carnatic traditions in the modern era — <b>the truth of riyaz</b>, the fallacy of tempered keyboards, and how to train your ear to inhabit the microtonal space between the swaras.
+    </p>
+
+    <div class="accent-rule"></div>
+
+    <div class="grid" data-od-id="grid">
+      <section class="cell" data-od-id="cell-1">
+        <div class="num"><span class="bar"></span>01 · RIYAZ</div>
+        <h3>The four a.m. mirror of the soul</h3>
+        <p>Riyaz is not mechanical finger drills; it is a ruthless interrogation of intention. Spending three hours sustaining the fundamental Shadja (Sa) until the natural acoustic harmonics bloom throughout the room teaches more about tonal authority than memorizing fifty fast taans.</p>
+        <div class="quote">Tune the tanpura to C#. Sing the middle Sa on one quiet, continuous exhalation without vibrato. Wait until the fifth (Pancham) appears as an acoustic phantom in the chamber on its own.</div>
+      </section>
+
+      <section class="cell" data-od-id="cell-2">
+        <div class="num"><span class="bar"></span>02 · THE SHRUTI</div>
+        <h3>The 22 microtones Western tuning erased</h3>
+        <p>Equal temperament flattened twelve intervals into rigid cages so harmonic organs could switch keys at will. The Komal Gandhar of Darbari Kanada does not sit on the tempered black key — it trembles fractionally lower, steeped in the contemplative gravity of midnight.</p>
+        <div class="quote">Compare the Komal Ga of Raga Todi against Raga Kafi on a fretless sarod. The pitch delta is barely twenty cents, but the emotional trajectory shifts from spiritual longing to worldly yearning.</div>
+      </section>
+
+      <section class="cell" data-od-id="cell-3">
+        <div class="num"><span class="bar"></span>03 · MANODHARMA</div>
+        <h3>Architectural improvisation with no safety net</h3>
+        <p>In both Carnatic and Hindustani systems, the composition (bandish or kriti) is merely the launch dock. The true vessel is alapana and alap: real-time monumental architecture sculpted without sheet music, where every phrase is born, tested, and dissolved in thin air.</p>
+        <div class="quote">Study Ustad Amir Khan’s 1968 Marwa. Notice how he bypasses Pancham entirely, sustaining Komal Rishabh against the pure Sa to forge twenty minutes of unbearable, divine tension.</div>
+      </section>
+
+      <section class="cell" data-od-id="cell-4">
+        <div class="num"><span class="bar"></span>04 · GHARANA &amp; BANI</div>
+        <h3>Living streams of thought, not museum vaults</h3>
+        <p>A gharana was never meant to be a walled bastion of guarded secrets. The explosive rhythmic bol-taans of Gwalior and the meditative contemplation of Kirana both share the same tonal compass — tradition exists to focus your conviction, not paralyze your musical curiosity.</p>
+        <div class="quote">Listen to Kishori Amonkar’s Bhoop. Notice how she welded the intellectual austerity of Jaipur-Atrauli with emotive swara-lagao, defying traditional purists to create a lasting aesthetic revolution.</div>
+      </section>
+
+      <section class="cell" data-od-id="cell-5">
+        <div class="num"><span class="bar"></span>05 · TALA &amp; LAYA</div>
+        <h3>Time as a cosmic circle, never an arrow</h3>
+        <p>Western tempo rushes linearly toward an inevitable climax; Indian laya breathes in recursive celestial loops. Whether counting Teentaal’s sixteen beats or Carnatic Adi Tala’s eight aksharas, the exhilarating resolution at the Sam is not an end, but an eternal homecoming.</p>
+        <div class="quote">Keep Vilambit Teentaal at 24 BPM. Feel the immense gravitational void between Khali on beat 9 and the explosive arrival on Sam at beat 1. If your inner pulse wavers, your fast layakaari collapses.</div>
+      </section>
+
+      <section class="cell" data-od-id="cell-6">
+        <div class="num"><span class="bar"></span>06 · RASIKAS</div>
+        <h3>The listener completes the electrical circuit</h3>
+        <p>An Indian classical baithak is an intimate circular ecosystem. Without the attentive rasika nodding at the sam or offering a quiet, visceral "wah", the swaras remain unfinished; the audience’s discernment calls forth the maestro’s highest standard of honesty.</p>
+        <div class="quote">Close your eyes and listen to a complete 40-minute Bhairavi thumri in one sitting without touching your screen. Great ragas do not seek to entertain you; they seek to reorder your inner stillness.</div>
+      </section>
+    </div>
+
+    <div class="footer" data-od-id="footer">
+      <div class="pro-tip">
+        <span class="badge">PRO TIP</span>
+        <span class="text">Never ask a maestro for <b>"something short and fast."</b> A raga is not a three-minute song; it is a sacred topography. Give the <b>alap at least twenty minutes</b> to let your pulse align with the tanpura.</span>
+      </div>
+      <div></div>
+      <div>RAGA MAGAZINE · ARCHIVE FOLIO · SAVE &amp; SHARE</div>
+    </div>
+  </div>
+</body>
+</html>
+

@@ -1,0 +1,23 @@
+{
+  "name": "raga-magazine",
+  "version": "1.0.0",
+  "description": "Autonomous 30-page editorial music magazine with live RSS news scraping, casual quickreads, and vector PDF compilation",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "generate": "node -e \"require('./generator-engine').scrapeAndGenerateMagazine()\""
+  },
+  "keywords": [
+    "magazine",
+    "editorial",
+    "pdf-generator",
+    "music-journal",
+    "south-asian-sound",
+    "rss-scraper"
+  ],
+  "author": "Lordvirendrasama",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer-core": "^25.16.0"
+  }
+}
