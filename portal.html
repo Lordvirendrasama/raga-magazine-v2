@@ -171,32 +171,17 @@
       box-shadow: 0 10px 28px rgba(255, 51, 31, 0.6);
     }
 
-    /* 8 Bit Bistro Card Styling */
+    /* 8 Bit Bistro (Nintendo Power Edition) Card Styling */
     .card-8bit {
-      border: 2px solid rgba(0, 240, 255, 0.35);
-      background: linear-gradient(160deg, #0e0a18 0%, #07050e 100%);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(0, 240, 255, 0.05);
+      border: 2px solid rgba(230, 0, 18, 0.45);
+      background: linear-gradient(160deg, #180d12 0%, #0d0e16 100%);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(230, 0, 18, 0.08);
       position: relative;
     }
 
-    .card-8bit::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.15),
-        rgba(0, 0, 0, 0.15) 2px,
-        transparent 2px,
-        transparent 4px
-      );
-      pointer-events: none;
-      z-index: 1;
-    }
-
     .card-8bit:hover {
-      border-color: var(--8bit-cyan);
-      box-shadow: 0 30px 70px rgba(0, 240, 255, 0.28), 0 0 35px rgba(255, 0, 85, 0.2), inset 0 0 60px rgba(0, 240, 255, 0.1);
+      border-color: #e60012;
+      box-shadow: 0 30px 70px rgba(230, 0, 18, 0.35), 0 0 35px rgba(255, 235, 0, 0.25), inset 0 0 60px rgba(230, 0, 18, 0.15);
     }
 
     .card-8bit .pub-badge {
@@ -392,33 +377,33 @@
         </div>
       </a>
 
-      <!-- PUBLICATION 2: THE 8 BIT BISTRO MAG -->
+      <!-- PUBLICATION 2: THE 8 BIT BISTRO MAG (NINTENDO POWER STYLE) -->
       <a href="/8bit" class="pub-card card-8bit" id="choose8Bit">
         <div>
           <div class="pub-meta-top">
-            <span class="pub-badge">ARCADE COIN-OP</span>
-            <span class="pub-stats" style="font-family:var(--font-pixel); font-size:9.5px; color:var(--8bit-cyan);">1P READY // 30 STAGES</span>
+            <span class="pub-badge" style="background:#e60012; color:#fff;">NINTENDO POWER STYLE</span>
+            <span class="pub-stats" style="font-family:var(--font-grotesk); font-weight:800; font-size:11px; color:#ffeb00;">VOL. 03 · 30 PACKED PAGES</span>
           </div>
 
-          <h2 class="pub-name">THE 8 BIT BISTRO</h2>
-          <div class="pub-subline" style="font-family:var(--font-pixel); font-size:10px; color:#ffb700; letter-spacing:0.04em;">
-            THE ARCADE GAZETTE OF GAMING NEWS
+          <h2 class="pub-name" style="color:#ffeb00; text-shadow: 2px 2px 0 #000, 4px 4px 0 #e60012;">THE 8 BIT BISTRO</h2>
+          <div class="pub-subline" style="font-family:var(--font-grotesk); font-weight:800; font-size:11px; color:#fff; letter-spacing:0.12em; text-transform:uppercase;">
+            ★ NOW YOU'RE PLAYING WITH POWER! ★
           </div>
 
           <p class="pub-desc">
-            The definitive gaming quarterly. Daily quests, game launches, studio tea, patch breakdowns, and hardware reviews. Harvested live from <strong>Kotaku</strong>, <strong>Polygon</strong>, <strong>PC Gamer</strong> &amp; <strong>Eurogamer</strong> with pixel art styling.
+            The definitive gaming quarterly inspired by classic <strong>Nintendo Power</strong> &amp; <strong>Official Nintendo Magazine</strong>. Boss strategy guides, Pak Watch previews, Classified secrets, and counselor tips. Harvested live from <strong>Kotaku</strong>, <strong>Polygon</strong>, <strong>PC Gamer</strong> &amp; <strong>Eurogamer</strong>.
           </p>
 
           <div class="pub-tags">
-            <span class="tag-pill" style="border-color:rgba(0,240,255,0.3); color:#00f0ff;">👾 Video Games &amp; Consoles</span>
-            <span class="tag-pill" style="border-color:rgba(255,0,85,0.3); color:#ff85a2;">🕹️ Pixel Art &amp; Scanlines</span>
-            <span class="tag-pill" style="border-color:rgba(0,255,102,0.3); color:#00ff88;">🎮 PC / PS5 / Switch / Xbox</span>
-            <span class="tag-pill" style="border-color:rgba(255,183,0,0.3); color:#ffc83b;">📄 Retro Arcade PDF</span>
+            <span class="tag-pill" style="border-color:rgba(230,0,18,0.5); color:#ff4d5e;">🍄 Official Nintendo Style</span>
+            <span class="tag-pill" style="border-color:rgba(255,235,0,0.5); color:#ffeb00;">⭐ Pak Watch &amp; Classified</span>
+            <span class="tag-pill" style="border-color:rgba(0,195,227,0.5); color:#00c3e3;">🎮 Switch / PC / PS5 / Xbox</span>
+            <span class="tag-pill" style="border-color:rgba(0,200,83,0.5); color:#00e676;">📄 1-Click Print PDF</span>
           </div>
         </div>
 
-        <div class="pub-btn">
-          <span>[PRESS START TO PLAY] 👾</span>
+        <div class="pub-btn" style="background:linear-gradient(135deg, #e60012 0%, #b8000e 100%); color:#fff; border:1px solid #ffd000; box-shadow:0 6px 20px rgba(230,0,18,0.4);">
+          <span>PLAY WITH POWER! ↗</span>
         </div>
       </a>
     </div>

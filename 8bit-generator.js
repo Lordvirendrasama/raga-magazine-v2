@@ -82,12 +82,11 @@ function extractQuotes(text) {
 function detectPlatforms(text) {
   const t = text.toLowerCase();
   const plats = [];
+  if (t.includes('switch') || t.includes('nintendo')) plats.push('NINTENDO SWITCH');
   if (t.includes('pc') || t.includes('steam') || t.includes('windows')) plats.push('PC / STEAM');
-  if (t.includes('ps5') || t.includes('playstation')) plats.push('PS5');
-  if (t.includes('switch') || t.includes('nintendo')) plats.push('SWITCH');
-  if (t.includes('xbox') || t.includes('series x')) plats.push('XBOX');
-  if (t.includes('steam deck')) plats.push('STEAM DECK');
-  return plats.length > 0 ? plats.join(' · ') : 'PC · MULTI-PLATFORM';
+  if (t.includes('ps5') || t.includes('playstation')) plats.push('PLAYSTATION 5');
+  if (t.includes('xbox') || t.includes('series x')) plats.push('XBOX SERIES X');
+  return plats.length > 0 ? plats.join(' · ') : 'NINTENDO SWITCH · MULTI-PLATFORM';
 }
 
 function rewriteAsGamingQuickread(title, contentOrDesc, source, link) {
@@ -98,78 +97,78 @@ function rewriteAsGamingQuickread(title, contentOrDesc, source, link) {
   const realQuote = extractQuotes(rawText);
   const sentences = rawText.split(/(?<=[.!?])\s+/).filter(s => s.length > 25 && !s.toLowerCase().includes('cookie') && !s.toLowerCase().includes('subscribe'));
 
-  let kicker = "👾 QUEST LOG // ARCADE DISPATCH";
-  let badge = "🎮 GAMING SCOOP";
+  let kicker = "★ POWER FEATURE // EXCLUSIVE DISPATCH";
+  let badge = "POWER PICK";
   let hookTitle = cleanTitle;
   let lead = "";
   let p1 = "";
   let p2 = "";
   let quote = "";
   let fullExplainer = "";
-  let verdict = "VERDICT: DAY ONE MUST-PLAY";
-  let difficulty = "NORMAL";
-  let xp = "500 XP";
+  let verdict = "POWER METER: 10/10 ★ NINTENDO POWER PICK";
+  let counselorTip = "Keep your thumb ready on the dash button—timing is everything!";
+  let powerRating = 98;
 
   if (lower.includes('gta') || lower.includes('grand theft auto') || lower.includes('rockstar') || lower.includes('open-world') || lower.includes('open world')) {
-    kicker = "👑 TITAN ALERT // OPEN WORLD";
-    badge = "🔥 MEGA-DROP";
-    hookTitle = `Open World Mayhem: ${cleanTitle}`;
-    lead = `Clear out your SSD and ready your controller—this is the seismic release shaking the entire gaming industry right now.`;
+    kicker = "👑 TITAN ALERT // OPEN WORLD MAYHEM";
+    badge = "MEGA HIT";
+    hookTitle = `Open World Heavyweight: ${cleanTitle}`;
+    lead = `Clear your memory cards and get ready for the biggest seismic release in modern gaming history.`;
     p1 = sentences.slice(0, 2).join(' ') || rawText.substring(0, 250);
-    p2 = sentences.slice(2, 4).join(' ') || `Pushing hardware limits with jaw-dropping fidelity, physics-driven interactions, and unmatched scale, this is where hundreds of hours of your life are going.`;
+    p2 = sentences.slice(2, 4).join(' ') || `Pushing hardware limits with breathtaking fidelity and endless emergent chaos, this is where hundreds of hours of your gaming life are headed.`;
     quote = realQuote || `“We wanted this world to feel impossibly alive—every street corner has a story, every NPC has a schedule.”`;
-    fullExplainer = `${cleanTitle}. In the frame: High-octane next-gen open world gameplay capture. The countdown begins.`;
-    verdict = "VERDICT: SYSTEM SELLER · 10/10 HYPE";
-    difficulty = "HARDCORE";
-    xp = "1500 XP";
+    counselorTip = "Explore off the beaten path early on to unlock high-tier safe houses and vehicles!";
+    fullExplainer = `${cleanTitle}. In the frame: High-octane next-gen open world gameplay capture.`;
+    verdict = "POWER METER: 10/10 ★ SYSTEM SELLER";
+    powerRating = 99;
   } else if (lower.includes('patch') || lower.includes('update') || lower.includes('rebalance') || lower.includes('buff') || lower.includes('nerf')) {
-    kicker = "⚔️ PATCH NOTES // SYSTEM BALANCE";
-    badge = "🛠️ UPDATE v1.0";
+    kicker = "🔍 CLASSIFIED INFORMATION // SECRET META GUIDE";
+    badge = "TOP SECRET";
     hookTitle = `Meta Shakeup: ${cleanTitle}`;
-    lead = `We combed through the patch notes so you don't have to get wrecked in your next ranked lobby.`;
+    lead = `The counselors combed through the latest balance notes so you can dominate your next tournament lobby.`;
     p1 = sentences.slice(0, 2).join(' ') || rawText.substring(0, 250);
-    p2 = sentences.slice(2, 4).join(' ') || `With major quality-of-life tweaks, rebalanced weapon scaling, and crucial hit-box refinements, the competitive meta is completely reset.`;
+    p2 = sentences.slice(2, 4).join(' ') || `With major quality-of-life adjustments, weapon scaling overhauls, and frame-data tuning, the competitive meta is completely rewritten.`;
     quote = realQuote || `“Our goal was to eliminate toxic cheese strategies while rewarding tactical mastery and team coordination.”`;
+    counselorTip = "Re-map your secondary ability to the shoulder trigger for instantaneous reaction timing!";
     fullExplainer = `${cleanTitle}. In the frame: Overhauled combat mechanics and balance adjustments live on servers now.`;
-    verdict = "VERDICT: META UPGRADE · ESSENTIAL UPDATE";
-    difficulty = "MEDIUM";
-    xp = "350 XP";
-  } else if (lower.includes('zelda') || lower.includes('ocarina') || lower.includes('remake') || lower.includes('retro') || lower.includes('nintendo')) {
-    kicker = "🕹️ RETRO VAULT // NOSTALGIA REBORN";
-    badge = "🪙 INSERT COIN";
-    hookTitle = `Timeless Classic: ${cleanTitle}`;
-    lead = `Some games never die; they just get upgraded with modern lighting, smoother frame rates, and immaculate love.`;
+    verdict = "POWER METER: 9.6/10 ★ ESSENTIAL UPDATE";
+    powerRating = 95;
+  } else if (lower.includes('zelda') || lower.includes('ocarina') || lower.includes('remake') || lower.includes('retro') || lower.includes('nintendo') || lower.includes('mario')) {
+    kicker = "🕹️ RETRO VAULT // NINTENDO POWER HERITAGE";
+    badge = "LEGENDARY";
+    hookTitle = `Timeless Masterpiece: ${cleanTitle}`;
+    lead = `Some games never die; they return with modern lighting, buttery 60 FPS performance, and unmatched magic.`;
     p1 = sentences.slice(0, 2).join(' ') || rawText.substring(0, 250);
-    p2 = sentences.slice(2, 4).join(' ') || `Preserving the original atmosphere while rebuilding the geometry from the ground up, this remake reminds us why we fell in love with gaming in the first place.`;
+    p2 = sentences.slice(2, 4).join(' ') || `Preserving the original atmosphere while rebuilding the geometry from the ground up, this release reminds us why we fell in love with gaming in the first place.`;
     quote = realQuote || `“Respecting the original vision wasn't optional—every texture was handcrafted to match what childhood memory felt like.”`;
+    counselorTip = "Equip the Pegasus Boots before entering the catacombs to breeze past moving trap blocks!";
     fullExplainer = `${cleanTitle}. In the frame: Legendary retro adventures reimagined for modern displays. Pure nostalgia.`;
-    verdict = "VERDICT: MASTERPIECE TRIBUTE · 9.8/10";
-    difficulty = "CLASSIC";
-    xp = "1000 XP";
+    verdict = "POWER METER: 9.9/10 ★ TIMELESS CLASSIC";
+    powerRating = 99;
   } else if (lower.includes('rpg') || lower.includes('path of exile') || lower.includes('mass effect') || lower.includes('dragon age')) {
-    kicker = "🧙 DEEP RPG // BUILD CRAFTING";
-    badge = "⚡ 100+ HOUR QUEST";
+    kicker = "🧙 DEEP RPG // STRATEGY & BUILD CRAFTING";
+    badge = "100+ HOURS";
     hookTitle = `Build Mastery: ${cleanTitle}`;
     lead = `Say goodbye to your weekend sleep schedule. ${cleanTitle}.`;
     p1 = sentences.slice(0, 2).join(' ') || rawText.substring(0, 250);
-    p2 = sentences.slice(2, 4).join(' ') || `Featuring deep skill trees, visceral loot drops, and intricate dialogue trees penned by veteran narrative designers, this is RPG comfort food at its finest.`;
+    p2 = sentences.slice(2, 4).join(' ') || `Featuring deep skill trees, visceral loot progression, and branching narrative dialogue written by veteran role-playing masters, this is RPG comfort food at its peak.`;
     quote = realQuote || `“We built this for players who want to dissect character stats and uncover hidden lore in dark catacombs.”`;
+    counselorTip = "Stack elemental resistance gear before attempting the fifth labyrinth boss!";
     fullExplainer = `${cleanTitle}. In the frame: Deep gameplay progression, intricate character stats, and massive boss encounters.`;
-    verdict = "VERDICT: ESSENTIAL RPG · ADDICTIVE LOOT";
-    difficulty = "EXPERT";
-    xp = "1200 XP";
+    verdict = "POWER METER: 9.7/10 ★ ESSENTIAL RPG";
+    powerRating = 97;
   } else {
-    kicker = "🎮 GAME RADAR // LATEST INTEL";
-    badge = "👾 INTEL REPORT";
-    hookTitle = `Arcade Dispatch: ${cleanTitle}`;
-    lead = `Here’s the unfiltered gaming dispatch from the front lines of game development: ${cleanTitle}.`;
+    kicker = "🎮 PAK WATCH // UPCOMING RELEASES & RADAR";
+    badge = "PAK WATCH";
+    hookTitle = `Counselor Dispatch: ${cleanTitle}`;
+    lead = `Here is the unfiltered dispatch straight from the game development front lines: ${cleanTitle}.`;
     p1 = sentences.slice(0, 2).join(' ') || rawText.substring(0, 250);
-    p2 = sentences.slice(2, 4).join(' ') || `Pushing back against predatory live-service bloat, this project stands out by prioritizing what actually matters: responsive controls, rewarding loops, and authentic player fun.`;
-    quote = realQuote || `“When games are built with genuine passion rather than corporate quarterly targets, players feel it instantly.”`;
+    p2 = sentences.slice(2, 4).join(' ') || `Pushing back against predatory live-service bloat, this title shines by delivering what Nintendo fans cherish most: responsive controls, rewarding loops, and pure player fun.`;
+    quote = realQuote || `“When games are crafted with genuine passion rather than corporate revenue checklists, players feel the difference instantly.”`;
+    counselorTip = "Practice your jump cancels in the training arena to master aerial combo extensions!";
     fullExplainer = `${cleanTitle}. In the frame: Studio gameplay capture and developmental milestones.`;
-    verdict = "VERDICT: WISHLIST IMMEDIATELY";
-    difficulty = "NORMAL";
-    xp = "600 XP";
+    verdict = "POWER METER: 9.5/10 ★ MUST PLAY";
+    powerRating = 94;
   }
 
   return {
@@ -180,11 +179,11 @@ function rewriteAsGamingQuickread(title, contentOrDesc, source, link) {
     p1,
     p2,
     quote,
+    counselorTip,
     fullExplainer,
     platform,
     verdict,
-    difficulty,
-    xp,
+    powerRating,
     sourceLink: link || '#'
   };
 }
@@ -256,13 +255,13 @@ async function harvestGamingStories(coveredMap, targetCount = 35) {
     }
   }
 
-  console.log(`🕹️ [8-BIT HARVESTER] Harvested ${freshArticles.length} gaming stories (Skipped ${skippedArticles.length} previously covered).`);
+  console.log(`🕹️ [NINTENDO POWER HARVESTER] Harvested ${freshArticles.length} gaming stories (Skipped ${skippedArticles.length} previously covered).`);
   return { freshArticles, skippedCount: skippedArticles.length };
 }
 
-// Generate the 30-Stage Pixel Art Magazine
+// Generate the 30-Page Nintendo Magazine Inspired Publication
 async function scrapeAndGenerate8BitMagazine() {
-  console.log('👾 [8-BIT ENGINE] Initializing autonomous gaming crawl & stage generation...');
+  console.log('⚡ [NINTENDO POWER ENGINE] Initializing autonomous crawl & Nintendo Magazine layout generation...');
 
   // 1. Read editions memory
   let memory = { activeEdition: 0, history: [] };
@@ -292,7 +291,7 @@ async function scrapeAndGenerate8BitMagazine() {
       const idx = freshArticles.length;
       freshArticles.push({
         source: 'Polygon',
-        title: `Next-Gen Gaming Protocol: Stage ${idx + 1} System Dispatch`,
+        title: `Nintendo Power Dispatch: Stage ${idx + 1} System Feature`,
         link: 'https://www.polygon.com',
         desc: 'Cutting edge graphics, real-time lighting pipelines, and modular indie designs redefine modern gameplay.',
         image: CURATED_GAMING_IMAGES[idx % CURATED_GAMING_IMAGES.length]
@@ -313,308 +312,386 @@ async function scrapeAndGenerate8BitMagazine() {
     return s;
   });
 
-  // 4. Build Complete 30-Stage Pixel Art Document
+  // 4. Build Complete 30-Page Nintendo Magazine Document
   let mainContentHtml = '';
 
-  // STAGE 01: HERO COVER
+  // PAGE 01: HERO COVER (NINTENDO POWER STYLE)
   mainContentHtml += `
     <!-- ========================================================
-         STAGE 01: HERO COVER SCREEN (INSERT COIN)
+         PAGE 01: HERO COVER (NINTENDO POWER STYLE)
          ======================================================== -->
-    <article id="stage-1" class="pixel-page stage-cover">
-      <img class="cover-hero-img" src="${heroStory.image}" alt="${heroStory.title}" />
-      <div class="crt-scanline-overlay"></div>
-      <div class="pixel-scrim-dark"></div>
+    <article id="stage-1" class="nintendo-page page-cover">
+      <img class="cover-hero-photo" src="${heroStory.image}" alt="${heroStory.title}" />
+      <div class="cover-vignette-scrim"></div>
 
-      <div class="stage-cover-content">
-        <!-- Top Arcade Header -->
-        <div class="cover-top-arcade-hud">
-          <span class="hud-arcade-tag">★ THE 8 BIT BISTRO ★ // QUARTERLY ARCADE GAZETTE</span>
-          <span class="hud-insert-coin">[1P READY // CREDITS: 99]</span>
-          <span class="hud-vol-tag">VOL. ${String(newVol).padStart(2, '0')} // STAGE 01</span>
+      <div class="cover-content-wrap">
+        <!-- Top Nintendo Racing Stripe & Masthead Bar -->
+        <header class="cover-top-strap">
+          <div class="strap-capsule-logo">
+            <span class="capsule-pill">( THE 8 BIT BISTRO )</span>
+          </div>
+          <div class="strap-edition-label">
+            <span>OFFICIAL GAMING MAGAZINE // VOL. ${String(newVol).padStart(2, '0')} // 30 PACKED PAGES</span>
+          </div>
+          <div class="strap-date-tag">
+            <span>${issueDate.toUpperCase()}</span>
+          </div>
+        </header>
+
+        <!-- Giant Nintendo Power Display Masthead -->
+        <div class="cover-masthead-center">
+          <div class="masthead-slanted-title">THE 8 BIT BISTRO</div>
+          <div class="masthead-yellow-subline">★ NOW YOU'RE PLAYING WITH POWER! ★</div>
         </div>
 
-        <!-- Giant Pixel Masthead -->
-        <div class="cover-masthead-box">
-          <h1 class="pixel-masthead-title">THE 8 BIT BISTRO</h1>
-          <div class="pixel-masthead-subline">THE ARCADE GAZETTE OF VIDEO GAME NEWS &amp; CULTURE</div>
+        <!-- Official Gold Seal of Quality Badge -->
+        <div class="official-gold-seal">
+          <div class="seal-inner">
+            <div class="seal-stars">★★★★★</div>
+            <div class="seal-text-small">OFFICIAL 8-BIT</div>
+            <div class="seal-text-bold">SEAL OF QUALITY</div>
+            <div class="seal-sub">VERIFIED EDITION</div>
+          </div>
         </div>
 
-        <!-- Center Screen Feature Showcase -->
-        <div class="cover-feature-dossier">
-          <div class="pixel-badge-row">
-            <span class="pixel-badge badge-cyan">${heroStory.hook.badge}</span>
-            <span class="pixel-badge badge-pink">${heroStory.hook.platform}</span>
-            <span class="pixel-badge badge-green">${heroStory.source} EXCLUSIVE</span>
+        <!-- Cover Stories Teaser Callouts Left Flank -->
+        <div class="cover-side-teasers">
+          <div class="teaser-card">
+            <span class="teaser-badge">PAK WATCH</span>
+            <div class="teaser-text">WHAT'S NEXT FOR SWITCH &amp; PC?</div>
+          </div>
+          <div class="teaser-card">
+            <span class="teaser-badge" style="background:#ffdc00; color:#000;">CLASSIFIED</span>
+            <div class="teaser-text">TOP SECRET CODES &amp; META SHAKEUPS</div>
+          </div>
+          <div class="teaser-card">
+            <span class="teaser-badge" style="background:#00c853; color:#fff;">STRATEGY</span>
+            <div class="teaser-text">EXCLUSIVE BOSS BATTLE MAPS INSIDE</div>
+          </div>
+        </div>
+
+        <!-- Bottom Giant Feature Lead Block -->
+        <div class="cover-bottom-feature-card">
+          <div class="feature-tag-row">
+            <span class="feature-tilted-badge">💥 EXCLUSIVE COVER STORY</span>
+            <span class="feature-source-badge">${heroStory.source} INTEL</span>
+            <span class="feature-plat-badge">${heroStory.hook.platform}</span>
           </div>
 
-          <h2 class="cover-headline-pixel">
-            <a href="${heroStory.link}" target="_blank" rel="noopener noreferrer" class="cover-title-link">
+          <h2 class="cover-feature-heading">
+            <a href="${heroStory.link}" target="_blank" rel="noopener noreferrer" class="cover-link-title">
               ${heroStory.title}
             </a>
           </h2>
 
-          <p class="cover-lead-summary">
+          <p class="cover-feature-lead">
             ${heroStory.hook.lead}
           </p>
 
-          <div class="cover-quickread-box">
-            <p>${heroStory.hook.p1}</p>
-          </div>
-
-          <div class="cover-interactive-row">
-            <a href="${heroStory.link}" target="_blank" rel="noopener noreferrer" class="pixel-btn-action">
-              <span>▶ READ SOURCE DISPATCH ↗</span>
+          <div class="cover-feature-actions">
+            <a href="${heroStory.link}" target="_blank" rel="noopener noreferrer" class="nintendo-btn-primary">
+              READ FULL DISPATCH ON ${heroStory.source.toUpperCase()} ↗
             </a>
-            <span class="cover-score-pill">METASCORE: 9.8/10</span>
+            <div class="cover-counselor-callout">
+              <span class="counselor-bubble-title">COUNSELOR'S TIP:</span>
+              <span class="counselor-bubble-text">${heroStory.hook.counselorTip}</span>
+            </div>
           </div>
         </div>
 
-        <!-- Bottom Arcade Marquee Barcode Strap -->
-        <div class="cover-bottom-hud">
-          <div class="hud-barcode-segment">
-            <div class="pixel-barcode">|| | ||| || |||| | ||| || ||||</div>
-            <span class="hud-serial-no">SN# 8BIT-STAGE-VOL${newVol}-2026</span>
+        <!-- Bottom Running Folio Barcode -->
+        <footer class="cover-footer-barcode-bar">
+          <div class="barcode-wrap">
+            <div class="barcode-bars">|||| | ||||| || |||| || ||| |||| | ||</div>
+            <span class="barcode-sn">NINTENDO-POWER-VOL${newVol}-ISSUE30</span>
           </div>
-          <div class="hud-date-stamp">
-            <span>RELEASE: ${issueDate.toUpperCase()} // ALL RIGHTS RESERVED</span>
+          <div class="footer-tagline">
+            <span>THE 8 BIT BISTRO // THE OFFICIAL PRINT &amp; DIGITAL GAMING QUARTERLY</span>
           </div>
-          <div class="hud-quarter-stamp">
-            <span>PRINT &amp; PDF ARCHIVE EDITION</span>
-          </div>
-        </div>
+        </footer>
       </div>
     </article>
   `;
 
-  // STAGES 02 - 30: ALTERNATING ARCADE LAYOUTS
+  // PAGES 02 - 30: ALTERNATING NINTENDO MAGAZINE SPREADS
   interiorStories.forEach((s, idx) => {
-    const stageNum = idx + 2; // stages 2 through 30
-    const isSpread = stageNum % 2 === 0; // Even stages: Full Screen Game Boss Spread
-    const isNeonDark = stageNum % 4 === 3; // Type A: Neon Cyberpunk Terminal
-    // Otherwise Type B: Phosphor Green / Retro Terminal
+    const pageNum = idx + 2; // Pages 2 to 30
+    const isSpread = pageNum % 2 === 0; // Even pages: POWER FEATURE // FULL STRATEGY SPREAD
+    const isClassified = pageNum % 4 === 3; // Type B: CLASSIFIED INFORMATION (White Glossy Sheet)
+    // Otherwise Type C: PAK WATCH // SYSTEM RADAR (Neon Cyan & Charcoal Sheet)
 
     if (isSpread) {
-      // FULL BLEED GAME BOSS SPREAD
+      // TEMPLATE 1: POWER FEATURE // STRATEGY GUIDE SPREAD (Cinematic Photographic Spread)
       mainContentHtml += `
         <!-- ========================================================
-             STAGE ${String(stageNum).padStart(2, '0')}: BOSS STAGE // FULL GAME CAPTURE SPREAD
+             PAGE ${String(pageNum).padStart(2, '0')}: POWER STRATEGY SPREAD (${s.title})
              ======================================================== -->
-        <article id="stage-${stageNum}" class="pixel-page stage-boss-spread">
-          <img class="spread-game-bg" src="${s.image}" alt="${s.title}" loading="lazy" />
-          <div class="crt-scanline-overlay"></div>
-          <div class="boss-vignette-scrim"></div>
+        <article id="stage-${pageNum}" class="nintendo-page page-strategy-spread">
+          <img class="spread-hero-photo" src="${s.image}" alt="${s.title}" loading="lazy" />
+          <div class="spread-cinema-scrim"></div>
 
-          <!-- Top HUD Folio -->
-          <header class="stage-hud-top">
-            <span class="hud-brand">THE 8 BIT BISTRO</span>
-            <span class="hud-middle-tag">⚔️ BOSS STAGE // IN-GAME CAPTURE</span>
-            <span class="hud-stage-counter">STAGE ${String(stageNum).padStart(2, '0')} / 30</span>
+          <!-- Running Top Header -->
+          <header class="nintendo-folio-top">
+            <div class="folio-left">
+              <span class="folio-capsule">( THE 8 BIT BISTRO )</span>
+              <span class="folio-section-tag">★ POWER STRATEGY GUIDE ★</span>
+            </div>
+            <div class="folio-middle">
+              <span class="hazard-tape-mini">⚡ LEVEL BOSS ENCOUNTER // ${s.source.toUpperCase()} ⚡</span>
+            </div>
+            <div class="folio-right">
+              <span class="page-number-pill">PAGE ${String(pageNum).padStart(2, '0')}</span>
+            </div>
           </header>
 
-          <!-- Bottom Right Floating Boss Rundown Card -->
-          <div class="boss-rundown-hud-card">
-            <div class="boss-card-header">
-              <span class="pixel-badge badge-pink">👾 BOSS ENCOUNTER</span>
-              <span class="boss-source-tag">${s.source} DISPATCH</span>
+          <!-- Floating Strategy Card in Bottom Right -->
+          <div class="strategy-floating-card">
+            <div class="card-racing-top">
+              <span class="card-eyebrow">⚔️ COUNSELOR'S STRATEGY ALERT</span>
+              <span class="card-power-meter">POWER: ${s.hook.powerRating}%</span>
             </div>
 
-            <h3 class="boss-card-title">
+            <h3 class="strategy-card-title">
               <a href="${s.link}" target="_blank" rel="noopener noreferrer" style="color:#ffffff; text-decoration:none;">
                 ${s.title}
               </a>
             </h3>
 
-            <!-- Health Bar Graphic -->
-            <div class="hud-health-bar-container">
-              <span class="hp-label">HP</span>
-              <div class="hp-track">
-                <div class="hp-fill" style="width: 85%;"></div>
+            <!-- Segmented Power Meter Bar -->
+            <div class="segmented-power-gauge">
+              <span class="gauge-label">POWER METER</span>
+              <div class="gauge-bar-track">
+                <div class="gauge-bar-fill" style="width: ${s.hook.powerRating}%;"></div>
               </div>
-              <span class="hp-percent">85%</span>
+              <span class="gauge-score">${s.hook.powerRating}%</span>
             </div>
 
-            <p class="boss-card-lead">${s.hook.lead}</p>
-            <p class="boss-card-p1">${s.hook.p1}</p>
+            <p class="strategy-card-lead">${s.hook.lead}</p>
+            <p class="strategy-card-body">${s.hook.p1}</p>
 
-            <div class="boss-quote-box">
-              ${s.hook.quote}
+            <!-- Counselor Advice Speech Bubble -->
+            <div class="counselor-speech-box">
+              <div class="speech-tail"></div>
+              <strong style="color:#ffe600;">COUNSELOR'S TIP:</strong> ${s.hook.counselorTip}
             </div>
 
-            <div class="boss-card-footer">
-              <div class="boss-tags">
-                <span class="tag-pill-cyan">${s.hook.platform}</span>
-                <span class="tag-pill-gold">${s.hook.verdict}</span>
+            <div class="strategy-card-footer">
+              <div class="footer-platform-pills">
+                <span class="plat-pill plat-switch">${s.hook.platform}</span>
+                <span class="plat-pill plat-rating">${s.hook.verdict}</span>
               </div>
-              <a href="${s.link}" target="_blank" rel="noopener noreferrer" class="pixel-btn-source">
-                READ INTEL ↗
+              <a href="${s.link}" target="_blank" rel="noopener noreferrer" class="nintendo-btn-action">
+                READ ORIGINAL INTEL ↗
               </a>
             </div>
           </div>
 
-          <!-- Bottom Folio Bar -->
-          <footer class="stage-hud-bottom">
-            <span>THE 8 BIT BISTRO · SOURCE: <a href="${s.link}" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);">${s.source} ↗</a></span>
-            <span>PLATFORM: <strong>${s.hook.platform}</strong></span>
-            <span>STAGE ${String(stageNum).padStart(2, '0')} // HIGH SCORE: 999990</span>
+          <!-- Bottom Running Folio -->
+          <footer class="nintendo-folio-bottom">
+            <span>THE 8 BIT BISTRO // STRATEGY ARCHIVE // SOURCE: <a href="${s.link}" target="_blank" rel="noopener noreferrer" style="color:#ffeb00;">${s.source} ↗</a></span>
+            <div class="dpad-controller-graphic">✚ (A) (B)</div>
+            <span>PAGE ${String(pageNum).padStart(2, '0')} OF 30</span>
           </footer>
         </article>
       `;
-    } else if (isNeonDark) {
-      // TYPE A: NEON CYBERPUNK TERMINAL SHEET
+    } else if (isClassified) {
+      // TEMPLATE 2: CLASSIFIED INFORMATION // SECRET WARP ZONE (Crisp White Editorial Sheet)
       mainContentHtml += `
         <!-- ========================================================
-             STAGE ${String(stageNum).padStart(2, '0')}: NEON CYBERPUNK TERMINAL (${s.title})
+             PAGE ${String(pageNum).padStart(2, '0')}: CLASSIFIED INFORMATION (${s.title})
              ======================================================== -->
-        <article id="stage-${stageNum}" class="pixel-page stage-neon-terminal">
-          <div class="crt-scanline-overlay"></div>
-
-          <header class="terminal-folio-top">
-            <span class="terminal-brand-pill">⚡ 8-BIT TERMINAL // STAGE ${String(stageNum).padStart(2, '0')}</span>
-            <span class="terminal-kicker">${s.hook.kicker}</span>
-            <span class="terminal-difficulty">[DIFF: ${s.hook.difficulty}]</span>
+        <article id="stage-${pageNum}" class="nintendo-page page-classified-white">
+          <!-- Top Racing Stripe Header -->
+          <header class="classified-top-header">
+            <div class="classified-red-banner">
+              <span class="classified-pill">( THE 8 BIT BISTRO )</span>
+              <span class="classified-title">🔍 CLASSIFIED INFORMATION // TOP SECRET TACTICS</span>
+              <span class="classified-page-badge">PAGE ${String(pageNum).padStart(2, '0')}</span>
+            </div>
+            <div class="hazard-stripe-bar"></div>
           </header>
 
-          <div class="terminal-headline-row">
-            <h2 class="terminal-heading-neon">
-              <a href="${s.link}" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:none;">
-                ${s.title}
-              </a>
-            </h2>
-            <a href="${s.link}" target="_blank" rel="noopener noreferrer" class="pixel-link-btn" title="Open original article">
-              SOURCE INTEL ↗
-            </a>
-          </div>
-
-          <!-- Two-Column Terminal Grid -->
-          <div class="terminal-body-grid">
-            <div class="terminal-col-left">
-              <div class="terminal-screenshot-frame">
-                <img src="${s.image}" alt="${s.title}" loading="lazy" />
-                <div class="screenshot-corner-border"></div>
-                <div class="screenshot-meta-badge">CAPTURE: ${s.source}</div>
+          <div class="classified-main-content">
+            <!-- Headline Row with Tilted Stamp -->
+            <div class="classified-headline-block">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span class="classified-tag-yellow">⚡ LEVEL 1 CLEARANCE // ${s.hook.kicker}</span>
+                <span class="secret-stamp-tilted">TOP SECRET</span>
               </div>
-
-              <div class="terminal-stats-card">
-                <div class="stat-line"><span>PLATFORM:</span> <strong>${s.hook.platform}</strong></div>
-                <div class="stat-line"><span>QUEST XP:</span> <strong style="color:var(--green);">${s.hook.xp}</strong></div>
-                <div class="stat-line"><span>STATUS:</span> <strong style="color:var(--gold);">${s.hook.verdict}</strong></div>
-              </div>
+              <h2 class="classified-heading">
+                <a href="${s.link}" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:none;">
+                  ${s.title}
+                </a>
+              </h2>
             </div>
 
-            <div class="terminal-col-right">
-              <div class="terminal-lead-text">
-                ${s.hook.lead}
+            <!-- Two Column Editorial Layout with Framed Image -->
+            <div class="classified-grid">
+              <div class="classified-col-left">
+                <div class="nintendo-framed-photo">
+                  <img src="${s.image}" alt="${s.title}" loading="lazy" />
+                  <div class="photo-pointer-arrow">LOOK OUT!</div>
+                  <div class="photo-caption-bar">
+                    <span>SCREENSHOT: ${s.source}</span>
+                    <a href="${s.link}" target="_blank" rel="noopener noreferrer" style="color:#ffeb00;">[OPEN]</a>
+                  </div>
+                </div>
+
+                <!-- Warp Zone Secret Box -->
+                <div class="warp-zone-card">
+                  <div class="warp-zone-header">
+                    <span>🌀 WARP ZONE SECRET</span>
+                  </div>
+                  <p class="warp-zone-body">
+                    ${s.hook.counselorTip}
+                  </p>
+                </div>
               </div>
 
-              <div class="terminal-body-p">
-                ${s.hook.p1}
-              </div>
+              <div class="classified-col-right">
+                <div class="editorial-lead-para">
+                  ${s.hook.lead}
+                </div>
 
-              <div class="terminal-body-p">
-                ${s.hook.p2}
-              </div>
+                <div class="editorial-text-para">
+                  ${s.hook.p1}
+                </div>
 
-              <div class="terminal-quote-callout">
-                ${s.hook.quote}
+                <div class="editorial-text-para">
+                  ${s.hook.p2}
+                </div>
+
+                <!-- Developer / Source Quote in Nintendo Speech Frame -->
+                <div class="classified-quote-frame">
+                  <div class="quote-speaker-tag">TRANSMISSION FROM ${s.source.toUpperCase()}:</div>
+                  <div class="quote-body-text">${s.hook.quote}</div>
+                </div>
+
+                <div class="classified-action-row">
+                  <span class="plat-tag-dark">${s.hook.platform}</span>
+                  <a href="${s.link}" target="_blank" rel="noopener noreferrer" class="nintendo-pill-btn">
+                    READ ORIGINAL ARTICLE ON ${s.source.toUpperCase()} ↗
+                  </a>
+                </div>
               </div>
             </div>
           </div>
 
-          <footer class="terminal-folio-bottom">
-            <span>THE 8 BIT BISTRO // EDITORIAL DISPATCH</span>
-            <span>VERIFIED GAMEPLAY LOG // CURATED FROM <a href="${s.link}" target="_blank" rel="noopener noreferrer" style="color:var(--pink);">${s.source} ↗</a></span>
-            <span>STAGE ${String(stageNum).padStart(2, '0')} OF 30</span>
+          <!-- Bottom Folio -->
+          <footer class="classified-bottom-folio">
+            <span>THE 8 BIT BISTRO · ISSUE VOL. ${newVol} · CLASSIFIED CODES</span>
+            <div class="dpad-controller-graphic" style="color:#e60012;">✚ (A) (B) (X) (Y)</div>
+            <span>PAGE ${String(pageNum).padStart(2, '0')} OF 30</span>
           </footer>
         </article>
       `;
     } else {
-      // TYPE B: RETRO PHOSPHOR GREEN TERMINAL SHEET
+      // TEMPLATE 3: PAK WATCH // SYSTEM PREVIEW & RADAR (Neon Cyan & Charcoal Sheet)
       mainContentHtml += `
         <!-- ========================================================
-             STAGE ${String(stageNum).padStart(2, '0')}: PHOSPHOR GREEN DOSSIER (${s.title})
+             PAGE ${String(pageNum).padStart(2, '0')}: PAK WATCH PREVIEW (${s.title})
              ======================================================== -->
-        <article id="stage-${stageNum}" class="pixel-page stage-green-dossier">
-          <div class="crt-scanline-overlay"></div>
-
-          <header class="dossier-folio-top">
-            <span class="dossier-mark">👾 ARCADE DOSSIER // STAGE ${String(stageNum).padStart(2, '0')}</span>
-            <span class="dossier-badge-green">${s.hook.badge}</span>
-            <span class="dossier-xp">${s.hook.xp}</span>
+        <article id="stage-${pageNum}" class="nintendo-page page-pakwatch-cyan">
+          <header class="pakwatch-top-header">
+            <div class="pakwatch-brand-bar">
+              <span class="pakwatch-pill">( THE 8 BIT BISTRO )</span>
+              <span class="pakwatch-title">🎮 PAK WATCH // SNEAK PEEK &amp; RADAR</span>
+              <span class="pakwatch-page-badge">PAGE ${String(pageNum).padStart(2, '0')}</span>
+            </div>
           </header>
 
-          <div class="dossier-header-block">
-            <span class="dossier-eyebrow">${s.hook.kicker}</span>
-            <h2 class="dossier-title">
-              <a href="${s.link}" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:none;">
-                ${s.title}
-              </a>
-            </h2>
-          </div>
+          <div class="pakwatch-main-content">
+            <div class="pakwatch-headline-row">
+              <span class="pakwatch-badge-yellow">★ UPCOMING TITAN // ${s.hook.badge}</span>
+              <h2 class="pakwatch-heading">
+                <a href="${s.link}" target="_blank" rel="noopener noreferrer" style="color:#ffffff; text-decoration:none;">
+                  ${s.title}
+                </a>
+              </h2>
+            </div>
 
-          <!-- Editorial Layout: Floating Retro Framed Screenshot -->
-          <div class="dossier-content-flow">
-            <div class="dossier-float-frame">
+            <!-- Big Framed Artwork with Joy-Con Colored Border -->
+            <div class="joycon-split-frame">
               <img src="${s.image}" alt="${s.title}" loading="lazy" />
-              <div class="float-frame-hud">
-                <span>PRESS [A] TO INSPECT</span>
-                <a href="${s.link}" target="_blank" rel="noopener noreferrer" style="color:var(--green); text-decoration:none;">[LINK ↗]</a>
+              <div class="frame-tag-left">JOY-CON BLUE</div>
+              <div class="frame-tag-right">NEON RED</div>
+            </div>
+
+            <div class="pakwatch-text-grid">
+              <div class="pakwatch-col-lead">
+                <p class="pakwatch-lead-para">${s.hook.lead}</p>
+                <p class="pakwatch-body-para">${s.hook.p1}</p>
+                <p class="pakwatch-body-para">${s.hook.p2}</p>
+              </div>
+
+              <div class="pakwatch-col-radar">
+                <!-- Power Radar Specs Card -->
+                <div class="power-radar-card">
+                  <div class="radar-card-title">★ POWER METER EVALUATION</div>
+                  <div class="radar-stat-row">
+                    <span>GRAPHICS &amp; ART:</span>
+                    <strong style="color:#ffeb00;">★★★★★ 9.9</strong>
+                  </div>
+                  <div class="radar-stat-row">
+                    <span>GAMEPLAY LOOP:</span>
+                    <strong style="color:#00ff66;">★★★★★ 9.8</strong>
+                  </div>
+                  <div class="radar-stat-row">
+                    <span>SOUND &amp; VIBE:</span>
+                    <strong style="color:#00c3e3;">★★★★★ 9.7</strong>
+                  </div>
+                  <div class="radar-verdict-box">
+                    ${s.hook.verdict}
+                  </div>
+                </div>
+
+                <div class="pakwatch-counselor-box">
+                  <strong>PRO STRATEGY:</strong> ${s.hook.counselorTip}
+                </div>
+
+                <a href="${s.link}" target="_blank" rel="noopener noreferrer" class="pakwatch-btn-source">
+                  READ FULL REPORT ON ${s.source.toUpperCase()} ↗
+                </a>
               </div>
             </div>
-
-            <div class="dossier-text-block">
-              <p class="dossier-lead">${s.hook.lead}</p>
-              <p class="dossier-paragraph">${s.hook.p1}</p>
-              <p class="dossier-paragraph">${s.hook.p2}</p>
-            </div>
-
-            <div class="dossier-quote-box">
-              <div class="quote-dialog-speaker">NPC TRANSMISSION:</div>
-              <div class="quote-dialog-text">${s.hook.quote}</div>
-            </div>
-
-            <div class="dossier-summary-bar">
-              <span class="dossier-pill-verdict">${s.hook.verdict}</span>
-              <span class="dossier-pill-plat">${s.hook.platform}</span>
-              <a href="${s.link}" target="_blank" rel="noopener noreferrer" class="dossier-read-btn">
-                READ ORIGINAL ARTICLE ON ${s.source.toUpperCase()} ↗
-              </a>
-            </div>
           </div>
 
-          <footer class="dossier-folio-bottom">
-            <span>THE 8 BIT BISTRO // ISSUE VOL. ${newVol}</span>
-            <span>SOURCE: <a href="${s.link}" target="_blank" rel="noopener noreferrer" style="color:var(--green);">${s.source}</a></span>
-            <span>STAGE ${String(stageNum).padStart(2, '0')} OF 30</span>
+          <footer class="pakwatch-bottom-folio">
+            <span>THE 8 BIT BISTRO // PAK WATCH RADAR // CURATED FROM <a href="${s.link}" target="_blank" rel="noopener noreferrer" style="color:#00c3e3;">${s.source} ↗</a></span>
+            <div class="dpad-controller-graphic" style="color:#00c3e3;">✚ (SELECT) (START)</div>
+            <span>PAGE ${String(pageNum).padStart(2, '0')} OF 30</span>
           </footer>
         </article>
       `;
     }
   });
 
-  // 5. Assemble Full Standalone 8bit.html File
+  // 5. Assemble Full Standalone 8bit.html File with Authentic Nintendo Magazine CSS
   const fullHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>THE 8 BIT BISTRO MAG — Stage 01 to 30 (Vol. ${newVol})</title>
+  <title>THE 8 BIT BISTRO MAG — Official Nintendo Power Edition (Vol. ${newVol})</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&family=Space+Grotesk:wght@400;500;600;700;800&family=Press+Start+2P&family=Righteous&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0b0714;
-      --card-bg: #130f24;
-      --card-green: #071711;
-      --cyan: #00f0ff;
-      --pink: #ff0055;
-      --green: #00ff66;
-      --gold: #ffb800;
-      --purple: #8a2be2;
-      --font-pixel: 'Press Start 2P', monospace;
-      --font-hud: 'VT323', monospace;
+      --nintendo-red: #e60012;
+      --nintendo-red-dark: #b8000e;
+      --star-yellow: #ffeb00;
+      --star-yellow-dark: #ffd000;
+      --joycon-cyan: #00c3e3;
+      --joycon-blue: #0096c7;
+      --luigi-green: #00c853;
+      --charcoal-bg: #12131a;
+      --card-dark: #1a1c26;
+      --white-sheet: #ffffff;
+      --font-display: 'Rubik', sans-serif;
       --font-body: 'Space Grotesk', -apple-system, sans-serif;
+      --font-retro: 'Press Start 2P', monospace;
+      --font-badge: 'Righteous', sans-serif;
     }
 
     * {
@@ -624,28 +701,26 @@ async function scrapeAndGenerate8BitMagazine() {
     }
 
     body {
-      background: var(--bg);
-      color: #e2e8f0;
+      background: #0a0b10;
+      color: #1a1a24;
       font-family: var(--font-body);
       min-height: 100vh;
       overflow-x: hidden;
       line-height: 1.6;
     }
 
-    /* Fixed Retro Arcade Top Bar */
-    .arcade-top-bar {
+    /* Fixed Nintendo Red Top Editor / Reader Bar */
+    .nintendo-top-bar {
       position: sticky;
       top: 0;
       z-index: 10000;
-      background: rgba(11, 7, 20, 0.96);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 2px solid var(--cyan);
-      box-shadow: 0 4px 24px rgba(0, 240, 255, 0.25), 0 10px 40px rgba(0, 0, 0, 0.8);
-      padding: 8px 20px;
+      background: var(--nintendo-red);
+      border-bottom: 3px solid #000;
+      box-shadow: 0 4px 25px rgba(230, 0, 18, 0.4), 0 8px 30px rgba(0, 0, 0, 0.6);
+      padding: 8px 24px;
     }
 
-    .arcade-bar-main {
+    .nintendo-bar-main {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -655,93 +730,103 @@ async function scrapeAndGenerate8BitMagazine() {
       flex-wrap: wrap;
     }
 
-    .arcade-brand {
+    .brand-cluster {
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
-    .arcade-logo {
-      font-family: var(--font-pixel);
-      font-size: 13px;
-      color: var(--cyan);
-      letter-spacing: 0.05em;
-      text-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
+    .nintendo-capsule-btn {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 14px;
+      background: #ffffff;
+      color: var(--nintendo-red);
+      padding: 6px 18px;
+      border-radius: 9999px;
+      border: 2px solid #000;
       text-decoration: none;
+      box-shadow: 2px 2px 0 #000;
+      letter-spacing: 0.05em;
     }
 
-    .arcade-hud-status {
-      font-family: var(--font-hud);
-      font-size: 16px;
-      color: var(--green);
-      letter-spacing: 0.1em;
-      background: rgba(0, 255, 102, 0.1);
-      border: 1px solid rgba(0, 255, 102, 0.3);
-      padding: 2px 10px;
+    .brand-edition-title {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      color: #ffffff;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      text-shadow: 2px 2px 0 #000;
+    }
+
+    .brand-status-pill {
+      font-family: var(--font-badge);
+      font-size: 12px;
+      background: var(--star-yellow);
+      color: #000;
+      padding: 3px 10px;
       border-radius: 4px;
+      border: 1.5px solid #000;
+      box-shadow: 2px 2px 0 #000;
+      font-weight: 700;
     }
 
-    .arcade-actions {
+    .top-action-buttons {
       display: flex;
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
     }
 
-    .pixel-btn {
-      font-family: var(--font-pixel);
-      font-size: 10px;
-      padding: 8px 14px;
-      border: 2px solid #ffffff;
-      background: #000000;
-      color: #ffffff;
+    .action-btn {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-style: italic;
+      font-size: 12px;
+      padding: 7px 16px;
+      border-radius: 6px;
+      border: 2px solid #000;
       cursor: pointer;
-      text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      box-shadow: 3px 3px 0 #000, 5px 5px 0 var(--cyan);
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
+      gap: 6px;
+      text-decoration: none;
+      box-shadow: 3px 3px 0 #000;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
     }
 
-    .pixel-btn:hover {
+    .action-btn:hover {
       transform: translate(-2px, -2px);
-      box-shadow: 5px 5px 0 #000, 7px 7px 0 var(--cyan);
+      box-shadow: 5px 5px 0 #000;
     }
 
-    .pixel-btn:active {
-      transform: translate(2px, 2px);
+    .action-btn:active {
+      transform: translate(1px, 1px);
       box-shadow: 1px 1px 0 #000;
     }
 
-    .btn-coin {
-      border-color: var(--gold);
-      background: #1a1200;
-      color: var(--gold);
-      box-shadow: 3px 3px 0 #000, 5px 5px 0 var(--gold);
-      animation: coinPulse 2s infinite ease-in-out;
+    .btn-generate {
+      background: var(--star-yellow);
+      color: #000;
+      border-color: #000;
     }
 
     .btn-pdf {
-      border-color: var(--green);
-      background: #001a0a;
-      color: var(--green);
-      box-shadow: 3px 3px 0 #000, 5px 5px 0 var(--green);
+      background: #ffffff;
+      color: var(--nintendo-red);
+      border-color: #000;
     }
 
     .btn-kiosk {
-      border-color: #94a3b8;
-      color: #94a3b8;
-      box-shadow: 3px 3px 0 #000, 5px 5px 0 #94a3b8;
+      background: #111;
+      color: #fff;
+      border-color: #000;
     }
 
-    @keyframes coinPulse {
-      0%, 100% { box-shadow: 3px 3px 0 #000, 5px 5px 0 var(--gold); }
-      50% { box-shadow: 3px 3px 0 #000, 7px 7px 0 rgba(255, 184, 0, 0.8), 0 0 15px rgba(255, 184, 0, 0.4); }
-    }
-
-    /* Stage Navigation Jump Bar */
-    .stage-nav-bar {
+    /* Page Navigation Pager Track */
+    .nintendo-nav-track {
       display: flex;
       align-items: center;
       gap: 6px;
@@ -752,276 +837,380 @@ async function scrapeAndGenerate8BitMagazine() {
       scrollbar-width: thin;
     }
 
-    .stage-nav-bar::-webkit-scrollbar {
-      height: 4px;
-    }
-    .stage-nav-bar::-webkit-scrollbar-thumb {
-      background: var(--cyan);
-    }
-
-    .nav-stage-btn {
-      font-family: var(--font-pixel);
-      font-size: 8px;
-      padding: 4px 8px;
-      background: #141026;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #94a3b8;
+    .nav-pill-btn {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 10px;
+      padding: 4px 10px;
+      background: rgba(0, 0, 0, 0.4);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
       cursor: pointer;
-      flex-shrink: 0;
-      border-radius: 2px;
+      border-radius: 9999px;
+      white-space: nowrap;
     }
 
-    .nav-stage-btn:hover, .nav-stage-btn.active {
-      background: var(--cyan);
+    .nav-pill-btn:hover, .nav-pill-btn.active {
+      background: var(--star-yellow);
       color: #000;
-      font-weight: 700;
-      border-color: var(--cyan);
-      box-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
+      border-color: #000;
+      box-shadow: 0 0 10px var(--star-yellow);
     }
 
-    /* Magazine Canvas Host */
-    .arcade-canvas {
+    /* Magazine Canvas (A4 Dimensions Proportional) */
+    .magazine-canvas {
       max-width: 800px;
-      margin: 32px auto 80px;
+      margin: 36px auto 80px;
       padding: 0 16px;
     }
 
-    /* Common Pixel Page Base (A4 Ratio Standard) */
-    .pixel-page {
+    /* Base Page Sheet Standard */
+    .nintendo-page {
       width: 800px;
       min-height: 1130px;
       height: 1130px;
       margin: 0 auto 48px;
       position: relative;
       overflow: hidden;
-      background: var(--card-bg);
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 240, 255, 0.05);
+      background: #ffffff;
+      border: 3px solid #000;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
-    /* CRT Scanline Overlay */
-    .crt-scanline-overlay {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 10;
-      background: repeating-linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0) 0px,
-        rgba(0, 0, 0, 0) 2px,
-        rgba(0, 0, 0, 0.18) 3px,
-        rgba(0, 0, 0, 0.18) 4px
-      );
+    /* ========================================================
+       PAGE 01: HERO COVER (NINTENDO POWER STYLE)
+       ======================================================== */
+    .page-cover {
+      background: #000;
+      border-color: var(--nintendo-red);
     }
 
-    /* STAGE 01: COVER SPECIFICS */
-    .stage-cover {
-      background: #000000;
-    }
-
-    .cover-hero-img {
+    .cover-hero-photo {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center 20%;
-      filter: brightness(0.7) contrast(1.15);
+      filter: brightness(0.85) contrast(1.15);
     }
 
-    .pixel-scrim-dark {
+    .cover-vignette-scrim {
       position: absolute;
       inset: 0;
       background: linear-gradient(
         to bottom,
-        rgba(11, 7, 20, 0.95) 0%,
-        rgba(11, 7, 20, 0.65) 20%,
-        rgba(11, 7, 20, 0.2) 45%,
-        rgba(11, 7, 20, 0.6) 65%,
-        rgba(11, 7, 20, 0.98) 92%,
-        #0b0714 100%
+        rgba(0, 0, 0, 0.88) 0%,
+        rgba(0, 0, 0, 0.3) 25%,
+        rgba(0, 0, 0, 0.25) 55%,
+        rgba(0, 0, 0, 0.85) 85%,
+        #000000 100%
       );
       z-index: 2;
     }
 
-    .stage-cover-content {
+    .cover-content-wrap {
       position: relative;
       z-index: 3;
       height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 36px 44px 30px;
+      padding: 24px 32px 20px;
     }
 
-    .cover-top-arcade-hud {
+    .cover-top-strap {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 2px dashed rgba(0, 240, 255, 0.4);
-      padding-bottom: 12px;
-      font-family: var(--font-pixel);
-      font-size: 9px;
-      color: var(--cyan);
+      background: var(--nintendo-red);
+      border: 2px solid #000;
+      box-shadow: 4px 4px 0 #000;
+      padding: 6px 14px;
+      border-radius: 4px;
+    }
+
+    .capsule-pill {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      background: #ffffff;
+      color: var(--nintendo-red);
+      padding: 3px 12px;
+      border-radius: 9999px;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+    }
+
+    .strap-edition-label {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-style: italic;
+      color: #ffffff;
+      font-size: 11px;
       letter-spacing: 0.1em;
     }
 
-    .hud-insert-coin {
-      color: var(--gold);
-      animation: coinPulse 1.5s infinite;
+    .strap-date-tag {
+      font-family: var(--font-badge);
+      color: var(--star-yellow);
+      font-size: 12px;
+      font-weight: 700;
     }
 
-    .cover-masthead-box {
+    /* Giant Slanted Masthead */
+    .cover-masthead-center {
       text-align: center;
-      margin: 18px 0 10px;
+      margin: 14px 0 0;
     }
 
-    .pixel-masthead-title {
-      font-family: var(--font-pixel);
-      font-size: 38px;
-      line-height: 1.1;
+    .masthead-slanted-title {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: clamp(48px, 6.8vw, 68px);
+      line-height: 0.95;
+      color: var(--star-yellow);
+      text-transform: uppercase;
       letter-spacing: -0.02em;
-      color: #ffffff;
+      transform: skew(-5deg);
       text-shadow: 
         4px 4px 0 #000, 
-        0 0 20px rgba(0, 240, 255, 0.8),
-        0 0 40px rgba(255, 0, 85, 0.5);
-      margin-bottom: 8px;
+        8px 8px 0 var(--nintendo-red),
+        0 0 30px rgba(255, 235, 0, 0.4);
     }
 
-    .pixel-masthead-subline {
-      font-family: var(--font-hud);
-      font-size: 18px;
-      color: var(--gold);
-      letter-spacing: 0.18em;
-    }
-
-    .cover-feature-dossier {
-      background: rgba(19, 15, 36, 0.88);
-      border: 2px solid var(--cyan);
-      box-shadow: 4px 4px 0 #000, 8px 8px 0 rgba(0, 240, 255, 0.4);
-      padding: 24px 28px;
-      border-radius: 4px;
-      margin-top: auto;
-      margin-bottom: 24px;
-    }
-
-    .pixel-badge-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
-    }
-
-    .pixel-badge {
-      font-family: var(--font-pixel);
-      font-size: 8px;
-      padding: 4px 10px;
-      border: 1px solid currentColor;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .badge-cyan { color: var(--cyan); border-color: var(--cyan); background: rgba(0, 240, 255, 0.1); }
-    .badge-pink { color: var(--pink); border-color: var(--pink); background: rgba(255, 0, 85, 0.1); }
-    .badge-green { color: var(--green); border-color: var(--green); background: rgba(0, 255, 102, 0.1); }
-    .badge-gold { color: var(--gold); border-color: var(--gold); background: rgba(255, 184, 0, 0.1); }
-
-    .cover-headline-pixel {
-      font-family: var(--font-pixel);
-      font-size: 20px;
-      line-height: 1.35;
-      margin-bottom: 12px;
-    }
-
-    .cover-title-link {
-      color: #ffffff;
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-    .cover-title-link:hover {
-      color: var(--cyan);
-      text-shadow: 0 0 10px var(--cyan);
-    }
-
-    .cover-lead-summary {
+    .masthead-yellow-subline {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
       font-size: 15px;
-      line-height: 1.5;
-      color: #cbd5e1;
-      margin-bottom: 14px;
+      color: #ffffff;
+      letter-spacing: 0.22em;
+      margin-top: 6px;
+      text-shadow: 2px 2px 0 #000;
     }
 
-    .cover-quickread-box {
-      font-size: 13.5px;
-      color: #94a3b8;
-      border-left: 3px solid var(--pink);
-      padding-left: 12px;
-      margin-bottom: 16px;
-      line-height: 1.45;
-    }
-
-    .cover-interactive-row {
+    /* Official Gold Seal of Quality */
+    .official-gold-seal {
+      position: absolute;
+      top: 110px;
+      right: 32px;
+      width: 104px;
+      height: 104px;
+      background: radial-gradient(circle, #ffe600 0%, #ffd000 65%, #d4a000 100%);
+      border: 3px dashed #000;
+      border-radius: 50%;
+      box-shadow: 4px 4px 0 #000, 0 0 20px rgba(255, 230, 0, 0.6);
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: center;
+      transform: rotate(-10deg);
+      z-index: 5;
     }
 
-    .pixel-btn-action {
-      font-family: var(--font-pixel);
-      font-size: 9px;
-      background: var(--pink);
-      color: #fff;
-      padding: 8px 14px;
-      text-decoration: none;
-      border: 1px solid #fff;
-      box-shadow: 2px 2px 0 #000;
+    .seal-inner {
+      text-align: center;
+      color: #000;
+      line-height: 1.1;
     }
-    .pixel-btn-action:hover {
-      background: #ff2a75;
+
+    .seal-stars { font-size: 9px; letter-spacing: 1px; color: #b8000e; }
+    .seal-text-small { font-family: var(--font-display); font-weight: 900; font-size: 7.5px; letter-spacing: 0.05em; }
+    .seal-text-bold { font-family: var(--font-display); font-weight: 900; font-style: italic; font-size: 8px; color: var(--nintendo-red-dark); }
+    .seal-sub { font-size: 6px; font-weight: 800; letter-spacing: 0.1em; }
+
+    /* Side Teasers */
+    .cover-side-teasers {
+      position: absolute;
+      top: 190px;
+      left: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 220px;
+      z-index: 4;
+    }
+
+    .teaser-card {
+      background: rgba(0, 0, 0, 0.88);
+      border: 2px solid #fff;
+      border-left: 5px solid var(--nintendo-red);
+      padding: 6px 10px;
       box-shadow: 3px 3px 0 #000;
     }
 
-    .cover-score-pill {
-      font-family: var(--font-hud);
-      font-size: 18px;
-      color: var(--green);
-      letter-spacing: 0.12em;
+    .teaser-badge {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 8.5px;
+      background: var(--nintendo-red);
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-bottom: 3px;
     }
 
-    .cover-bottom-hud {
+    .teaser-text {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-style: italic;
+      font-size: 11px;
+      color: #ffffff;
+      line-height: 1.25;
+    }
+
+    /* Bottom Feature Block */
+    .cover-bottom-feature-card {
+      background: rgba(18, 19, 26, 0.94);
+      border: 3px solid var(--star-yellow);
+      box-shadow: 6px 6px 0 #000, 10px 10px 0 var(--nintendo-red);
+      padding: 20px 24px;
+      border-radius: 6px;
+      margin-top: auto;
+      margin-bottom: 12px;
+    }
+
+    .feature-tag-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .feature-tilted-badge {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 9.5px;
+      background: var(--nintendo-red);
+      color: #fff;
+      padding: 4px 10px;
+      transform: skew(-4deg);
+      border: 1px solid #fff;
+      box-shadow: 2px 2px 0 #000;
+    }
+
+    .feature-source-badge {
+      font-family: var(--font-badge);
+      font-size: 11px;
+      background: var(--joycon-cyan);
+      color: #000;
+      padding: 3px 8px;
+      font-weight: 800;
+    }
+
+    .feature-plat-badge {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 10px;
+      background: #000;
+      color: var(--star-yellow);
+      border: 1px solid var(--star-yellow);
+      padding: 2px 8px;
+    }
+
+    .cover-feature-heading {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 23px;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+
+    .cover-link-title {
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .cover-link-title:hover {
+      color: var(--star-yellow);
+      text-shadow: 0 0 10px var(--star-yellow);
+    }
+
+    .cover-feature-lead {
+      font-size: 14px;
+      line-height: 1.48;
+      color: #cbd5e1;
+      margin-bottom: 12px;
+    }
+
+    .cover-feature-actions {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
-      padding-top: 14px;
-      font-family: var(--font-hud);
-      font-size: 15px;
-      color: #94a3b8;
-      letter-spacing: 0.12em;
+      gap: 16px;
+      flex-wrap: wrap;
     }
 
-    .hud-barcode-segment {
+    .nintendo-btn-primary {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 11px;
+      background: var(--nintendo-red);
+      color: #fff;
+      padding: 8px 16px;
+      border: 2px solid #000;
+      text-decoration: none;
+      box-shadow: 3px 3px 0 #000;
+    }
+    .nintendo-btn-primary:hover {
+      background: #ff1f35;
+      transform: translate(-1px, -1px);
+    }
+
+    .cover-counselor-callout {
+      background: #000;
+      border: 1px solid var(--star-yellow);
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      max-width: 440px;
+    }
+
+    .counselor-bubble-title { color: var(--star-yellow); font-family: var(--font-display); font-weight: 900; margin-right: 4px; }
+    .counselor-bubble-text { color: #e2e8f0; font-style: italic; }
+
+    .cover-footer-barcode-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: 10px;
+      font-family: var(--font-display);
+      font-size: 10px;
+      color: #94a3b8;
+    }
+
+    .barcode-wrap {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .pixel-barcode {
+    .barcode-bars {
       font-family: monospace;
       letter-spacing: 2px;
-      font-weight: 700;
       color: #fff;
+      font-weight: 700;
+      font-size: 12px;
     }
 
-    /* STAGE SPREAD: FULL SCREEN BOSS FIGHT */
-    .stage-boss-spread {
+    /* ========================================================
+       SPREAD 1: POWER FEATURE STRATEGY (CINEMATIC FULL SPREAD)
+       ======================================================== */
+    .page-strategy-spread {
       background: #000;
+      border-color: #000;
     }
 
-    .spread-game-bg {
+    .spread-hero-photo {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -1030,475 +1219,697 @@ async function scrapeAndGenerate8BitMagazine() {
       filter: brightness(0.85) contrast(1.1);
     }
 
-    .boss-vignette-scrim {
+    .spread-cinema-scrim {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at center, transparent 30%, rgba(11, 7, 20, 0.8) 100%);
+      background: radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.75) 100%);
       z-index: 2;
     }
 
-    .stage-hud-top {
+    .nintendo-folio-top {
       position: relative;
       z-index: 3;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 24px 32px 0;
-      font-family: var(--font-pixel);
-      font-size: 8.5px;
-      color: var(--cyan);
-      text-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
+      background: rgba(0, 0, 0, 0.88);
+      border-bottom: 2px solid var(--star-yellow);
+      padding: 8px 24px;
+      font-family: var(--font-display);
+      font-size: 10px;
+      color: #fff;
     }
 
-    .boss-rundown-hud-card {
+    .folio-capsule {
+      font-weight: 900;
+      font-style: italic;
+      color: var(--nintendo-red);
+      background: #fff;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      margin-right: 8px;
+    }
+
+    .folio-section-tag {
+      font-weight: 900;
+      font-style: italic;
+      color: var(--star-yellow);
+      letter-spacing: 0.1em;
+    }
+
+    .hazard-tape-mini {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      color: #000;
+      background: var(--star-yellow);
+      padding: 2px 10px;
+      border: 1px solid #000;
+    }
+
+    .page-number-pill {
+      background: var(--nintendo-red);
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      font-weight: 800;
+    }
+
+    .strategy-floating-card {
       position: absolute;
-      bottom: 60px;
-      right: 32px;
-      width: 480px;
-      max-width: calc(100% - 64px);
-      background: rgba(13, 9, 24, 0.94);
-      border: 2px solid var(--pink);
-      box-shadow: 4px 4px 0 #000, 8px 8px 0 rgba(255, 0, 85, 0.4);
-      border-radius: 4px;
+      bottom: 50px;
+      right: 28px;
+      width: 500px;
+      max-width: calc(100% - 56px);
+      background: rgba(18, 19, 26, 0.96);
+      border: 3px solid var(--star-yellow);
+      box-shadow: 6px 6px 0 #000, 10px 10px 0 var(--nintendo-red);
+      border-radius: 6px;
       padding: 20px 24px;
       z-index: 4;
     }
 
-    .boss-card-header {
+    .card-racing-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: 2px solid var(--nintendo-red);
+      padding-bottom: 8px;
       margin-bottom: 10px;
     }
 
-    .boss-source-tag {
-      font-family: var(--font-hud);
-      font-size: 15px;
-      color: var(--gold);
-      letter-spacing: 0.1em;
+    .card-eyebrow {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 11px;
+      color: var(--star-yellow);
+      letter-spacing: 0.08em;
     }
 
-    .boss-card-title {
-      font-family: var(--font-pixel);
-      font-size: 13px;
-      line-height: 1.4;
-      margin-bottom: 12px;
+    .card-power-meter {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 11px;
+      color: var(--joycon-cyan);
     }
 
-    /* Health Bar */
-    .hud-health-bar-container {
+    .strategy-card-title {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 18px;
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+
+    /* Segmented Power Gauge */
+    .segmented-power-gauge {
       display: flex;
       align-items: center;
       gap: 10px;
       background: #000;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
       padding: 4px 8px;
       margin-bottom: 12px;
-      font-family: var(--font-pixel);
-      font-size: 7.5px;
+      border-radius: 3px;
     }
 
-    .hp-label { color: var(--pink); font-weight: 700; }
-    .hp-track {
-      flex: 1;
-      height: 8px;
-      background: #2a1420;
-      position: relative;
-    }
-    .hp-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #ff0055, #00ff66);
-    }
-    .hp-percent { color: var(--green); }
+    .gauge-label { font-family: var(--font-display); font-weight: 900; font-size: 9px; color: var(--nintendo-red); }
+    .gauge-bar-track { flex: 1; height: 10px; background: #2a1114; border-radius: 2px; overflow: hidden; }
+    .gauge-bar-fill { height: 100%; background: linear-gradient(90deg, var(--nintendo-red), var(--star-yellow)); }
+    .gauge-score { font-family: var(--font-display); font-weight: 900; font-size: 10px; color: var(--star-yellow); }
 
-    .boss-card-lead {
-      font-size: 13.5px;
+    .strategy-card-lead {
+      font-size: 14px;
       line-height: 1.45;
       color: #e2e8f0;
-      margin-bottom: 10px;
+      font-weight: 600;
+      margin-bottom: 8px;
     }
 
-    .boss-card-p1 {
+    .strategy-card-body {
+      font-size: 13px;
+      line-height: 1.45;
+      color: #94a3b8;
+      margin-bottom: 12px;
+    }
+
+    /* Comic Speech Bubble with Tail */
+    .counselor-speech-box {
+      position: relative;
+      background: #000;
+      border: 2px solid var(--star-yellow);
+      border-radius: 6px;
+      padding: 10px 14px;
       font-size: 12.5px;
       line-height: 1.4;
-      color: #94a3b8;
-      margin-bottom: 10px;
-    }
-
-    .boss-quote-box {
-      font-family: var(--font-hud);
-      font-size: 16px;
-      color: var(--cyan);
-      border-left: 2px solid var(--cyan);
-      padding-left: 10px;
+      color: #fff;
       margin-bottom: 14px;
-      line-height: 1.35;
     }
 
-    .boss-card-footer {
+    .speech-tail {
+      position: absolute;
+      top: -8px;
+      left: 20px;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 8px solid var(--star-yellow);
+    }
+
+    .strategy-card-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding-top: 10px;
       border-top: 1px dashed rgba(255, 255, 255, 0.15);
+      gap: 10px;
     }
 
-    .boss-tags {
-      display: flex;
-      gap: 8px;
-    }
+    .footer-platform-pills { display: flex; gap: 6px; }
 
-    .tag-pill-cyan {
-      font-family: var(--font-pixel);
-      font-size: 7px;
-      color: var(--cyan);
-      background: rgba(0, 240, 255, 0.1);
-      border: 1px solid var(--cyan);
-      padding: 2px 6px;
-    }
-
-    .tag-pill-gold {
-      font-family: var(--font-pixel);
-      font-size: 7px;
-      color: var(--gold);
-      background: rgba(255, 184, 0, 0.1);
-      border: 1px solid var(--gold);
-      padding: 2px 6px;
-    }
-
-    .pixel-btn-source {
-      font-family: var(--font-pixel);
+    .plat-pill {
+      font-family: var(--font-display);
+      font-weight: 800;
       font-size: 8px;
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+
+    .plat-switch { background: var(--nintendo-red); color: #fff; }
+    .plat-rating { background: var(--star-yellow); color: #000; }
+
+    .nintendo-btn-action {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 9.5px;
+      background: var(--joycon-cyan);
       color: #000;
-      background: var(--green);
-      border: 1px solid #fff;
-      padding: 5px 10px;
+      padding: 6px 12px;
+      border: 1.5px solid #000;
       text-decoration: none;
-      font-weight: 700;
       box-shadow: 2px 2px 0 #000;
     }
-    .pixel-btn-source:hover {
-      background: #33ff88;
+    .nintendo-btn-action:hover {
+      background: #38d8f0;
     }
 
-    .stage-hud-bottom {
+    .nintendo-folio-bottom {
       position: relative;
       z-index: 3;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 32px 24px;
-      font-family: var(--font-hud);
-      font-size: 14px;
+      background: rgba(0, 0, 0, 0.9);
+      border-top: 2px solid var(--nintendo-red);
+      padding: 8px 24px;
+      font-family: var(--font-display);
+      font-size: 10px;
       color: #94a3b8;
-      letter-spacing: 0.12em;
     }
 
-    /* STAGE TYPE A: NEON CYBERPUNK TERMINAL */
-    .stage-neon-terminal {
-      background: #0d0a18;
-      border-color: rgba(0, 240, 255, 0.3);
-      padding: 32px 40px;
+    .dpad-controller-graphic {
+      font-family: monospace;
+      font-size: 12px;
+      color: var(--star-yellow);
+      letter-spacing: 2px;
     }
 
-    .terminal-folio-top {
+    /* ========================================================
+       SPREAD 2: CLASSIFIED INFORMATION (WHITE GLOSSY SHEET)
+       ======================================================== */
+    .page-classified-white {
+      background: #ffffff;
+      color: #12131a;
+      padding: 0;
+    }
+
+    .classified-top-header {
+      width: 100%;
+    }
+
+    .classified-red-banner {
+      background: var(--nintendo-red);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid rgba(0, 240, 255, 0.3);
-      padding-bottom: 12px;
-      font-family: var(--font-pixel);
-      font-size: 8px;
-      color: var(--cyan);
-    }
-
-    .terminal-headline-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin: 18px 0 14px;
-      gap: 16px;
-    }
-
-    .terminal-heading-neon {
-      font-family: var(--font-pixel);
-      font-size: 16px;
-      line-height: 1.4;
-      color: #ffffff;
-      flex: 1;
-    }
-
-    .pixel-link-btn {
-      font-family: var(--font-pixel);
-      font-size: 8px;
-      padding: 6px 10px;
-      border: 1px solid var(--pink);
-      color: var(--pink);
-      background: rgba(255, 0, 85, 0.1);
-      text-decoration: none;
-      flex-shrink: 0;
-    }
-    .pixel-link-btn:hover {
-      background: var(--pink);
+      padding: 8px 24px;
       color: #fff;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
     }
 
-    .terminal-body-grid {
+    .classified-pill {
+      background: #ffffff;
+      color: var(--nintendo-red);
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-size: 10px;
+    }
+
+    .classified-title {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--star-yellow);
+    }
+
+    .classified-page-badge {
+      background: #000;
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 10px;
+    }
+
+    .hazard-stripe-bar {
+      height: 8px;
+      background: repeating-linear-gradient(
+        -45deg,
+        #ffd000,
+        #ffd000 12px,
+        #000000 12px,
+        #000000 24px
+      );
+      border-bottom: 2px solid #000;
+    }
+
+    .classified-main-content {
+      padding: 24px 32px 10px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .classified-tag-yellow {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 10.5px;
+      background: var(--star-yellow);
+      color: #000;
+      padding: 3px 8px;
+      border: 1.5px solid #000;
+      box-shadow: 2px 2px 0 #000;
+    }
+
+    .secret-stamp-tilted {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 12px;
+      color: var(--nintendo-red);
+      border: 2px solid var(--nintendo-red);
+      padding: 2px 8px;
+      transform: rotate(-6deg);
+      letter-spacing: 0.12em;
+    }
+
+    .classified-heading {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 24px;
+      line-height: 1.25;
+      color: #000;
+      margin: 10px 0 16px;
+    }
+
+    .classified-grid {
       display: grid;
       grid-template-columns: 310px 1fr;
       gap: 24px;
-      margin-top: 10px;
       flex: 1;
     }
 
-    .terminal-screenshot-frame {
+    .nintendo-framed-photo {
       position: relative;
-      border: 2px solid var(--cyan);
-      box-shadow: 4px 4px 0 #000, 6px 6px 0 rgba(0, 240, 255, 0.3);
-      height: 230px;
-      margin-bottom: 16px;
+      border: 3px solid #000;
+      box-shadow: 5px 5px 0 var(--nintendo-red);
+      border-radius: 4px;
       overflow: hidden;
+      height: 220px;
+      margin-bottom: 14px;
     }
 
-    .terminal-screenshot-frame img {
+    .nintendo-framed-photo img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
 
-    .screenshot-meta-badge {
+    .photo-pointer-arrow {
       position: absolute;
-      bottom: 6px;
-      left: 6px;
-      background: #000;
-      color: var(--cyan);
-      font-family: var(--font-pixel);
-      font-size: 6.5px;
-      padding: 2px 6px;
-      border: 1px solid var(--cyan);
+      top: 10px;
+      left: 10px;
+      background: var(--nintendo-red);
+      color: #fff;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 9px;
+      padding: 3px 8px;
+      border: 1px solid #fff;
+      box-shadow: 2px 2px 0 #000;
+      transform: rotate(-8deg);
     }
 
-    .terminal-stats-card {
-      background: #141026;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 12px 14px;
-      font-family: var(--font-hud);
-      font-size: 15px;
-      letter-spacing: 0.08em;
-    }
-
-    .stat-line {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 6px;
-      border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
-      padding-bottom: 4px;
-    }
-
-    .terminal-lead-text {
-      font-size: 15.5px;
-      line-height: 1.5;
-      color: #ffffff;
-      font-weight: 600;
-      margin-bottom: 14px;
-    }
-
-    .terminal-body-p {
-      font-size: 13.5px;
-      line-height: 1.6;
-      color: #94a3b8;
-      margin-bottom: 14px;
-    }
-
-    .terminal-quote-callout {
-      font-family: var(--font-hud);
-      font-size: 18px;
-      color: var(--pink);
-      background: rgba(255, 0, 85, 0.08);
-      border-left: 3px solid var(--pink);
-      padding: 10px 14px;
-      margin: 16px 0;
-      line-height: 1.4;
-    }
-
-    .terminal-folio-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
-      padding-top: 14px;
-      margin-top: 20px;
-      font-family: var(--font-hud);
-      font-size: 14px;
-      color: #64748b;
-      letter-spacing: 0.12em;
-    }
-
-    /* STAGE TYPE B: PHOSPHOR GREEN DOSSIER */
-    .stage-green-dossier {
-      background: var(--card-green);
-      border-color: rgba(0, 255, 102, 0.3);
-      padding: 32px 40px;
-    }
-
-    .dossier-folio-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(0, 255, 102, 0.3);
-      padding-bottom: 12px;
-      font-family: var(--font-pixel);
-      font-size: 8px;
-      color: var(--green);
-    }
-
-    .dossier-header-block {
-      margin: 16px 0 14px;
-    }
-
-    .dossier-eyebrow {
-      font-family: var(--font-pixel);
-      font-size: 8px;
-      color: var(--gold);
-      display: inline-block;
-      margin-bottom: 8px;
-    }
-
-    .dossier-title {
-      font-family: var(--font-pixel);
-      font-size: 16px;
-      line-height: 1.4;
-      color: #ffffff;
-    }
-
-    .dossier-content-flow {
-      margin-top: 10px;
-      flex: 1;
-    }
-
-    .dossier-float-frame {
-      float: right;
-      width: 320px;
-      height: 230px;
-      border: 2px solid var(--green);
-      box-shadow: 4px 4px 0 #000, 6px 6px 0 rgba(0, 255, 102, 0.3);
-      margin: 0 0 16px 20px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .dossier-float-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .float-frame-hud {
+    .photo-caption-bar {
       position: absolute;
       bottom: 0;
       inset-inline: 0;
       background: rgba(0, 0, 0, 0.85);
-      border-top: 1px solid var(--green);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 8px;
       padding: 4px 8px;
       display: flex;
       justify-content: space-between;
-      font-family: var(--font-pixel);
-      font-size: 6.5px;
-      color: #cbd5e1;
+      border-top: 1px solid var(--star-yellow);
     }
 
-    .dossier-lead {
-      font-size: 15.5px;
-      line-height: 1.5;
-      color: #f1f5f9;
+    .warp-zone-card {
+      background: #fff8d6;
+      border: 2px dashed #000;
+      border-left: 6px solid var(--nintendo-red);
+      padding: 10px 12px;
+      box-shadow: 3px 3px 0 #000;
+    }
+
+    .warp-zone-header {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 10.5px;
+      color: var(--nintendo-red);
+      margin-bottom: 4px;
+    }
+
+    .warp-zone-body {
+      font-size: 12px;
+      line-height: 1.4;
+      color: #2a2200;
       font-weight: 600;
+    }
+
+    .editorial-lead-para {
+      font-size: 15px;
+      line-height: 1.5;
+      font-weight: 700;
+      color: #000000;
       margin-bottom: 12px;
     }
 
-    .dossier-paragraph {
+    .editorial-text-para {
       font-size: 13.5px;
-      line-height: 1.6;
-      color: #94a3b8;
+      line-height: 1.55;
+      color: #334155;
       margin-bottom: 12px;
     }
 
-    .dossier-quote-box {
-      clear: both;
-      background: rgba(0, 0, 0, 0.6);
-      border: 1px solid var(--green);
-      border-left: 4px solid var(--green);
-      padding: 12px 16px;
-      margin: 16px 0;
+    .classified-quote-frame {
+      background: #f1f5f9;
+      border-left: 4px solid var(--nintendo-red);
+      padding: 10px 14px;
+      margin: 12px 0;
     }
 
-    .quote-dialog-speaker {
-      font-family: var(--font-pixel);
-      font-size: 7.5px;
-      color: var(--green);
-      margin-bottom: 6px;
+    .quote-speaker-tag {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 8.5px;
+      color: var(--nintendo-red);
+      margin-bottom: 4px;
     }
 
-    .quote-dialog-text {
-      font-family: var(--font-hud);
-      font-size: 17px;
-      color: #e2e8f0;
-      line-height: 1.35;
+    .quote-body-text {
+      font-size: 13px;
+      line-height: 1.4;
+      font-style: italic;
+      color: #1e293b;
     }
 
-    .dossier-summary-bar {
+    .classified-action-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #05140e;
-      border: 1px solid rgba(0, 255, 102, 0.2);
-      padding: 10px 14px;
-      margin-top: 14px;
-      flex-wrap: wrap;
+      margin-top: 12px;
       gap: 10px;
     }
 
-    .dossier-pill-verdict {
-      font-family: var(--font-pixel);
-      font-size: 7.5px;
-      color: var(--gold);
-    }
-
-    .dossier-pill-plat {
-      font-family: var(--font-hud);
-      font-size: 15px;
-      color: var(--cyan);
-    }
-
-    .dossier-read-btn {
-      font-family: var(--font-pixel);
-      font-size: 7.5px;
-      color: var(--green);
-      text-decoration: none;
-      border: 1px solid var(--green);
+    .plat-tag-dark {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 9px;
+      background: #000;
+      color: #fff;
       padding: 4px 8px;
     }
-    .dossier-read-btn:hover {
-      background: var(--green);
-      color: #000;
-    }
 
-    .dossier-folio-bottom {
+    .nintendo-pill-btn {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 9px;
+      background: var(--nintendo-red);
+      color: #fff;
+      padding: 6px 12px;
+      border: 1.5px solid #000;
+      text-decoration: none;
+      box-shadow: 2px 2px 0 #000;
+    }
+    .nintendo-pill-btn:hover { background: var(--nintendo-red-dark); }
+
+    .classified-bottom-folio {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-top: 1px solid rgba(0, 255, 102, 0.3);
-      padding-top: 14px;
-      margin-top: 20px;
-      font-family: var(--font-hud);
-      font-size: 14px;
+      border-top: 2px solid #000;
+      padding: 10px 32px;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 10px;
       color: #64748b;
-      letter-spacing: 0.12em;
+      background: #f8fafc;
+    }
+
+    /* ========================================================
+       SPREAD 3: PAK WATCH PREVIEW (NEON CYAN & CHARCOAL SHEET)
+       ======================================================== */
+    .page-pakwatch-cyan {
+      background: #10121a;
+      color: #ffffff;
+      padding: 0;
+    }
+
+    .pakwatch-top-header { width: 100%; }
+
+    .pakwatch-brand-bar {
+      background: var(--joycon-cyan);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 24px;
+      color: #000;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      border-bottom: 2px solid #000;
+    }
+
+    .pakwatch-pill {
+      background: #000;
+      color: var(--joycon-cyan);
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-size: 10px;
+    }
+
+    .pakwatch-title { font-size: 12px; letter-spacing: 0.1em; color: #000; }
+    .pakwatch-page-badge { background: #fff; color: #000; padding: 2px 8px; border-radius: 3px; font-size: 10px; }
+
+    .pakwatch-main-content {
+      padding: 20px 32px 10px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pakwatch-badge-yellow {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 10px;
+      background: var(--star-yellow);
+      color: #000;
+      padding: 3px 8px;
+      margin-bottom: 6px;
+    }
+
+    .pakwatch-heading {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 23px;
+      line-height: 1.25;
+      margin-bottom: 14px;
+    }
+
+    /* Joy-Con Split Frame: Left Neon Blue, Right Neon Red */
+    .joycon-split-frame {
+      position: relative;
+      height: 240px;
+      border-top: 4px solid var(--joycon-cyan);
+      border-bottom: 4px solid var(--joycon-cyan);
+      border-left: 8px solid var(--joycon-cyan);
+      border-right: 8px solid var(--nintendo-red);
+      box-shadow: 6px 6px 0 #000;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+
+    .joycon-split-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .frame-tag-left {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: var(--joycon-cyan);
+      color: #000;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 7.5px;
+      padding: 2px 6px;
+    }
+
+    .frame-tag-right {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: var(--nintendo-red);
+      color: #fff;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 7.5px;
+      padding: 2px 6px;
+    }
+
+    .pakwatch-text-grid {
+      display: grid;
+      grid-template-columns: 1fr 270px;
+      gap: 24px;
+      flex: 1;
+    }
+
+    .pakwatch-lead-para {
+      font-size: 15px;
+      line-height: 1.5;
+      color: #f8fafc;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .pakwatch-body-para {
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: #94a3b8;
+      margin-bottom: 10px;
+    }
+
+    /* Power Radar Evaluation Box */
+    .power-radar-card {
+      background: #1b1e2a;
+      border: 2px solid var(--joycon-cyan);
+      box-shadow: 4px 4px 0 #000;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+    }
+
+    .radar-card-title {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 10px;
+      color: var(--star-yellow);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+    }
+
+    .radar-stat-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      margin-bottom: 5px;
+      font-family: var(--font-display);
+    }
+
+    .radar-verdict-box {
+      background: #000;
+      color: var(--star-yellow);
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 10px;
+      padding: 4px 8px;
+      margin-top: 6px;
+      text-align: center;
+      border: 1px solid var(--star-yellow);
+    }
+
+    .pakwatch-counselor-box {
+      background: #000;
+      border-left: 4px solid var(--star-yellow);
+      padding: 8px 12px;
+      font-size: 12px;
+      line-height: 1.4;
+      color: #e2e8f0;
+      margin-bottom: 12px;
+    }
+
+    .pakwatch-btn-source {
+      display: block;
+      text-align: center;
+      background: var(--joycon-cyan);
+      color: #000;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 10px;
+      padding: 8px 12px;
+      border: 2px solid #000;
+      text-decoration: none;
+      box-shadow: 3px 3px 0 #000;
+    }
+    .pakwatch-btn-source:hover { background: #38d8f0; }
+
+    .pakwatch-bottom-folio {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px solid var(--joycon-cyan);
+      padding: 10px 32px;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 10px;
+      color: #64748b;
+      background: #0b0d14;
     }
 
     /* Modal Progress Backdrop */
-    .arcade-modal-backdrop {
+    .nintendo-modal-backdrop {
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.85);
@@ -1509,32 +1920,33 @@ async function scrapeAndGenerate8BitMagazine() {
       justify-content: center;
     }
 
-    .arcade-modal-backdrop.open {
-      display: flex;
-    }
+    .nintendo-modal-backdrop.open { display: flex; }
 
-    .arcade-modal-card {
-      background: #0f0a1c;
-      border: 3px solid var(--cyan);
-      box-shadow: 6px 6px 0 #000, 12px 12px 0 var(--pink);
+    .nintendo-modal-card {
+      background: #ffffff;
+      border: 4px solid #000;
+      box-shadow: 8px 8px 0 var(--nintendo-red);
       padding: 36px 32px;
       max-width: 520px;
       width: 90%;
       text-align: center;
     }
 
-    .modal-arcade-title {
-      font-family: var(--font-pixel);
-      font-size: 14px;
-      color: var(--cyan);
-      margin-bottom: 14px;
+    .modal-nintendo-title {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 20px;
+      color: var(--nintendo-red);
+      margin-bottom: 10px;
     }
 
     .modal-step-list {
       text-align: left;
-      font-family: var(--font-hud);
-      font-size: 18px;
-      color: #94a3b8;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 14px;
+      color: #1e293b;
       margin: 20px 0;
       display: flex;
       flex-direction: column;
@@ -1552,15 +1964,15 @@ async function scrapeAndGenerate8BitMagazine() {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
-      .arcade-top-bar, .arcade-modal-backdrop {
+      .nintendo-top-bar, .nintendo-modal-backdrop {
         display: none !important;
       }
-      .arcade-canvas {
+      .magazine-canvas {
         max-width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
       }
-      .pixel-page {
+      .nintendo-page {
         width: 100% !important;
         height: 100vh !important;
         min-height: 100vh !important;
@@ -1576,64 +1988,65 @@ async function scrapeAndGenerate8BitMagazine() {
 <body>
 
   <!-- ========================================================
-       TOP ARCADE TOOLBAR & HUD
+       TOP NINTENDO POWER TOOLBAR
        ======================================================== -->
-  <header class="arcade-top-bar">
-    <div class="arcade-bar-main">
-      <div class="arcade-brand">
-        <a href="/" class="pixel-btn btn-kiosk" title="Return to Magazine Selection Kiosk">← KIOSK</a>
-        <span class="arcade-logo">THE 8 BIT BISTRO</span>
-        <span class="arcade-hud-status">[STAGE 01-30 // 1P READY]</span>
+  <header class="nintendo-top-bar">
+    <div class="nintendo-bar-main">
+      <div class="brand-cluster">
+        <a href="/" class="action-btn btn-kiosk" title="Return to Magazine Selection Kiosk">← KIOSK</a>
+        <span class="nintendo-capsule-btn">( THE 8 BIT BISTRO )</span>
+        <span class="brand-edition-title">NINTENDO POWER EDITION</span>
+        <span class="brand-status-pill">★ 30 PACKED PAGES</span>
       </div>
 
-      <div class="arcade-actions">
-        <button class="pixel-btn btn-coin" onclick="trigger8BitScrape()" title="Scrape Kotaku, Polygon, PC Gamer, Eurogamer to compile 30 Stages">
-          👾 INSERT COIN // GENERATE 30 STAGES
+      <div class="top-action-buttons">
+        <button class="action-btn btn-generate" onclick="triggerNintendoScrape()" title="Scrape live gaming news and compile fresh 30-Page Issue">
+          ⚡ GENERATE 30-PAGE POWER ISSUE
         </button>
 
-        <button id="btnSavePdf" class="pixel-btn btn-pdf" onclick="save8BitAsPdf()" title="Direct 1-Click A4 PDF Download">
+        <button id="btnSavePdf" class="action-btn btn-pdf" onclick="saveNintendoPdf()" title="Direct 1-Click A4 PDF Download">
           📄 SAVE AS PDF
         </button>
 
-        <button class="pixel-btn" onclick="save8BitHtml()" title="Save clean HTML copy">
+        <button class="action-btn" style="background:#fff; color:#000;" onclick="saveNintendoHtml()" title="Save clean HTML copy">
           💾 SAVE HTML
         </button>
       </div>
     </div>
 
-    <!-- 30 Stage Navigation Pager -->
-    <nav class="stage-nav-bar">
-      <button class="nav-stage-btn active" onclick="jumpToStage('stage-1')">STAGE 01 (COVER)</button>
+    <!-- 30 Page Navigation Pager -->
+    <nav class="nintendo-nav-track">
+      <button class="nav-pill-btn active" onclick="jumpToStage('stage-1')">PAGE 01 (COVER)</button>
       ${Array.from({ length: 29 }, (_, i) => {
         const num = i + 2;
         const pad = String(num).padStart(2, '0');
-        return `<button class="nav-stage-btn" onclick="jumpToStage('stage-${num}')">ST-${pad}</button>`;
+        return `<button class="nav-pill-btn" onclick="jumpToStage('stage-${num}')">P-${pad}</button>`;
       }).join('\n      ')}
     </nav>
   </header>
 
   <!-- ========================================================
-       30-STAGE MAGAZINE WORKSPACE CANVAS
+       30-PAGE NINTENDO MAGAZINE WORKSPACE
        ======================================================== -->
-  <main class="arcade-canvas">
+  <main class="magazine-canvas">
     ${mainContentHtml}
   </main>
 
   <!-- ========================================================
-       PROGRESS MODAL (INSERT COIN / LEVEL LOAD)
+       PROGRESS MODAL ("NOW YOU'RE PLAYING WITH POWER!")
        ======================================================== -->
-  <div id="arcadeModal" class="arcade-modal-backdrop">
-    <div class="arcade-modal-card">
-      <div style="font-size: 40px; margin-bottom: 12px;">🕹️</div>
-      <h3 id="modalTitle" class="modal-arcade-title">DOWNLOADING GAME TELEMETRY...</h3>
-      <p id="modalSub" style="font-size: 13px; color: #cbd5e1; margin-bottom: 14px;">
+  <div id="nintendoModal" class="nintendo-modal-backdrop">
+    <div class="nintendo-modal-card">
+      <div style="font-size: 42px; margin-bottom: 10px;">🍄⭐🎮</div>
+      <h3 id="modalTitle" class="modal-nintendo-title">NOW YOU'RE PLAYING WITH POWER!</h3>
+      <p id="modalSub" style="font-size: 14px; color: #475569; margin-bottom: 14px;">
         Harvesting latest dispatches from Polygon, Kotaku, PC Gamer &amp; Eurogamer...
       </p>
 
       <div class="modal-step-list">
-        <div id="step1" style="color: var(--cyan);">⏳ [1/3] Ingesting RSS feeds &amp; filtering duplicates...</div>
-        <div id="step2">⏳ [2/3] Synthesizing quickread hooks, bosses &amp; specs...</div>
-        <div id="step3">⏳ [3/3] Compiling 30 arcade stages &amp; PDF buffers...</div>
+        <div id="step1" style="color: var(--nintendo-red);">⏳ [1/3] Ingesting RSS feeds &amp; filtering covered stories...</div>
+        <div id="step2">⏳ [2/3] Writing counselor tips, power meters &amp; strategies...</div>
+        <div id="step3">⏳ [3/3] Assembling 30-page Nintendo Power spreads &amp; PDF...</div>
       </div>
     </div>
   </div>
@@ -1643,15 +2056,15 @@ async function scrapeAndGenerate8BitMagazine() {
       const el = document.getElementById(id);
       if (el) {
         el.scrollIntoView({ behavior: 'smooth' });
-        document.querySelectorAll('.nav-stage-btn').forEach(b => b.classList.remove('active'));
-        if (event && event.target && event.target.classList.contains('nav-stage-btn')) {
+        document.querySelectorAll('.nav-pill-btn').forEach(b => b.classList.remove('active'));
+        if (event && event.target && event.target.classList.contains('nav-pill-btn')) {
           event.target.classList.add('active');
         }
       }
     }
 
     // Direct 1-Click PDF Download (No print dialogs!)
-    async function save8BitAsPdf() {
+    async function saveNintendoPdf() {
       const btn = document.getElementById('btnSavePdf');
       const origText = btn.innerHTML;
       btn.disabled = true;
@@ -1665,7 +2078,7 @@ async function scrapeAndGenerate8BitMagazine() {
         const a = document.createElement('a');
         a.style.display = 'none';
         a.href = url;
-        a.download = 'The_8Bit_Bistro_Mag_Vol_${newVol}_30_Stages.pdf';
+        a.download = 'The_8Bit_Bistro_Nintendo_Power_Vol_${newVol}_30_Pages.pdf';
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
@@ -1680,9 +2093,9 @@ async function scrapeAndGenerate8BitMagazine() {
     }
 
     // Save Clean HTML Copy
-    function save8BitHtml() {
+    function saveNintendoHtml() {
       const clone = document.documentElement.cloneNode(true);
-      clone.querySelectorAll('.arcade-modal-backdrop').forEach(m => m.classList.remove('open'));
+      clone.querySelectorAll('.nintendo-modal-backdrop').forEach(m => m.classList.remove('open'));
       const blob = new Blob(["<!DOCTYPE html>\\n" + clone.outerHTML], { type: 'text/html' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
@@ -1693,8 +2106,8 @@ async function scrapeAndGenerate8BitMagazine() {
     }
 
     // Trigger Autonomous Gaming Scraper
-    async function trigger8BitScrape() {
-      const modal = document.getElementById('arcadeModal');
+    async function triggerNintendoScrape() {
+      const modal = document.getElementById('nintendoModal');
       const modalTitle = document.getElementById('modalTitle');
       const modalSub = document.getElementById('modalSub');
       const s1 = document.getElementById('step1');
@@ -1706,26 +2119,26 @@ async function scrapeAndGenerate8BitMagazine() {
       try {
         setTimeout(() => {
           s1.innerHTML = '✅ [1/3] Harvested fresh gaming stories from 4 feeds!';
-          s1.style.color = 'var(--green)';
-          s2.innerHTML = '⏳ [2/3] Synthesizing boss stages &amp; terminal stats...';
-          s2.style.color = 'var(--cyan)';
+          s1.style.color = 'var(--luigi-green)';
+          s2.innerHTML = '⏳ [2/3] Writing counselor tips &amp; classified intel...';
+          s2.style.color = 'var(--nintendo-red)';
         }, 1200);
 
         setTimeout(() => {
-          s2.innerHTML = '✅ [2/3] Synthesized boss stages &amp; terminal stats';
-          s2.style.color = 'var(--green)';
-          s3.innerHTML = '⏳ [3/3] Compiling 30 stages &amp; staging PDF buffer...';
-          s3.style.color = 'var(--cyan)';
+          s2.innerHTML = '✅ [2/3] Written counselor tips &amp; classified intel';
+          s2.style.color = 'var(--luigi-green)';
+          s3.innerHTML = '⏳ [3/3] Compiling 30 pages &amp; staging PDF buffer...';
+          s3.style.color = 'var(--nintendo-red)';
         }, 2500);
 
         const res = await fetch('/api/scrape-and-generate?pub=8bit');
         const data = await res.json();
 
         if (data.success) {
-          s3.innerHTML = '✅ [3/3] Compiled 30 stages (Skipped ' + (data.skippedCoveredCount || 0) + ' covered stories)';
-          s3.style.color = 'var(--green)';
-          modalTitle.innerText = 'STAGE COMPLETE! // VOL. ' + data.edition;
-          modalSub.innerText = 'Featured: "' + data.coverTitle + '". Refreshing workspace...';
+          s3.innerHTML = '✅ [3/3] Compiled 30 pages (Skipped ' + (data.skippedCoveredCount || 0) + ' covered stories)';
+          s3.style.color = 'var(--luigi-green)';
+          modalTitle.innerText = 'MISSION ACCOMPLISHED! // VOL. ' + data.edition;
+          modalSub.innerText = 'Cover: "' + data.coverTitle + '". Refreshing workspace...';
 
           setTimeout(() => {
             window.location.href = '/8bit?edition=' + data.edition + '&t=' + Date.now();
@@ -1735,7 +2148,7 @@ async function scrapeAndGenerate8BitMagazine() {
         }
       } catch (err) {
         console.error(err);
-        alert('8-Bit generation failed: ' + err.message);
+        alert('Generation failed: ' + err.message);
         modal.classList.remove('open');
       }
     }
@@ -1756,20 +2169,20 @@ async function scrapeAndGenerate8BitMagazine() {
     volume: newVol,
     stage: newVol,
     date: issueDate,
-    title: `THE 8 BIT BISTRO MAG // STAGE ${newVol}`,
-    tagline: `Arcade Edition: ${heroStory.title}`,
+    title: `THE 8 BIT BISTRO MAG // NINTENDO POWER EDITION VOL. ${newVol}`,
+    tagline: `Power Edition: ${heroStory.title}`,
     totalStories: 30,
     pageCount: 30,
     coverGame: heroStory.title,
     sources: ["Polygon", "Kotaku", "PC Gamer", "Eurogamer"],
     featuredStories: newlyCoveredStories,
     skippedPreviouslyCoveredCount: skippedCount,
-    editorialNotes: `Autonomous live harvest compiled on ${new Date().toISOString()} - 30 stages generated with pixel art styling; skipped ${skippedCount} previously covered stories.`
+    editorialNotes: `Autonomous live harvest compiled on ${new Date().toISOString()} - 30 pages generated in Nintendo Power / Official Nintendo Magazine style; skipped ${skippedCount} previously covered stories.`
   });
 
   fs.writeFileSync(EDITIONS_8BIT_FILE, JSON.stringify(memory, null, 2), 'utf8');
 
-  console.log(`✅ [8-BIT GENERATION COMPLETE] Compiled Stage/Vol ${newVol} featuring "${heroStory.title}"! Skipped ${skippedCount} previously covered stories.`);
+  console.log(`✅ [NINTENDO POWER COMPLETE] Compiled Vol. ${newVol} featuring "${heroStory.title}"! Skipped ${skippedCount} previously covered stories.`);
 
   return {
     success: true,
@@ -1786,4 +2199,3 @@ module.exports = {
   harvestGamingStories,
   rewriteAsGamingQuickread
 };
-
