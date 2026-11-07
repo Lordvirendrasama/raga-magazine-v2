@@ -3,21 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Antigravity Magazine Kiosk — Choose Your Publication</title>
+  <title>Antigravity Publishing Engine &amp; Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,700;0,6..96,900;1,6..96,700&family=Press+Start+2P&family=Space+Grotesk:wght@400;600;700;800&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,700;0,6..96,900;1,6..96,700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Press+Start+2P&family=Space+Grotesk:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #090a0f;
-      --card-bg: #12141c;
+      --bg: #07090e;
+      --card-bg: #10131c;
+      --card-border: rgba(255, 255, 255, 0.08);
       --raga-accent: #ff331f;
+      --8bit-red: #e60012;
       --8bit-cyan: #00f0ff;
-      --8bit-pink: #ff0055;
-      --8bit-green: #00ff66;
+      --wp-blue: #2271b1;
+      --wp-blue-hover: #135e96;
+      --wp-green: #008a20;
       --font-display: 'Bodoni Moda', serif;
       --font-grotesk: 'Space Grotesk', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
       --font-pixel: 'Press Start 2P', monospace;
+      --font-mono: 'JetBrains Mono', monospace;
     }
 
     * {
@@ -29,11 +34,10 @@
     body {
       background: var(--bg);
       color: #ffffff;
-      font-family: var(--font-grotesk);
+      font-family: var(--font-body);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       overflow-x: hidden;
       position: relative;
     }
@@ -45,35 +49,33 @@
       pointer-events: none;
       z-index: 0;
       background: 
-        radial-gradient(circle at 20% 30%, rgba(255, 51, 31, 0.12) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(0, 240, 255, 0.12) 0%, transparent 50%);
+        radial-gradient(circle at 15% 20%, rgba(255, 51, 31, 0.1) 0%, transparent 45%),
+        radial-gradient(circle at 85% 35%, rgba(0, 240, 255, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 50% 85%, rgba(34, 113, 177, 0.09) 0%, transparent 50%);
     }
 
     .kiosk-wrapper {
       position: relative;
       z-index: 2;
-      max-width: 1200px;
+      max-width: 1280px;
       margin: 0 auto;
-      padding: 48px 24px 32px;
+      padding: 44px 24px 60px;
       width: 100%;
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
     }
 
     /* Header Masthead */
     .kiosk-header {
       text-align: center;
-      margin-bottom: 50px;
+      margin-bottom: 42px;
     }
 
     .kiosk-tag {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       padding: 5px 16px;
       border-radius: 9999px;
       font-size: 11px;
@@ -85,39 +87,39 @@
     }
 
     .kiosk-title {
-      font-size: clamp(36px, 5.5vw, 64px);
+      font-family: var(--font-grotesk);
+      font-size: clamp(34px, 5vw, 60px);
       font-weight: 800;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
       line-height: 1.1;
       margin-bottom: 12px;
-      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
+      background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #94a3b8 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .kiosk-subtitle {
-      font-size: 16px;
+      font-size: 15.5px;
       color: #94a3b8;
-      max-width: 620px;
+      max-width: 660px;
       margin: 0 auto;
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
     /* Dual Publication Cabinets */
     .kiosk-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 36px;
+      gap: 32px;
       align-items: stretch;
-      margin-bottom: 40px;
+      margin-bottom: 60px;
     }
 
-    /* Publication Card Base */
     .pub-card {
       position: relative;
       background: var(--card-bg);
       border-radius: 20px;
-      padding: 40px 36px;
+      padding: 36px 32px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -125,15 +127,15 @@
       color: inherit;
       overflow: hidden;
       transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
       cursor: pointer;
     }
 
     .pub-card:hover {
-      transform: translateY(-8px);
+      transform: translateY(-6px);
     }
 
-    /* Raga Edition Card Styling */
+    /* Raga Edition Card */
     .card-raga {
       border: 1.5px solid rgba(255, 51, 31, 0.28);
       background: linear-gradient(160deg, #161217 0%, #0c0a0e 100%);
@@ -151,7 +153,7 @@
 
     .card-raga .pub-name {
       font-family: var(--font-display);
-      font-size: clamp(38px, 4.4vw, 54px);
+      font-size: clamp(38px, 4.4vw, 52px);
       font-weight: 900;
       letter-spacing: -0.02em;
       line-height: 1.05;
@@ -171,68 +173,55 @@
       box-shadow: 0 10px 28px rgba(255, 51, 31, 0.6);
     }
 
-    /* 8 Bit Bistro (Nintendo Power Edition) Card Styling */
+    /* 8 Bit Bistro Edition Card */
     .card-8bit {
-      border: 2px solid rgba(230, 0, 18, 0.45);
+      border: 2px solid rgba(230, 0, 18, 0.35);
       background: linear-gradient(160deg, #180d12 0%, #0d0e16 100%);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(230, 0, 18, 0.08);
-      position: relative;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.75);
     }
 
     .card-8bit:hover {
-      border-color: #e60012;
-      box-shadow: 0 30px 70px rgba(230, 0, 18, 0.35), 0 0 35px rgba(255, 235, 0, 0.25), inset 0 0 60px rgba(230, 0, 18, 0.15);
+      border-color: var(--8bit-red);
+      box-shadow: 0 30px 70px rgba(230, 0, 18, 0.35), 0 0 35px rgba(255, 235, 0, 0.2);
     }
 
     .card-8bit .pub-badge {
-      background: var(--8bit-pink);
+      background: var(--8bit-red);
       color: #ffffff;
-      font-family: var(--font-pixel);
-      font-size: 8.5px;
-      letter-spacing: 0.1em;
-      border-radius: 0;
-      box-shadow: 3px 3px 0 #000;
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
     }
 
     .card-8bit .pub-name {
-      font-family: var(--font-pixel);
-      font-size: clamp(24px, 2.8vw, 32px);
-      line-height: 1.35;
+      font-family: var(--font-grotesk);
+      font-size: clamp(30px, 3.4vw, 42px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin: 18px 0 8px;
       color: #ffffff;
-      text-shadow: 3px 3px 0 #ff0055, -2px -2px 0 #00f0ff;
-      margin: 22px 0 12px;
-      position: relative;
-      z-index: 2;
     }
 
     .card-8bit .pub-btn {
-      font-family: var(--font-pixel);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      background: linear-gradient(135deg, var(--8bit-cyan) 0%, #00a8b5 100%);
-      color: #0c0814;
+      background: #ffffff;
+      color: #0b0d13;
       font-weight: 800;
-      border: 2px solid #ffffff;
-      border-radius: 0;
-      box-shadow: 4px 4px 0 #ff0055, 8px 8px 0 #000;
-      position: relative;
-      z-index: 2;
+      border: 1px solid #ffffff;
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.15);
     }
 
     .card-8bit:hover .pub-btn {
-      background: #00ff88;
-      box-shadow: 4px 4px 0 #00f0ff, 8px 8px 0 #000;
-      transform: translate(-2px, -2px);
+      background: #f1f5f9;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(255, 255, 255, 0.3);
     }
 
-    /* Common Card Details */
     .pub-meta-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 6px;
-      position: relative;
-      z-index: 2;
     }
 
     .pub-badge {
@@ -251,34 +240,28 @@
     }
 
     .pub-subline {
-      font-size: 14.5px;
+      font-size: 13.5px;
       color: rgba(255, 255, 255, 0.7);
-      margin-bottom: 20px;
-      position: relative;
-      z-index: 2;
+      margin-bottom: 18px;
     }
 
     .pub-desc {
-      font-size: 14.5px;
+      font-size: 14px;
       line-height: 1.6;
       color: #cbd5e1;
-      margin-bottom: 26px;
-      position: relative;
-      z-index: 2;
+      margin-bottom: 24px;
     }
 
     .pub-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 32px;
-      position: relative;
-      z-index: 2;
+      margin-bottom: 30px;
     }
 
     .tag-pill {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       padding: 4px 10px;
       border-radius: 6px;
       font-size: 11px;
@@ -292,9 +275,9 @@
       justify-content: center;
       gap: 10px;
       width: 100%;
-      padding: 15px 24px;
+      padding: 14px 24px;
       border-radius: 12px;
-      font-size: 14.5px;
+      font-size: 14px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.06em;
@@ -302,10 +285,819 @@
       cursor: pointer;
     }
 
+    /* =========================================================
+       SECTION 2: EDITORIAL NEWSROOM & WORDPRESS STUDIO
+       ========================================================= */
+    .studio-section {
+      background: rgba(16, 19, 28, 0.85);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 40px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+      margin-bottom: 48px;
+      position: relative;
+    }
+
+    .studio-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 32px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      flex-wrap: wrap;
+    }
+
+    .studio-title-area {
+      max-width: 680px;
+    }
+
+    .studio-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, rgba(34, 113, 177, 0.25) 0%, rgba(0, 240, 255, 0.2) 100%);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #38bdf8;
+      margin-bottom: 12px;
+    }
+
+    .studio-title {
+      font-family: var(--font-grotesk);
+      font-size: clamp(26px, 3.2vw, 36px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .studio-subtext {
+      font-size: 14.5px;
+      color: #94a3b8;
+      line-height: 1.55;
+    }
+
+    .studio-actions-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #e2e8f0;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--wp-blue);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 16px rgba(34, 113, 177, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: var(--wp-blue-hover);
+      box-shadow: 0 6px 20px rgba(34, 113, 177, 0.5);
+      transform: translateY(-1px);
+    }
+
+    /* Filter & Controls Bar */
+    .studio-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .studio-tabs {
+      display: flex;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      gap: 4px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab-btn:hover {
+      color: #ffffff;
+    }
+
+    .tab-btn.active {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .studio-search {
+      position: relative;
+      min-width: 260px;
+    }
+
+    .studio-search input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 9px 14px 9px 36px;
+      color: #ffffff;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .studio-search input:focus {
+      border-color: #38bdf8;
+    }
+
+    .studio-search svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 15px;
+      height: 15px;
+      color: #64748b;
+      pointer-events: none;
+    }
+
+    /* Live Stories Grid */
+    .stories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 24px;
+    }
+
+    .story-card {
+      background: rgba(22, 26, 38, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .story-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+    }
+
+    .story-img-container {
+      height: 170px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      background: #1a1e2b;
+    }
+
+    .story-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .story-card:hover .story-img-container img {
+      transform: scale(1.05);
+    }
+
+    .story-pub-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .badge-raga-pub {
+      background: rgba(255, 51, 31, 0.88);
+      color: #ffffff;
+    }
+
+    .badge-8bit-pub {
+      background: rgba(230, 0, 18, 0.9);
+      color: #ffffff;
+    }
+
+    .story-source-badge {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(0, 0, 0, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #cbd5e1;
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      backdrop-filter: blur(4px);
+    }
+
+    .story-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .story-title {
+      font-size: 16.5px;
+      font-weight: 700;
+      line-height: 1.35;
+      color: #ffffff;
+      margin-bottom: 10px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .story-desc {
+      font-size: 13.5px;
+      color: #94a3b8;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .story-action-btn {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .story-card:hover .story-action-btn {
+      background: #ffffff;
+      color: #0c0e14;
+      box-shadow: 0 4px 16px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Modal Backdrop and Wrapper */
+    .studio-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 6, 10, 0.85);
+      backdrop-filter: blur(14px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .studio-modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .studio-modal {
+      background: #11141f;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      max-width: 980px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.85);
+      transform: scale(0.96);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .studio-modal-backdrop.open .studio-modal {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      padding: 22px 28px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      background: rgba(18, 22, 34, 0.6);
+    }
+
+    .modal-title-wrap h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-title-wrap p {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    .modal-close-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94a3b8;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+      transition: all 0.2s;
+    }
+
+    .modal-close-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+    }
+
+    .modal-body {
+      padding: 28px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    /* Selected Story Strip in Angle Modal */
+    .selected-story-strip {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .strip-meta {
+      flex: 1;
+    }
+
+    .strip-pub-tag {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #38bdf8;
+      margin-bottom: 4px;
+    }
+
+    .strip-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.35;
+    }
+
+    .strip-source {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    /* Angles Grid */
+    .angles-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .angle-card {
+      background: rgba(24, 28, 42, 0.7);
+      border: 1.5px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 22px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .angle-card:hover {
+      border-color: #38bdf8;
+      background: rgba(24, 28, 42, 0.95);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0, 240, 255, 0.12);
+    }
+
+    .angle-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .angle-badge {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .angle-tone {
+      font-size: 11px;
+      color: #94a3b8;
+      font-style: italic;
+    }
+
+    .angle-name {
+      font-size: 16px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .angle-headline {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #e2e8f0;
+      line-height: 1.45;
+      margin-bottom: 14px;
+      padding: 8px 12px;
+      background: rgba(0, 0, 0, 0.25);
+      border-left: 3px solid #38bdf8;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .angle-summary {
+      font-size: 12.5px;
+      color: #94a3b8;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+
+    .angle-select-btn {
+      width: 100%;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #38bdf8;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .angle-card:hover .angle-select-btn {
+      background: #38bdf8;
+      color: #0b0f19;
+      box-shadow: 0 4px 14px rgba(56, 189, 248, 0.4);
+    }
+
+    /* Modal 2: Article Publishing Studio Layout */
+    .studio-editor-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+    }
+
+    .editor-column {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #94a3b8;
+      margin-bottom: 6px;
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #ffffff;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus {
+      border-color: #38bdf8;
+    }
+
+    .preview-tabs {
+      display: flex;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .preview-tab-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      padding: 8px 16px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .preview-tab-btn.active {
+      color: #ffffff;
+      border-bottom-color: #38bdf8;
+    }
+
+    .article-visual-preview {
+      background: #ffffff;
+      color: #1e293b;
+      padding: 30px;
+      border-radius: 12px;
+      line-height: 1.7;
+      font-size: 15px;
+      max-height: 480px;
+      overflow-y: auto;
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .article-visual-preview h2 {
+      color: #0f172a;
+      font-size: 20px;
+      margin: 22px 0 10px;
+      font-weight: 800;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 6px;
+    }
+
+    .article-visual-preview p {
+      margin-bottom: 16px;
+    }
+
+    .article-html-source {
+      background: #090c14;
+      color: #93c5fd;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      max-height: 480px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      outline: none;
+    }
+
+    /* Right Sidebar: WordPress Dispatch */
+    .dispatch-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .dispatch-card {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    .dispatch-card-title {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #cbd5e1;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .status-pill.connected {
+      background: rgba(34, 197, 94, 0.15);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+
+    .status-pill.disconnected {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .publish-btn {
+      width: 100%;
+      background: var(--wp-blue);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 6px 20px rgba(34, 113, 177, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    .publish-btn:hover {
+      background: var(--wp-blue-hover);
+      box-shadow: 0 8px 26px rgba(34, 113, 177, 0.6);
+      transform: translateY(-1px);
+    }
+
+    .publish-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .result-alert {
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.5;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .result-alert.success {
+      display: block;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #86efac;
+    }
+
+    .result-alert.error {
+      display: block;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+    }
+
+    /* Modal 3: Settings Help Callout */
+    .help-callout {
+      background: rgba(34, 113, 177, 0.12);
+      border: 1px solid rgba(34, 113, 177, 0.3);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 12.5px;
+      color: #93c5fd;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .help-callout ol {
+      padding-left: 20px;
+      margin-top: 8px;
+    }
+
+    .help-callout li {
+      margin-bottom: 4px;
+    }
+
+    /* Spinners & Animation */
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     /* Kiosk Footer */
     .kiosk-footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 22px 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 24px;
       text-align: center;
       font-size: 12px;
       color: #64748b;
@@ -314,7 +1106,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      max-width: 1200px;
+      max-width: 1280px;
       margin: 0 auto;
       width: 100%;
     }
@@ -323,13 +1115,19 @@
       color: #cbd5e1;
     }
 
-    @media (max-width: 840px) {
+    @media (max-width: 900px) {
       .kiosk-grid {
+        grid-template-columns: 1fr;
+      }
+      .angles-grid {
+        grid-template-columns: 1fr;
+      }
+      .studio-editor-layout {
         grid-template-columns: 1fr;
       }
       .kiosk-footer {
         flex-direction: column;
-        gap: 10px;
+        gap: 12px;
         text-align: center;
       }
     }
@@ -339,14 +1137,16 @@
   <div class="ambient-glow"></div>
 
   <div class="kiosk-wrapper">
+    <!-- TOP MASTHEAD -->
     <header class="kiosk-header">
-      <div class="kiosk-tag">★ Antigravity Publication Engine ★</div>
-      <h1 class="kiosk-title">Select Your Magazine</h1>
+      <div class="kiosk-tag">★ Antigravity Magazine Engine &amp; Publishing Studio ★</div>
+      <h1 class="kiosk-title">Editorial Portals &amp; Newsroom</h1>
       <p class="kiosk-subtitle">
-        Pick your editorial portal below. Each publication features an autonomous 30-page live harvester, custom quickread synthesis, and 1-click A4 print PDF export.
+        Read 30-page autonomous publications or use the Newsroom Studio below to harvest live stories, choose editorial angles, and publish original articles directly to WordPress.
       </p>
     </header>
 
+    <!-- SECTION 1: DUAL PUBLICATION SHOWCASE -->
     <div class="kiosk-grid">
       <!-- PUBLICATION 1: RAGA MAGAZINE -->
       <a href="/raga" class="pub-card card-raga" id="chooseRaga">
@@ -381,12 +1181,12 @@
       <a href="/8bit" class="pub-card card-8bit" id="choose8Bit">
         <div>
           <div class="pub-meta-top">
-            <span class="pub-badge" style="background:#e60012; color:#fff;">LUXURY GAMING MONOGRAPH</span>
-            <span class="pub-stats" style="font-family:var(--font-grotesk); font-weight:700; font-size:11px; color:#cbd5e1;">Vol. 05 · 30 Curated Pages</span>
+            <span class="pub-badge">LUXURY GAMING MONOGRAPH</span>
+            <span class="pub-stats">Vol. 05 · 30 Curated Pages</span>
           </div>
 
-          <h2 class="pub-name" style="color:#ffffff;">THE 8 BIT BISTRO</h2>
-          <div class="pub-subline" style="font-family:var(--font-grotesk); font-weight:700; font-size:11px; color:var(--crimson, #e60012); letter-spacing:0.14em; text-transform:uppercase;">
+          <h2 class="pub-name">THE 8 BIT BISTRO</h2>
+          <div class="pub-subline" style="font-weight:700; font-size:11px; color:#ff3b53; letter-spacing:0.14em; text-transform:uppercase;">
             The Journal of Interactive Art &amp; Game Architecture
           </div>
 
@@ -402,18 +1202,797 @@
           </div>
         </div>
 
-        <div class="pub-btn" style="background:#ffffff; color:#0b0d13; border:1px solid #ffffff; box-shadow:0 6px 20px rgba(255,255,255,0.15);">
+        <div class="pub-btn">
           <span>Read The 8 Bit Bistro</span>
           <span style="font-size:18px;">→</span>
         </div>
       </a>
     </div>
+
+    <!-- =========================================================
+         SECTION 2: EDITORIAL NEWSROOM & WORDPRESS STUDIO
+         ========================================================= -->
+    <section class="studio-section" id="newsroomStudio">
+      <div class="studio-header">
+        <div class="studio-title-area">
+          <div class="studio-badge">⚡ LIVE CONTENT NEWSROOM &amp; WORDPRESS STUDIO</div>
+          <h2 class="studio-title">Select Story → Choose Angle → Publish to WordPress</h2>
+          <p class="studio-subtext">
+            Harvest real-time dispatches from music and gaming feeds. Click any story to generate 4 distinct editorial angles (investigative deep-dive, fan reaction, critical take, or fast digest). Choose your preferred perspective to generate a 100% original, plagiarism-free article ready for WordPress.
+          </p>
+        </div>
+
+        <div class="studio-actions-top">
+          <button class="btn-secondary" id="btnOpenSettings">
+            <span>⚙️</span>
+            <span>WordPress &amp; API Settings</span>
+          </button>
+          <button class="btn-primary" id="btnRefreshStories">
+            <span>🔄</span>
+            <span>Refresh Live Feeds</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Controls & Filters Bar -->
+      <div class="studio-controls">
+        <div class="studio-tabs">
+          <button class="tab-btn active" data-pub="all">
+            <span>All Sources</span>
+            <span id="countAll">(0)</span>
+          </button>
+          <button class="tab-btn" data-pub="raga">
+            <span>🎵 Raga: Music</span>
+            <span id="countRaga">(0)</span>
+          </button>
+          <button class="tab-btn" data-pub="8bit">
+            <span>🎮 8-Bit: Gaming</span>
+            <span id="count8bit">(0)</span>
+          </button>
+        </div>
+
+        <div class="studio-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="storySearchInput" placeholder="Filter stories by keyword...">
+        </div>
+      </div>
+
+      <!-- Live Stories Grid -->
+      <div class="stories-grid" id="storiesGrid">
+        <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; color: #94a3b8;">
+          <div class="spinner" style="width:28px; height:28px; border-width:3px; margin-bottom:12px;"></div>
+          <p style="font-size:15px; font-weight:600;">Harvesting live stories from Rolling Stone, Eurogamer, PC Gamer &amp; Polygon...</p>
+        </div>
+      </div>
+    </section>
   </div>
 
+  <!-- =========================================================
+       MODAL 1: ANGLE SELECTION WORKBENCH
+       ========================================================= -->
+  <div class="studio-modal-backdrop" id="modalAnglesBackdrop">
+    <div class="studio-modal">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <h3>🎯 Pick Your Editorial Angle</h3>
+          <p>Select how you want to frame this story. Each angle crafts an original title, structure, and editorial voice.</p>
+        </div>
+        <button class="modal-close-btn" id="btnCloseAnglesModal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Selected Story Summary Strip -->
+        <div class="selected-story-strip" id="selectedStoryStrip">
+          <div class="strip-meta">
+            <div class="strip-pub-tag" id="stripPubTag">SOURCE DISPATCH</div>
+            <div class="strip-title" id="stripStoryTitle">Story Title Loading...</div>
+            <div class="strip-source" id="stripStorySource">Original reporting via Source</div>
+          </div>
+        </div>
+
+        <!-- 4 Distinct Angle Cards -->
+        <div class="angles-grid" id="anglesGrid">
+          <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #94a3b8;">
+            <div class="spinner" style="margin-bottom:10px;"></div>
+            <p>Formulating 4 editorial angles for this story...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL 2: ARTICLE EDITOR & WORDPRESS DISPATCH STUDIO
+       ========================================================= -->
+  <div class="studio-modal-backdrop" id="modalPublishBackdrop">
+    <div class="studio-modal" style="max-width: 1100px;">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <h3>✍️ Editorial Studio &amp; WordPress Dispatch</h3>
+          <p id="publishModalSubtitle">Generated 100% original article from your chosen angle. Review, customize, and publish.</p>
+        </div>
+        <button class="modal-close-btn" id="btnClosePublishModal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="studio-editor-layout">
+          <!-- Left Column: Article Editor & Preview -->
+          <div class="editor-column">
+            <div class="form-group">
+              <label>Article Headline (Editable)</label>
+              <input type="text" class="form-input" id="articleHeadlineInput" style="font-weight:700; font-size:16px;">
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+              <div class="form-group">
+                <label>URL Slug</label>
+                <input type="text" class="form-input" id="articleSlugInput">
+              </div>
+              <div class="form-group">
+                <label>Estimated Read Time</label>
+                <input type="text" class="form-input" id="articleReadTimeInput" readonly style="color:#94a3b8;">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>SEO Excerpt / Summary</label>
+              <input type="text" class="form-input" id="articleExcerptInput">
+            </div>
+
+            <!-- Preview Mode Toggle Tabs -->
+            <div class="preview-tabs">
+              <button class="preview-tab-btn active" id="tabVisualPreview">👁️ Formatted Visual Preview</button>
+              <button class="preview-tab-btn" id="tabHtmlSource">💻 Clean WordPress HTML</button>
+            </div>
+
+            <!-- Visual Formatted Preview -->
+            <div class="article-visual-preview" id="articleVisualPreview">
+              <!-- Content injected dynamically -->
+            </div>
+
+            <!-- HTML Source Code View -->
+            <textarea class="article-html-source" id="articleHtmlSource" style="display: none; height: 350px; resize: vertical;"></textarea>
+          </div>
+
+          <!-- Right Column: WordPress Publishing Desk -->
+          <div class="dispatch-sidebar">
+            <!-- Connection Status Box -->
+            <div class="dispatch-card">
+              <div class="dispatch-card-title">
+                <span>📡</span>
+                <span>WordPress Destination</span>
+              </div>
+              <div id="wpConnectionStatus" style="margin-bottom: 12px;">
+                <span class="status-pill disconnected">
+                  <span class="status-dot"></span>
+                  <span>Credentials Needed</span>
+                </span>
+              </div>
+              <p style="font-size: 12px; color: #94a3b8; line-height: 1.4; margin-bottom: 12px;" id="wpTargetSiteText">
+                Configure your WordPress Site URL &amp; Application Password to publish directly.
+              </p>
+              <button class="btn-secondary" style="width:100%; justify-content:center; padding:8px 12px; font-size:12px;" id="btnOpenSettingsFromPublish">
+                ⚙️ Configure WordPress
+              </button>
+            </div>
+
+            <!-- Publishing Options -->
+            <div class="dispatch-card">
+              <div class="dispatch-card-title">
+                <span>🚀</span>
+                <span>Publishing Actions</span>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 16px;">
+                <label>Publication Status</label>
+                <select class="form-input" id="postStatusSelect" style="background:#181b26;">
+                  <option value="draft" selected>Draft (Recommended - Safe Review in WP)</option>
+                  <option value="publish">Publish (Go Live Immediately on Blog)</option>
+                </select>
+              </div>
+
+              <button class="publish-btn" id="btnPublishToWp">
+                <span id="publishBtnIcon">🚀</span>
+                <span id="publishBtnText">Publish to WordPress</span>
+              </button>
+
+              <button class="btn-secondary" id="btnCopyHtml" style="width:100%; justify-content:center; margin-top:10px;">
+                📋 Copy Clean HTML
+              </button>
+
+              <!-- Feedback / Results Notice -->
+              <div class="result-alert" id="publishResultAlert" style="margin-top: 14px;"></div>
+            </div>
+
+            <!-- Back to Angles Button -->
+            <button class="btn-secondary" id="btnBackToAngles" style="width:100%; justify-content:center;">
+              ← Pick a Different Angle
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL 3: WORDPRESS & API SETTINGS
+       ========================================================= -->
+  <div class="studio-modal-backdrop" id="modalSettingsBackdrop">
+    <div class="studio-modal" style="max-width: 620px;">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <h3>⚙️ WordPress &amp; API Configuration</h3>
+          <p>Connect your WordPress REST API and optional Google Gemini AI key.</p>
+        </div>
+        <button class="modal-close-btn" id="btnCloseSettingsModal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="help-callout">
+          <strong>💡 How to create a WordPress Application Password in 30 seconds:</strong>
+          <ol>
+            <li>Log into your WordPress Admin Dashboard.</li>
+            <li>Go to <strong>Users → Profile</strong> (or <em>Edit User</em>).</li>
+            <li>Scroll down to the <strong>Application Passwords</strong> section.</li>
+            <li>Enter a name (e.g. <code>Antigravity Studio</code>) and click <strong>Add New Application Password</strong>.</li>
+            <li>Copy the generated 24-character password and paste it below!</li>
+          </ol>
+        </div>
+
+        <form id="settingsForm" onsubmit="return false;">
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label>WordPress Site URL</label>
+            <input type="url" class="form-input" id="cfgWpUrl" placeholder="https://yourblog.com" required>
+            <span style="font-size:11px; color:#64748b; margin-top:4px; display:block;">The root URL of your WordPress installation (e.g., https://mygamingblog.com)</span>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label>WordPress Admin / Editor Username</label>
+            <input type="text" class="form-input" id="cfgWpUsername" placeholder="e.g. admin or editor" required>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label>WordPress Application Password</label>
+            <input type="password" class="form-input" id="cfgWpAppPassword" placeholder="xxxx xxxx xxxx xxxx" autocomplete="new-password">
+            <span style="font-size:11px; color:#64748b; margin-top:4px; display:block;">WordPress standard Application Password (does not expose your primary login password).</span>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label>Default WordPress Status</label>
+            <select class="form-input" id="cfgDefaultStatus" style="background:#181b26;">
+              <option value="draft">Draft (Review first in WP Admin)</option>
+              <option value="publish">Publish (Go Live Immediately)</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 22px;">
+            <label>Google Gemini API Key (Optional)</label>
+            <input type="password" class="form-input" id="cfgGeminiKey" placeholder="AIzaSy..." autocomplete="off">
+            <span style="font-size:11px; color:#64748b; margin-top:4px; display:block;">Optional. If left blank, our intelligent contextual writer generates rich, structured articles automatically.</span>
+          </div>
+
+          <button class="btn-primary" type="button" id="btnSaveConfig" style="width:100%; justify-content:center; padding:12px;">
+            💾 Save Settings
+          </button>
+        </form>
+
+        <div class="result-alert" id="settingsAlert" style="margin-top: 14px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
   <footer class="kiosk-footer">
-    <span>Powered by <strong>Antigravity Magazine OS</strong> · Localhost Server</span>
-    <span>Autonomous Live Scraper · 30-Page Dynamic Layouts · A4 Vector Print Engine</span>
+    <span>Powered by <strong>Antigravity Magazine OS &amp; Publishing Engine</strong> · Localhost Server</span>
+    <span>Autonomous Harvester · 4-Angle Journalism Synthesizer · WordPress REST API Dispatch</span>
   </footer>
+
+  <!-- CLIENT-SIDE SCRIPT -->
+  <script>
+    // State
+    let allStories = [];
+    let currentPubFilter = 'all';
+    let currentSelectedStory = null;
+    let currentGeneratedAngles = [];
+    let currentSelectedAngle = null;
+    let currentGeneratedArticle = null;
+    let studioConfig = { wpUrl: '', wpUsername: '', wpAppPassword: '', defaultStatus: 'draft', hasGeminiKey: false };
+
+    // DOM Elements
+    const storiesGrid = document.getElementById('storiesGrid');
+    const storySearchInput = document.getElementById('storySearchInput');
+    const countAll = document.getElementById('countAll');
+    const countRaga = document.getElementById('countRaga');
+    const count8bit = document.getElementById('count8bit');
+
+    // Modals
+    const modalAnglesBackdrop = document.getElementById('modalAnglesBackdrop');
+    const modalPublishBackdrop = document.getElementById('modalPublishBackdrop');
+    const modalSettingsBackdrop = document.getElementById('modalSettingsBackdrop');
+
+    // Angles Modal Elements
+    const stripPubTag = document.getElementById('stripPubTag');
+    const stripStoryTitle = document.getElementById('stripStoryTitle');
+    const stripStorySource = document.getElementById('stripStorySource');
+    const anglesGrid = document.getElementById('anglesGrid');
+
+    // Publish Studio Elements
+    const articleHeadlineInput = document.getElementById('articleHeadlineInput');
+    const articleSlugInput = document.getElementById('articleSlugInput');
+    const articleReadTimeInput = document.getElementById('articleReadTimeInput');
+    const articleExcerptInput = document.getElementById('articleExcerptInput');
+    const articleVisualPreview = document.getElementById('articleVisualPreview');
+    const articleHtmlSource = document.getElementById('articleHtmlSource');
+    const tabVisualPreview = document.getElementById('tabVisualPreview');
+    const tabHtmlSource = document.getElementById('tabHtmlSource');
+    const postStatusSelect = document.getElementById('postStatusSelect');
+    const btnPublishToWp = document.getElementById('btnPublishToWp');
+    const publishBtnText = document.getElementById('publishBtnText');
+    const publishResultAlert = document.getElementById('publishResultAlert');
+    const wpConnectionStatus = document.getElementById('wpConnectionStatus');
+    const wpTargetSiteText = document.getElementById('wpTargetSiteText');
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadStudioConfig();
+      await fetchStudioStories();
+      setupEventListeners();
+    });
+
+    // 1. Fetch live stories from server
+    async function fetchStudioStories() {
+      storiesGrid.innerHTML = `
+        <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; color: #94a3b8;">
+          <div class="spinner" style="width:28px; height:28px; border-width:3px; margin-bottom:12px;"></div>
+          <p style="font-size:15px; font-weight:600;">Harvesting live stories from Rolling Stone, Eurogamer, PC Gamer &amp; Polygon...</p>
+        </div>
+      `;
+
+      try {
+        const res = await fetch('/api/studio/stories?pub=all');
+        const data = await res.json();
+        if (data.success && Array.isArray(data.stories)) {
+          allStories = data.stories;
+          updateCounts();
+          renderStories();
+        } else {
+          storiesGrid.innerHTML = `<p style="grid-column: 1/-1; color: #f87171; text-align: center; padding: 40px;">Failed to fetch live stories: ${data.error || 'Unknown error'}</p>`;
+        }
+      } catch (err) {
+        storiesGrid.innerHTML = `<p style="grid-column: 1/-1; color: #f87171; text-align: center; padding: 40px;">Network error connecting to studio: ${err.message}</p>`;
+      }
+    }
+
+    function updateCounts() {
+      const ragaCount = allStories.filter(s => s.pub === 'raga').length;
+      const gamingCount = allStories.filter(s => s.pub === '8bit').length;
+      countAll.textContent = `(${allStories.length})`;
+      countRaga.textContent = `(${ragaCount})`;
+      count8bit.textContent = `(${gamingCount})`;
+    }
+
+    function renderStories() {
+      const searchTerm = storySearchInput.value.toLowerCase().trim();
+      const filtered = allStories.filter(story => {
+        const matchesPub = currentPubFilter === 'all' || story.pub === currentPubFilter;
+        const matchesSearch = !searchTerm || 
+          story.title.toLowerCase().includes(searchTerm) || 
+          (story.desc && story.desc.toLowerCase().includes(searchTerm)) ||
+          story.source.toLowerCase().includes(searchTerm);
+        return matchesPub && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        storiesGrid.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; color: #94a3b8;">
+            <p style="font-size: 16px; font-weight: 600;">No stories match your filter.</p>
+            <p style="font-size: 13px; margin-top: 6px;">Try changing search terms or switching between Raga and 8-Bit feeds.</p>
+          </div>
+        `;
+        return;
+      }
+
+      storiesGrid.innerHTML = filtered.map(story => {
+        const isRaga = story.pub === 'raga';
+        const pubBadgeClass = isRaga ? 'badge-raga-pub' : 'badge-8bit-pub';
+        const fallbackImg = isRaga 
+          ? 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80'
+          : 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80';
+        const imgSrc = story.image || fallbackImg;
+
+        return `
+          <div class="story-card" data-story-id="${story.id}">
+            <div>
+              <div class="story-img-container">
+                <img src="${imgSrc}" alt="${escapeHtml(story.title)}" onerror="this.src='${fallbackImg}'">
+                <span class="story-pub-badge ${pubBadgeClass}">${story.pubLabel}</span>
+                <span class="story-source-badge">${story.source}</span>
+              </div>
+              <div class="story-content">
+                <h4 class="story-title">${escapeHtml(story.title)}</h4>
+                <p class="story-desc">${escapeHtml(story.desc || 'Live journalistic reporting harvested directly from official digital dispatches.')}</p>
+              </div>
+            </div>
+            <div style="padding: 0 20px 20px;">
+              <button class="story-action-btn" onclick="openAngleSelector('${story.id}')">
+                <span>🎯 Explore 4 Angles</span>
+                <span>→</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 2. Open Angle Selector Modal & Fetch 4 Angles
+    window.openAngleSelector = async function(storyId) {
+      const story = allStories.find(s => s.id === storyId);
+      if (!story) return;
+      currentSelectedStory = story;
+
+      stripPubTag.textContent = `${story.pubLabel} · ${story.category}`;
+      stripPubTag.style.color = story.pub === 'raga' ? '#ff331f' : '#38bdf8';
+      stripStoryTitle.textContent = story.title;
+      stripStorySource.innerHTML = `Source: <strong>${story.source}</strong> · <a href="${story.link}" target="_blank" style="color:#38bdf8; text-decoration:none;">Original Article ↗</a>`;
+
+      anglesGrid.innerHTML = `
+        <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; color: #94a3b8;">
+          <div class="spinner" style="margin-bottom: 12px;"></div>
+          <p style="font-size: 15px; font-weight: 600;">Analyzing story &amp; formulating 4 unique editorial angles...</p>
+        </div>
+      `;
+
+      openModal(modalAnglesBackdrop);
+
+      try {
+        const res = await fetch('/api/studio/angles', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ article: story, apiKey: studioConfig.geminiApiKey })
+        });
+        const data = await res.json();
+        if (data.success && Array.isArray(data.angles)) {
+          currentGeneratedAngles = data.angles;
+          renderAngles(data.angles);
+        } else {
+          anglesGrid.innerHTML = `<p style="grid-column: 1/-1; color: #f87171; text-align: center;">Error generating angles: ${data.error}</p>`;
+        }
+      } catch (err) {
+        anglesGrid.innerHTML = `<p style="grid-column: 1/-1; color: #f87171; text-align: center;">Failed to generate angles: ${err.message}</p>`;
+      }
+    };
+
+    function renderAngles(angles) {
+      anglesGrid.innerHTML = angles.map((angle, index) => {
+        return `
+          <div class="angle-card" onclick="selectAngleAndGenerate(${index})">
+            <div>
+              <div class="angle-top">
+                <span class="angle-badge">${angle.badge || 'EDITORIAL'}</span>
+                <span class="angle-tone">${angle.tone || 'Original Voice'}</span>
+              </div>
+              <h4 class="angle-name">${escapeHtml(angle.name)}</h4>
+              <div class="angle-headline">“${escapeHtml(angle.proposedHeadline || angle.name)}”</div>
+              <p class="angle-summary">${escapeHtml(angle.angleSummary)}</p>
+            </div>
+            <button class="angle-select-btn">
+              <span>✍️ Write Article from this Angle</span>
+              <span>→</span>
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 3. User chooses angle -> Generate full article & open Publishing Studio
+    window.selectAngleAndGenerate = async function(angleIndex) {
+      const angle = currentGeneratedAngles[angleIndex];
+      if (!angle || !currentSelectedStory) return;
+      currentSelectedAngle = angle;
+
+      // Show spinner on the clicked angle card
+      const clickedCardBtn = anglesGrid.children[angleIndex]?.querySelector('.angle-select-btn');
+      if (clickedCardBtn) {
+        clickedCardBtn.innerHTML = `<div class="spinner" style="width:14px; height:14px; border-width:2px;"></div> Generating Original Article...`;
+      }
+
+      try {
+        const res = await fetch('/api/studio/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            article: currentSelectedStory,
+            angle: angle,
+            apiKey: studioConfig.geminiApiKey
+          })
+        });
+
+        const data = await res.json();
+        if (data.success && data.article) {
+          currentGeneratedArticle = data.article;
+          closeModal(modalAnglesBackdrop);
+          populatePublishingStudio(data.article);
+          openModal(modalPublishBackdrop);
+        } else {
+          alert('Error generating article: ' + (data.error || 'Unknown error'));
+        }
+      } catch (err) {
+        alert('Failed to generate article: ' + err.message);
+      } finally {
+        if (clickedCardBtn) {
+          clickedCardBtn.innerHTML = `<span>✍️ Write Article from this Angle</span><span>→</span>`;
+        }
+      }
+    };
+
+    // 4. Populate Publishing Studio
+    function populatePublishingStudio(article) {
+      articleHeadlineInput.value = article.headline || '';
+      articleSlugInput.value = article.slug || '';
+      articleReadTimeInput.value = article.readTime || '4 min read';
+      articleExcerptInput.value = article.excerpt || '';
+      articleVisualPreview.innerHTML = article.contentHtml || '';
+      articleHtmlSource.value = article.contentHtml || '';
+
+      // Default status
+      postStatusSelect.value = studioConfig.defaultStatus || 'draft';
+
+      // Update WP Connection Status indicator
+      updateWpStatusUi();
+
+      // Reset alert
+      publishResultAlert.style.display = 'none';
+      publishResultAlert.className = 'result-alert';
+      btnPublishToWp.disabled = false;
+      publishBtnText.textContent = postStatusSelect.value === 'draft' ? 'Save as WordPress Draft' : 'Publish to WordPress';
+    }
+
+    function updateWpStatusUi() {
+      const hasConfig = Boolean(studioConfig.wpUrl && studioConfig.wpUsername && (studioConfig.wpAppPassword || studioConfig.hasAppPassword));
+      if (hasConfig) {
+        wpConnectionStatus.innerHTML = `
+          <span class="status-pill connected">
+            <span class="status-dot"></span>
+            <span>Connected: ${escapeHtml(studioConfig.wpUsername)}</span>
+          </span>
+        `;
+        wpTargetSiteText.innerHTML = `Target: <strong>${escapeHtml(studioConfig.wpUrl)}</strong>`;
+      } else {
+        wpConnectionStatus.innerHTML = `
+          <span class="status-pill disconnected">
+            <span class="status-dot"></span>
+            <span>Credentials Needed</span>
+          </span>
+        `;
+        wpTargetSiteText.textContent = `Configure your WordPress Site URL & Application Password to publish directly.`;
+      }
+    }
+
+    // 5. Publish to WordPress
+    async function handlePublishToWordPress() {
+      if (!studioConfig.wpUrl || !studioConfig.wpUsername) {
+        publishResultAlert.className = 'result-alert error';
+        publishResultAlert.innerHTML = `⚠️ WordPress credentials are missing. Please click <strong>Configure WordPress</strong> to enter your Site URL, Username, and Application Password.`;
+        return;
+      }
+
+      // Sync any edited fields back into postData
+      const postData = {
+        headline: articleHeadlineInput.value.trim(),
+        slug: articleSlugInput.value.trim(),
+        excerpt: articleExcerptInput.value.trim(),
+        contentHtml: articleHtmlSource.style.display !== 'none' ? articleHtmlSource.value : articleVisualPreview.innerHTML,
+        status: postStatusSelect.value
+      };
+
+      btnPublishToWp.disabled = true;
+      publishBtnText.innerHTML = `<span class="spinner" style="width:14px; height:14px; border-width:2px;"></span> Publishing to WordPress...`;
+      publishResultAlert.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/studio/publish', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ postData })
+        });
+        const result = await res.json();
+
+        if (result.success) {
+          publishResultAlert.className = 'result-alert success';
+          publishResultAlert.innerHTML = `
+            <div style="font-weight: 800; font-size: 14px; margin-bottom: 6px;">🎉 Successfully Sent to WordPress!</div>
+            <div style="margin-bottom: 10px;">Post #${result.postId} created with status: <strong>${result.status.toUpperCase()}</strong></div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              ${result.editLink ? `<a href="${result.editLink}" target="_blank" style="color:#ffffff; background:#008a20; padding:6px 12px; border-radius:6px; text-decoration:none; font-weight:700; font-size:12px;">Edit in WP Admin ↗</a>` : ''}
+              ${result.postLink ? `<a href="${result.postLink}" target="_blank" style="color:#ffffff; background:rgba(255,255,255,0.15); padding:6px 12px; border-radius:6px; text-decoration:none; font-weight:600; font-size:12px;">View Post ↗</a>` : ''}
+            </div>
+          `;
+        } else {
+          publishResultAlert.className = 'result-alert error';
+          publishResultAlert.innerHTML = `❌ WordPress Error: ${escapeHtml(result.error || 'Failed to publish')}`;
+        }
+      } catch (err) {
+        publishResultAlert.className = 'result-alert error';
+        publishResultAlert.innerHTML = `❌ Connection Error: ${escapeHtml(err.message)}`;
+      } finally {
+        btnPublishToWp.disabled = false;
+        publishBtnText.textContent = postStatusSelect.value === 'draft' ? 'Save as WordPress Draft' : 'Publish to WordPress';
+      }
+    }
+
+    // 6. Config / Settings Logic
+    async function loadStudioConfig() {
+      try {
+        const res = await fetch('/api/studio/config');
+        const data = await res.json();
+        if (data.success && data.config) {
+          studioConfig = data.config;
+          document.getElementById('cfgWpUrl').value = studioConfig.wpUrl || '';
+          document.getElementById('cfgWpUsername').value = studioConfig.wpUsername || '';
+          document.getElementById('cfgWpAppPassword').value = studioConfig.wpAppPassword || '';
+          document.getElementById('cfgDefaultStatus').value = studioConfig.defaultStatus || 'draft';
+          document.getElementById('cfgGeminiKey').value = studioConfig.geminiApiKey || '';
+          updateWpStatusUi();
+        }
+      } catch (_) {}
+    }
+
+    async function saveStudioConfig() {
+      const payload = {
+        wpUrl: document.getElementById('cfgWpUrl').value.trim(),
+        wpUsername: document.getElementById('cfgWpUsername').value.trim(),
+        wpAppPassword: document.getElementById('cfgWpAppPassword').value.trim(),
+        defaultStatus: document.getElementById('cfgDefaultStatus').value,
+        geminiApiKey: document.getElementById('cfgGeminiKey').value.trim()
+      };
+
+      const btn = document.getElementById('btnSaveConfig');
+      const alertBox = document.getElementById('settingsAlert');
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+
+      try {
+        const res = await fetch('/api/studio/config', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          studioConfig = { ...studioConfig, ...payload };
+          updateWpStatusUi();
+          alertBox.className = 'result-alert success';
+          alertBox.textContent = '✅ WordPress & API settings saved successfully!';
+          setTimeout(() => {
+            closeModal(modalSettingsBackdrop);
+            alertBox.style.display = 'none';
+          }, 1200);
+        } else {
+          alertBox.className = 'result-alert error';
+          alertBox.textContent = 'Failed to save: ' + (data.error || 'Unknown error');
+        }
+      } catch (err) {
+        alertBox.className = 'result-alert error';
+        alertBox.textContent = 'Network error: ' + err.message;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '💾 Save Settings';
+      }
+    }
+
+    // 7. Event Listeners
+    function setupEventListeners() {
+      // Publication Tab Buttons
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentPubFilter = btn.dataset.pub;
+          renderStories();
+        });
+      });
+
+      // Search input
+      storySearchInput.addEventListener('input', renderStories);
+
+      // Refresh Stories button
+      document.getElementById('btnRefreshStories').addEventListener('click', fetchStudioStories);
+
+      // Settings Modal Open/Close
+      document.getElementById('btnOpenSettings').addEventListener('click', () => openModal(modalSettingsBackdrop));
+      document.getElementById('btnOpenSettingsFromPublish').addEventListener('click', () => {
+        closeModal(modalPublishBackdrop);
+        openModal(modalSettingsBackdrop);
+      });
+      document.getElementById('btnCloseSettingsModal').addEventListener('click', () => closeModal(modalSettingsBackdrop));
+      document.getElementById('btnSaveConfig').addEventListener('click', saveStudioConfig);
+
+      // Angles Modal Close
+      document.getElementById('btnCloseAnglesModal').addEventListener('click', () => closeModal(modalAnglesBackdrop));
+
+      // Publish Modal Close & Back
+      document.getElementById('btnClosePublishModal').addEventListener('click', () => closeModal(modalPublishBackdrop));
+      document.getElementById('btnBackToAngles').addEventListener('click', () => {
+        closeModal(modalPublishBackdrop);
+        openModal(modalAnglesBackdrop);
+      });
+
+      // Publish to WP button
+      btnPublishToWp.addEventListener('click', handlePublishToWordPress);
+
+      // Post status selector text update
+      postStatusSelect.addEventListener('change', () => {
+        publishBtnText.textContent = postStatusSelect.value === 'draft' ? 'Save as WordPress Draft' : 'Publish to WordPress';
+      });
+
+      // Preview Tabs
+      tabVisualPreview.addEventListener('click', () => {
+        tabVisualPreview.classList.add('active');
+        tabHtmlSource.classList.remove('active');
+        articleVisualPreview.innerHTML = articleHtmlSource.value;
+        articleVisualPreview.style.display = 'block';
+        articleHtmlSource.style.display = 'none';
+      });
+
+      tabHtmlSource.addEventListener('click', () => {
+        tabHtmlSource.classList.add('active');
+        tabVisualPreview.classList.remove('active');
+        articleHtmlSource.style.display = 'block';
+        articleVisualPreview.style.display = 'none';
+      });
+
+      // Copy HTML Button
+      document.getElementById('btnCopyHtml').addEventListener('click', () => {
+        const htmlToCopy = articleHtmlSource.style.display !== 'none' ? articleHtmlSource.value : articleVisualPreview.innerHTML;
+        navigator.clipboard.writeText(htmlToCopy).then(() => {
+          const original = document.getElementById('btnCopyHtml').textContent;
+          document.getElementById('btnCopyHtml').textContent = '✅ Copied to Clipboard!';
+          setTimeout(() => {
+            document.getElementById('btnCopyHtml').textContent = original;
+          }, 2000);
+        });
+      });
+
+      // Close modal on backdrop click
+      [modalAnglesBackdrop, modalPublishBackdrop, modalSettingsBackdrop].forEach(backdrop => {
+        backdrop.addEventListener('click', (e) => {
+          if (e.target === backdrop) closeModal(backdrop);
+        });
+      });
+
+      // Close modal on Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeModal(modalAnglesBackdrop);
+          closeModal(modalPublishBackdrop);
+          closeModal(modalSettingsBackdrop);
+        }
+      });
+    }
+
+    function openModal(modal) {
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(modal) {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+  </script>
 </body>
 </html>
-
